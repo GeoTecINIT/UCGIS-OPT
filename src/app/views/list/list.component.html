@@ -1,0 +1,65 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-2">
+                            <button type="button" class="btn btn-block btn-outline-primary">New Occupational
+                                Profile</button>
+                        </div>
+                        <div class="col-sm-4 offset-md-4 col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fa fa-search"></i></button>
+                                </span>
+                                <input class="form-control" id="input1-group2" type="text" name="input1-group2"
+                                    placeholder="Search" autocomplete="search">
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-2">
+                            <button type="button" class="btn btn-block btn-link">
+                                Advanced Search </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div *ngFor="let o of occupationalProfiles" class="row">
+                        <div class="col-md-10">
+                            <button type="button" class="btn text-justify" routerLink="/detail">
+                                <h1> {{o.title}}</h1>
+                                <p> {{o.description}}</p>
+                                <span class="badge badge-pill badge-danger float-right">[GD1] Geolocating Data to Earth </span>
+                                <span class="badge badge-pill badge-primary float-right">[AM7-7] Bayesian methods</span>
+                                <span class="badge badge-pill badge-success float-right">[DM3-5] The Triangulated Irregular Network (TIN) model</span>
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-4">
+                                    <button type="button" class="btn btn-block btn-link"> <i
+                                            class="fa fa-copy fa-lg mt-4"></i></button>
+                                </div>
+                                <div class="col-sm-4 col-md-4">
+                                    <button type="button" class="btn btn-block btn-link"> <i
+                                            class="fa fa-edit fa-lg mt-4"></i></button>
+                                </div>
+                                <div class="col-sm-4 col-md-4">
+                                    <button type="button" class="btn btn-block btn-link"> <i
+                                            class="fa fa-trash-o fa-lg mt-4"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+
+    </div>
+    <!--/.row-->
+
+</div>
