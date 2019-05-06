@@ -1,13 +1,14 @@
 <app-header
   [navbarBrandRouterLink]="['/dashboard']"
   [fixed]="true"
-  [navbarBrandFull]="{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'CoreUI Logo'}"
+  [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 89, height: 27, alt: 'CoreUI Logo'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
   [sidebarToggler]="false"
   [asideMenuToggler]="false">
   <ul class="nav navbar-nav d-md-down-none">
     <li class="nav-item px-3">
       <a class="nav-link" href="#">Home</a>
+      <a class="nav-link" routerLink="/list" routerLinkActive="active" href="#">List</a>
     </li>
   </ul>
 </app-header>
@@ -25,7 +26,8 @@
       <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
             <a class="btn" href="#"> Hello username! </a>
-          <a class="btn" href="#"><i class="icon-home"></i>&nbsp;Home</a>
+          <a class="btn" routerLink="/" routerLinkActive="active" href="#"><i class="icon-home"></i>&nbsp;Home</a>
+          <a class="btn" routerLink="/list" routerLinkActive="active" href="#">List</a>
           <a class="btn" href="#"><i class="icon-list"></i> &nbsp;Tools</a>
           <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
         </div>
@@ -37,6 +39,6 @@
   </main>
 </div>
 <app-footer>
-  <span><a href="https://coreui.io">CoreUI</a> &copy; 2018 creativeLabs.</span>
-  <span class="ml-auto">Powered by <a href="https://coreui.io/angular">CoreUI for Angular</a></span>
+  <span><a href="#">EO4GEO</a></span>
+  <span class="ml-auto"> <a href="#">FAQ</a> <a href="#">Contact</a></span>
 </app-footer>

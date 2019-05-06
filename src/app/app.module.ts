@@ -21,6 +21,9 @@ import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { ListComponent } from './views/list/list.component';
 
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
+
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
@@ -40,6 +43,7 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { DetailComponent } from './views/detail/detail.component';
 
 @NgModule({
   imports: [
@@ -53,7 +57,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    TooltipModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -62,7 +67,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     P500Component,
     LoginComponent,
     RegisterComponent,
-    ListComponent
+    ListComponent,
+    DetailComponent
   ],
   providers: [{
     provide: LocationStrategy,

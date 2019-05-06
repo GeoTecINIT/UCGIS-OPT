@@ -10,6 +10,7 @@ import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
 import { ListComponent } from './views/list/list.component';
+import { DetailComponent } from './views/detail/detail.component';
 
 export const routes: Routes = [
   {
@@ -54,7 +55,17 @@ export const routes: Routes = [
     children: [
       {
         path: 'list',
+        data: {
+          title: 'List'
+        },
         component: ListComponent,
+      },
+      {
+        path: 'detail',
+        data: {
+          title: 'Detail'
+        },
+        component: DetailComponent,
       },
       {
         path: 'base',

@@ -28,9 +28,12 @@
                 <div class="card-body">
                     <div *ngFor="let o of occupationalProfiles" class="row">
                         <div class="col-md-10">
-                            <button type="button" class="btn text-justify">
+                            <button type="button" class="btn text-justify" routerLink="/detail">
                                 <h1> {{o.title}}</h1>
                                 <p> {{o.description}}</p>
+                                <span class="badge badge-pill badge-danger float-right">[GD1] Geolocating Data to Earth </span>
+                                <span class="badge badge-pill badge-primary float-right">[AM7-7] Bayesian methods</span>
+                                <span class="badge badge-pill badge-success float-right">[DM3-5] The Triangulated Irregular Network (TIN) model</span>
                             </button>
                         </div>
                         <div class="col-md-2">
