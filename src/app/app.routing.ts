@@ -9,6 +9,8 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
+import { ListComponent } from './views/list/list.component';
+
 export const routes: Routes = [
   {
     path: '',
@@ -50,6 +52,10 @@ export const routes: Routes = [
       title: 'Home'
     },
     children: [
+      {
+        path: 'list',
+        component: ListComponent,
+      },
       {
         path: 'base',
         loadChildren: './views/base/base.module#BaseModule'

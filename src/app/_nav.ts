@@ -63,8 +63,8 @@ export const navItems: NavData[] = [
     icon: 'icon-puzzle',
     children: [
       {
-        name: 'Cards',
-        url: '/base/cards',
+        name: 'List',
+        url: '/list',
         icon: 'icon-puzzle'
       },
       {
