@@ -5,12 +5,12 @@
   [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
   [sidebarToggler]="false"
   [asideMenuToggler]="false">
-  <ul class="nav navbar-nav d-md-down-none">
+<!--   <ul class="nav navbar-nav d-md-down-none">
     <li class="nav-item px-3">
       <a class="nav-link" href="#">Home</a>
       <a class="nav-link" routerLink="/list" routerLinkActive="active" href="#">List</a>
     </li>
-  </ul>
+  </ul> -->
 </app-header>
 <div class="app-body">
   <app-sidebar [fixed]="true" [display]="false">   <!-- Change to true to show sidebar menu  [sidebarToggler]="'lg'"  -->
@@ -27,7 +27,6 @@
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
             <a class="btn" href="#"> Hello username! </a>
           <a class="btn" routerLink="/" routerLinkActive="active" href="#"><i class="icon-home"></i>&nbsp;Home</a>
-          <a class="btn" routerLink="/list" routerLinkActive="active" href="#">List</a>
           <a class="btn" href="#"><i class="icon-list"></i> &nbsp;Tools</a>
           <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
         </div>
