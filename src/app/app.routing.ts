@@ -11,6 +11,7 @@ import { RegisterComponent } from './views/register/register.component';
 
 import { ListComponent } from './views/list/list.component';
 import { DetailComponent } from './views/detail/detail.component';
+import { NewopComponent } from './views/newop/newop.component';
 
 export const routes: Routes = [
   {
@@ -66,6 +67,13 @@ export const routes: Routes = [
           title: 'Detail'
         },
         component: DetailComponent,
+      },
+      {
+        path: 'newop',
+        data: {
+          title: 'New'
+        },
+        component: NewopComponent,
       }
     ]
   },

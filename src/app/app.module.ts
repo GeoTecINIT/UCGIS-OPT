@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -44,6 +45,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { DetailComponent } from './views/detail/detail.component';
+import { NewopComponent } from './views/newop/newop.component';
 
 @NgModule({
   imports: [
@@ -58,7 +60,8 @@ import { DetailComponent } from './views/detail/detail.component';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    FormsModule
   ],
   declarations: [
     AppComponent,
@@ -68,7 +71,8 @@ import { DetailComponent } from './views/detail/detail.component';
     LoginComponent,
     RegisterComponent,
     ListComponent,
-    DetailComponent
+    DetailComponent,
+    NewopComponent
   ],
   providers: [{
     provide: LocationStrategy,
