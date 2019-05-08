@@ -79,15 +79,14 @@
                     <span class="caret"></span>
                   </button>
                   <div class="dropdown-menu" *dropdownMenu>
-                    <button *ngFor="let c of competences" class="dropdown-item" (click)="addCompetence(c)">{{c}}</button>
+                    <button *ngFor="let c of filteredCompetences " class="dropdown-item" (click)="addCompetence(c)">{{c}}</button>
                   </div>
                 </div>
+                <input type="text" id="input-competence-filter" name="input-competence-filter" class="form-control" placeholder="Filter Competences" (keyup)="filterCompetence($event)">
+
               </div>
 
-
               <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary" (click)="removeCompetence(mc, model.competences)">{{mc}}</button>
-
-
 
 
 <!--               <div class="form-group row">
