@@ -35,8 +35,8 @@
               <div class="col-md-11">
                 <div class="form-group">
                   <label for="description">Description</label>
-                  <input type="text" class="form-control" id="description" [(ngModel)]="model.description"
-                    name="description">
+                  <textarea class="form-control" id="description" name="textarea-input" [(ngModel)]="model.description"
+                    rows="4"></textarea>
                 </div>
               </div>
               <div class="col-md-1">
@@ -45,64 +45,38 @@
                   <input type="number" size="1" class="form-control" id="eqf" [(ngModel)]="model.eqf" name="eqf">
                 </div>
               </div>
-
             </div>
           </form>
-
-
           <div class="row text-center">
             <div class="col-md-4">
               <h5>Knowledge</h5>
-
               <svg id="bubbles" width="500" height="500"> </svg>
-
-
             </div>
             <div class="col-md-4">
               <h5>Skills</h5>
 
               <div *ngIf="model.skills.length > 0">
-
-
               </div>
-
-
-
             </div>
             <div class="col-md-4">
               <h5>Competences</h5>
 
-
               <div class="input-group">
                 <div class="input-group-prepend" dropdown>
-                  <button type="button" class="btn btn-primary dropdown-toggle" dropdownToggle> Add more
-                    <span class="caret"></span>
+                  <button type="button" class="btn btn-primary"> <i class="fa fa-search"></i>
                   </button>
-                  <div class="dropdown-menu" *dropdownMenu>
-                    <button *ngFor="let c of filteredCompetences " class="dropdown-item" (click)="addCompetence(c)">{{c}}</button>
-                  </div>
                 </div>
-                <input type="text" id="input-competence-filter" name="input-competence-filter" class="form-control" placeholder="Filter Competences" (keyup)="filterCompetence($event)">
-
+                <input type="text" id="input-competence-filter" name="input-competence-filter" class="form-control"
+                  placeholder="Filter Competences" (keyup)="filterCompetence($event)">
               </div>
-
-              <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary" (click)="removeCompetence(mc, model.competences)">{{mc}}</button>
-
-
-<!--               <div class="form-group row">
-                <label class="col-md-3 col-form-label" for="multiple-select">Add skills</label>
-                <div class="col-md-9">
-                  <select id="multiple-select" name="multiple-select" class="form-control" size="competences.length"
-                    multiple>
-                    <option *ngFor="let c of competences" value="c">{{c}}</option>
-
-                  </select>
-                </div>
-              </div> -->
-
+              <div class="filteredResults" *ngIf="isFilteringCompetences">
+                <button *ngFor="let c of filteredCompetences " class="dropdown-item"
+                  (click)="addCompetence(c)">{{c}}</button>
+              </div>
+              <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary"
+                (click)="removeCompetence(mc, model.competences)"><i class="fa fa-close"></i> {{mc}}</button>
             </div>
           </div>
-
         </div>
       </div>
     </div>
