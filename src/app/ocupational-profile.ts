@@ -6,5 +6,8 @@ export class OcupationalProfile {
         public description: string,
         public field: string,
         public eqf: number,
+        public knowledge: string[],
+        public skills: string[],
+        public competences: string[]
       ) {  }
 }

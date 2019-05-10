@@ -9,10 +9,8 @@
             </div>
             <div class="col-sm-4 offset-md-4 col-md-4">
             </div>
-            <div class="col-sm-4 col-md-2">
-              <div class="row">
-
-              </div>
+            <div class="col-sm-4 col-md-2 text-right">
+              <button type="submit" class="btn btn-success">Save</button>
             </div>
           </div>
         </div>
@@ -23,13 +21,13 @@
               <div class="col-md-8">
                 <div class="form-group">
                   <label for="title">Title</label>
-                  <input type="text" class="form-control" id="title" [(ngModel)]="model.title" required>
+                  <input type="text" class="form-control" id="title" [(ngModel)]="model.title" name="title" required>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="field">Field</label>
-                  <input type="text" class="form-control" id="field" [(ngModel)]="model.field" required>
+                  <input type="text" class="form-control" id="field" [(ngModel)]="model.field" name="field" required>
                 </div>
               </div>
             </div>
@@ -37,52 +35,48 @@
               <div class="col-md-11">
                 <div class="form-group">
                   <label for="description">Description</label>
-                  <input type="text" class="form-control" id="description" [(ngModel)]="model.description">
+                  <textarea class="form-control" id="description" name="textarea-input" [(ngModel)]="model.description"
+                    rows="4"></textarea>
                 </div>
               </div>
               <div class="col-md-1">
                 <div class="form-group">
                   <label for="eqf">EQF</label>
-                  <input type="number" size="1" class="form-control" id="eqf" [(ngModel)]="model.eqf">
+                  <input type="number" size="1" class="form-control" id="eqf" [(ngModel)]="model.eqf" name="eqf">
                 </div>
               </div>
-              <button type="submit" class="btn btn-success">Save</button>
             </div>
           </form>
-
-          <div class="row">
-            <div class="col-md-6">
-
-
-
-            </div>
-            <div class="col-md-2 offset-md-3">
-              <h5>Field's Name </h5>
-            </div>
-            <div class="col-md-1">
-              <button type="button" class="btn btn-default btn-secondary"
-                tooltip="The threshold of knowledge by which a person is capable to understand the information given in a certain domain."
-                placement="left">
-                EQF 6
-              </button>
-            </div>
-          </div>
-
           <div class="row text-center">
             <div class="col-md-4">
               <h5>Knowledge</h5>
-              
+              <svg id="bubbles" width="500" height="500"> </svg>
             </div>
             <div class="col-md-4">
               <h5>Skills</h5>
-             
+
+              <div *ngIf="model.skills.length > 0">
+              </div>
             </div>
             <div class="col-md-4">
               <h5>Competences</h5>
-             
+
+              <div class="input-group">
+                <div class="input-group-prepend" dropdown>
+                  <button type="button" class="btn btn-primary"> <i class="fa fa-search"></i>
+                  </button>
+                </div>
+                <input type="text" id="input-competence-filter" name="input-competence-filter" class="form-control"
+                  placeholder="Filter Competences" (keyup)="filterCompetence($event)">
+              </div>
+              <div class="filteredResults" *ngIf="isFilteringCompetences">
+                <button *ngFor="let c of filteredCompetences " class="dropdown-item"
+                  (click)="addCompetence(c)">{{c}}</button>
+              </div>
+              <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary"
+                (click)="removeCompetence(mc, model.competences)"><i class="fa fa-close"></i> {{mc}}</button>
             </div>
           </div>
-
         </div>
       </div>
     </div>
