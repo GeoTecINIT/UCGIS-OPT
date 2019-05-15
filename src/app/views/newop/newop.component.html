@@ -26,7 +26,9 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="field">Field</label>
+                  <label for="field">Field</label> <span
+                    tooltip="The term relates directly to a specific area of study."
+                    class="badge badge-primary badge-pill">i</span>
                   <input type="text" class="form-control" id="field" [(ngModel)]="model.field" name="field" required>
                 </div>
               </div>
@@ -41,38 +43,94 @@
               </div>
               <div class="col-md-1">
                 <div class="form-group">
-                  <label for="eqf">EQF</label>
+                  <label for="eqf">EQF</label> <span
+                    tooltip="The core of the EQF concerns eight reference levels describing what a learner knows, understands and is able to do – 'learning outcomes', ranging from basic (Level 1) to advanced (Level 8)."
+                    class="badge badge-primary badge-pill">i</span>
                   <input type="number" size="1" class="form-control" id="eqf" [(ngModel)]="model.eqf" name="eqf">
                 </div>
               </div>
             </div>
           </form>
+          <hr>
+
+          <div class="row">
+            <div class="col-md-4">
+              <label>Knowledge</label>
+              <span
+                tooltip="The occupational profile knowledge represent the comprehensive awareness in certain areas/domains, which complete the list of theoretical capacity learning."
+                class="badge badge-primary badge-pill">i</span>
+            </div>
+          </div>
           <div class="row text-center">
             <div class="col-md-4">
-              <h5>Knowledge</h5>
-              <svg id="bubbles" width="500" height="500"> </svg>
+              <div class="row text-center">
+                <div class="offset-md-2 col-md-6">
+                  <div class="input-group">
+                    <div class="input-group-prepend" dropdown>
+                      <button type="button" class="btn btn-primary"> <i class="fa fa-search"></i>
+                      </button>
+                    </div>
+                    <input type="text" id="input-competence-filter" name="input-competence-filter" class="form-control"
+                      placeholder="Search Knowledge">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <button type="submit" class="btn btn-primary"
+                    tooltip="Search or navigate in the graph to add knowledge." (click)="addBokKnowledge()">Add</button>
+                </div>
+              </div>
+              <svg id="bubbles" width="350" height="350"> </svg>
             </div>
+            <div class="col-md-5">
+              <div #textBoK id="textBoK"></div>
+            </div>
+            <div class="col-md-3">
+              <button *ngFor="let mk of model.knowledge" type="button" class="btn btn-pill btn-danger"
+                (click)="removeCompetence(mk, model.knowledge)"><i class="fa fa-close"></i> {{mk}}</button>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
             <div class="col-md-4">
-              <h5>Skills</h5>
-
+              <label>Skills</label>
+              <span
+                tooltip="Skills represent the ability to apply knowledge and use know-how to complete tasks and solve problems in a certain occupational profile."
+                class="badge badge-primary badge-pill">i</span>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-12">
               <div *ngIf="model.skills.length > 0">
+                <button *ngFor="let ms of model.skills" (click)="removeCompetence(ms, model.skills)" type="button"
+                  class="btn btn-pill btn-light"><i class="fa fa-close"></i> {{ms}}</button>
               </div>
             </div>
+          </div>
+          <hr>
+          <div class="row">
             <div class="col-md-4">
-              <h5>Competences</h5>
-
+              <label>Competences</label>
+              <span
+                tooltip="Competence is the proven ability to use knowledge, skills and personal, social and/or methodological abilities, in work or study situations and in professional and personal development."
+                class="badge badge-primary badge-pill">i</span>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-4">
               <div class="input-group">
-                <div class="input-group-prepend" dropdown>
+                <div class="filterButton" class="input-group-prepend" dropdown>
                   <button type="button" class="btn btn-primary"> <i class="fa fa-search"></i>
                   </button>
                 </div>
                 <input type="text" id="input-competence-filter" name="input-competence-filter" class="form-control"
-                  placeholder="Filter Competences" (keyup)="filterCompetence($event)">
+                  placeholder="Search Competences" (keyup)="filterCompetence($event)">
+                <div class="filteredResults" *ngIf="isFilteringCompetences">
+                  <button *ngFor="let c of filteredCompetences " class="dropdown-item"
+                    (click)="addCompetence(c)">{{c}}</button>
+                </div>
               </div>
-              <div class="filteredResults" *ngIf="isFilteringCompetences">
-                <button *ngFor="let c of filteredCompetences " class="dropdown-item"
-                  (click)="addCompetence(c)">{{c}}</button>
-              </div>
+            </div>
+            <div class="col-md-8">
               <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary"
                 (click)="removeCompetence(mc, model.competences)"><i class="fa fa-close"></i> {{mc}}</button>
             </div>
