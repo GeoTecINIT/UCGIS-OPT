@@ -17,7 +17,7 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: 'list',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: '404',
@@ -59,21 +59,21 @@ export const routes: Routes = [
         data: {
           title: 'List'
         },
-        component: ListComponent,
+        component: ListComponent
       },
       {
-        path: 'detail',
+        path: 'detail/:name',
         data: {
           title: 'Detail'
         },
-        component: DetailComponent,
+        component: DetailComponent
       },
       {
         path: 'newop',
         data: {
           title: 'New'
         },
-        component: NewopComponent,
+        component: NewopComponent
       }
     ]
   },
@@ -81,7 +81,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

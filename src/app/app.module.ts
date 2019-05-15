@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+// Import firebase-firestore
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -12,6 +16,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 
 import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
 
 // Import containers
 import { DefaultLayoutComponent } from './containers';
@@ -24,17 +29,14 @@ import { ListComponent } from './views/list/list.component';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-
-const APP_CONTAINERS = [
-  DefaultLayoutComponent
-];
+const APP_CONTAINERS = [DefaultLayoutComponent];
 
 import {
   AppAsideModule,
   AppBreadcrumbModule,
   AppHeaderModule,
   AppFooterModule,
-  AppSidebarModule,
+  AppSidebarModule
 } from '@coreui/angular';
 
 // Import routing module
@@ -46,6 +48,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { DetailComponent } from './views/detail/detail.component';
 import { NewopComponent } from './views/newop/newop.component';
+import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 
 @NgModule({
   imports: [
@@ -61,7 +64,9 @@ import { NewopComponent } from './views/newop/newop.component';
     TabsModule.forRoot(),
     ChartsModule,
     TooltipModule.forRoot(),
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   declarations: [
     AppComponent,
@@ -72,12 +77,15 @@ import { NewopComponent } from './views/newop/newop.component';
     RegisterComponent,
     ListComponent,
     DetailComponent,
-    NewopComponent
+    NewopComponent,
+    LoadingIndicatorComponent
   ],
-  providers: [{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }],
-  bootstrap: [ AppComponent ]
+  providers: [
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    }
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
