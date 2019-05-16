@@ -1,4 +1,4 @@
-export class OcupationalProfile {
+export class OcupationalProfile extends Object {
   constructor(
     public _id: string,
     public title: string,
@@ -8,5 +8,7 @@ export class OcupationalProfile {
     public knowledge: string[],
     public skills: string[],
     public competences: string[]
-  ) {}
+  ) {
+    super();
+  }
 }

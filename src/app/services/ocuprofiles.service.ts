@@ -28,11 +28,10 @@ export class OcuprofilesService {
   addNewOccuProfile(newProfile: OcupationalProfile) {
     const id = this.db.createId();
     newProfile._id = id;
-    const profileData = JSON.parse(JSON.stringify(newProfile));
-    const newProfileref = this.db
+    this.db
       .collection(collection)
       .doc(id)
-      .set(profileData);
+      .set(newProfile);
   }
 
   removeOccuProfile(occuProfileId: string) {
