@@ -69,9 +69,16 @@ export const routes: Routes = [
         component: DetailComponent
       },
       {
-        path: 'newop',
+        path: 'newop/:mode',
         data: {
           title: 'New'
+        },
+        component: NewopComponent
+      },
+      {
+        path: 'newop/:mode/:name',
+        data: {
+          title: 'Duplicate'
         },
         component: NewopComponent
       }

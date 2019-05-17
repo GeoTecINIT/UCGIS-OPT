@@ -8,7 +8,7 @@
               <button
                 type="button"
                 class="btn btn-block btn-outline-primary"
-                routerLink="/newop"
+                routerLink="/newop/empty"
               >
                 New Occupational Profile
               </button>
@@ -61,7 +61,11 @@
             <div class="col-md-2">
               <div class="row">
                 <div class="col-sm-4 col-md-4">
-                  <button type="button" class="btn btn-block btn-link">
+                  <button
+                    type="button"
+                    class="btn btn-block btn-link"
+                    routerLink="/newop/duplicate/{{ o._id }}"
+                  >
                     <i class="fa fa-copy fa-lg mt-4"></i>
                   </button>
                 </div>
