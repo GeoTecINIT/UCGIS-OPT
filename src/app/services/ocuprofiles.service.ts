@@ -40,4 +40,11 @@ export class OcuprofilesService {
       .doc(occuProfileId)
       .delete();
   }
+
+  updateOccuProfile(occuProfileId: string, updatedProfile: OcupationalProfile) {
+    this.db
+      .collection(collection)
+      .doc<OcupationalProfile>(occuProfileId)
+      .update(updatedProfile);
+  }
 }

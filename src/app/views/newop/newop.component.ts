@@ -74,6 +74,7 @@ export class NewopComponent implements OnInit {
   isFilteringCompetences = false;
   selectedProfile: OcupationalProfile;
   _id: string;
+  mode: string;
 
   @ViewChild('boktitle') boktitleEl: ElementRef;
   @ViewChild('bokskills') bokskills: ElementRef;
@@ -141,12 +142,16 @@ export class NewopComponent implements OnInit {
   }
 
   saveOccuProfile() {
-    this.occuprofilesService.addNewOccuProfile(this.model);
+    if (this.mode === 'copy') {
+      this.occuprofilesService.updateOccuProfile(this._id, this.model);
+    } else {
+      this.occuprofilesService.addNewOccuProfile(this.model);
+    }
   }
 
   getMode(): void {
-    const mode = this.route.snapshot.paramMap.get('mode');
-    if (mode === 'duplicate') {
+    this.mode = this.route.snapshot.paramMap.get('mode');
+    if (this.mode === 'duplicate' || this.mode === 'copy') {
       this.getOccuProfileId();
       this.fillForm();
     }
