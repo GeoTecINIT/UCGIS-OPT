@@ -49,6 +49,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { DetailComponent } from './views/detail/detail.component';
 import { NewopComponent } from './views/newop/newop.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
+import { SelectDropDownModule } from 'ngx-select-dropdown';
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { LoadingIndicatorComponent } from './components/loading-indicator/loadin
     TooltipModule.forRoot(),
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    SelectDropDownModule
   ],
   declarations: [
     AppComponent,

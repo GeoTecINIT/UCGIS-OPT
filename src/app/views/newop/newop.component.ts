@@ -67,6 +67,7 @@ export class NewopComponent implements OnInit {
     'Think proactively'
   ];
 
+
   // tslint:disable-next-line:max-line-length
   model = new OcupationalProfile('', '', '', '', 1, [], [], []);
 
@@ -81,6 +82,39 @@ export class NewopComponent implements OnInit {
   filteredFields = [];
   parentFields = [];
   hierarchyFields = {};
+
+  configFields = {
+    displayKey: 'name', // if objects array passed which key to be displayed defaults to description
+    search: true, // true/false for the search functionlity defaults to false,
+    // tslint:disable-next-line:max-line-length
+    height: 'auto', // height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
+    placeholder: 'Select Field', // text to be displayed when no item is selected defaults to Select,
+    // tslint:disable-next-line:max-line-length
+    customComparator: () => {}, // a custom function using which user wants to sort the items. default is undefined and Array.sort() will be used in that case,
+    limitTo: this.parentFields.length, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
+    moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
+    noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
+    searchPlaceholder: 'Search Field', // label thats displayed in search input,
+    // tslint:disable-next-line:max-line-length
+    searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
+    };
+
+
+  configCompetences = {
+    displayKey: 'name', // if objects array passed which key to be displayed defaults to description
+    search: true, // true/false for the search functionlity defaults to false,
+    // tslint:disable-next-line:max-line-length
+    height: 'auto', // height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
+    placeholder: 'Select Competences', // text to be displayed when no item is selected defaults to Select,
+    // tslint:disable-next-line:max-line-length
+    customComparator: () => {}, // a custom function using which user wants to sort the items. default is undefined and Array.sort() will be used in that case,
+    limitTo: this.competences.length, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
+    moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
+    noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
+    searchPlaceholder: 'Search Competences', // label thats displayed in search input,
+    // tslint:disable-next-line:max-line-length
+    searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
+    };
 
   @ViewChild('textBoK') textBoK: ElementRef;
 
@@ -99,42 +133,12 @@ export class NewopComponent implements OnInit {
     this.fieldsService.subscribeToFields().subscribe(allfiel => {
       allfiel.forEach(f => {
        // tslint:disable-next-line:max-line-length
-       this.hierarchyFields[f.greatgrandparent] ? this.hierarchyFields[f.greatgrandparent].push(f.name) : this.hierarchyFields[f.greatgrandparent] = []; 
+       this.hierarchyFields[f.greatgrandparent] ? this.hierarchyFields[f.greatgrandparent].push(f.name) : this.hierarchyFields[f.greatgrandparent] = [];
+       this.filteredFields.push(f.name);
+       console.log(f.name);
       });
       this.parentFields = Object.keys(this.hierarchyFields);
     });
-  }
-
-  addCompetence(c: string) {
-    this.model.competences.push(c);
-    this.removeCompetence(c, this.filteredCompetences);
-    this.isFilteringCompetences = false;
-  }
-
-  removeCompetence(name: string, array: string[]) {
-    array.forEach((item, index) => {
-      if (item === name) {
-        array.splice(index, 1);
-      }
-    });
-  }
-
-  filterCompetence(ev) {
-    this.isFilteringCompetences = true;
-    const txt = ev.target.value.toUpperCase();
-    this.filteredCompetences = [];
-    this.competences.forEach(item => {
-      if (item.toUpperCase().indexOf(txt) !== -1) {
-        if (!this.model.competences.includes(item)) {
-          this.filteredCompetences.push(item);
-        }
-      }
-    });
-  }
-
-  filterField(ev) {
-    // const txt = ev.target.value.toUpperCase();
-    this.filteredFields = [];
   }
 
   addBokKnowledge() {
