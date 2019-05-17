@@ -45,6 +45,11 @@
                     class="badge badge-primary badge-pill"
                     >i</span
                   >
+                  <select (change)="filterField()">
+                  <optgroup *ngFor="let key of parentFields" label="{{ key }}">
+                    <option *ngFor="let f of hierarchyFields[key]" value="{{ f }}">{{ f }}</option>
+                  </optgroup>
+                </select>
                   <input
                     type="text"
                     class="form-control"

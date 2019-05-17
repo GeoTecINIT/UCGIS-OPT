@@ -5,7 +5,7 @@ import * as fData from './fields.data';
 
 const collection = 'Fields';
 
-export interface Field { name: string; code: Number; parent: string; grandparent: string; }
+export interface Field { name: string; code: Number; parent: string; grandparent: string; greatgrandparent: string; }
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,10 @@ export class FieldsService {
   private db: AngularFirestore;
   constructor(db: AngularFirestore) {
     this.db = db;
+  }
+
+  subscribeToFields(): Observable<Field[]> {
+    return this.db.collection<Field>(collection).valueChanges();
   }
 
   addFields() {

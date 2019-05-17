@@ -2,7 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { OcupationalProfile } from '../../ocupational-profile';
 import * as bok from '@eo4geo/bok-dataviz';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
+import { FieldsService, Field } from '../../services/fields.service';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-newop',
@@ -75,13 +77,17 @@ export class NewopComponent implements OnInit {
   selectedProfile: OcupationalProfile;
   _id: string;
 
-  @ViewChild('boktitle') boktitleEl: ElementRef;
-  @ViewChild('bokskills') bokskills: ElementRef;
+  fields: Observable<Field[]>;
+  filteredFields = [];
+  parentFields = [];
+  hierarchyFields = {};
+
   @ViewChild('textBoK') textBoK: ElementRef;
 
   constructor(
     private elementRef: ElementRef,
     private occuprofilesService: OcuprofilesService,
+    private fieldsService: FieldsService,
     private route: ActivatedRoute
   ) {
     console.log('newOP');
@@ -90,6 +96,13 @@ export class NewopComponent implements OnInit {
   ngOnInit() {
     bok.visualizeBOKData('#bubbles', 'assets/saved-bok.xml', '#textBoK');
     this.getMode();
+    this.fieldsService.subscribeToFields().subscribe(allfiel => {
+      allfiel.forEach(f => {
+       // tslint:disable-next-line:max-line-length
+       this.hierarchyFields[f.greatgrandparent] ? this.hierarchyFields[f.greatgrandparent].push(f.name) : this.hierarchyFields[f.greatgrandparent] = []; 
+      });
+      this.parentFields = Object.keys(this.hierarchyFields);
+    });
   }
 
   addCompetence(c: string) {
@@ -117,7 +130,11 @@ export class NewopComponent implements OnInit {
         }
       }
     });
-    console.log('filteringgggg');
+  }
+
+  filterField(ev) {
+    // const txt = ev.target.value.toUpperCase();
+    this.filteredFields = [];
   }
 
   addBokKnowledge() {
