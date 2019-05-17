@@ -71,7 +71,11 @@
                   </button>
                 </div>
                 <div class="col-sm-4 col-md-4">
-                  <button type="button" class="btn btn-block btn-link">
+                  <button
+                    type="button"
+                    class="btn btn-block btn-link"
+                    (click)="removeOccuProfile(o._id)"
+                  >
                     <i class="fa fa-trash-o fa-lg mt-4"></i>
                   </button>
                 </div>

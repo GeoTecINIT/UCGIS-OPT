@@ -24,4 +24,20 @@ export class OcuprofilesService {
       .doc<OcupationalProfile>(occuProfileId)
       .valueChanges();
   }
+
+  addNewOccuProfile(newProfile: OcupationalProfile) {
+    const id = this.db.createId();
+    newProfile._id = id;
+    this.db
+      .collection(collection)
+      .doc(id)
+      .set(newProfile);
+  }
+
+  removeOccuProfile(occuProfileId: string) {
+    this.db
+      .collection(collection)
+      .doc(occuProfileId)
+      .delete();
+  }
 }

@@ -18,4 +18,8 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.occupationalProfiles = this.occuprofilesService.subscribeToOccupationalProfiles();
   }
+
+  removeOccuProfile(id: string) {
+    this.occuprofilesService.removeOccuProfile(id);
+  }
 }
