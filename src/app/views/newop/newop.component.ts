@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { OcupationalProfile } from '../../ocupational-profile';
 import * as bok from '@eo4geo/bok-dataviz';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-newop',
@@ -65,21 +66,14 @@ export class NewopComponent implements OnInit {
   ];
 
   // tslint:disable-next-line:max-line-length
-  model = new OcupationalProfile(
-    'id',
-    'Occupational Profile A',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate non augue ac ornare. Duis pretium dictum elit vitae bibendum. Donec tristique tincidunt malesuada. Morbi a nulla urna. Praesent sit amet lectus ut nisi sodales pretium eu quis felis. Duis et felis ac risus aliquam iaculis eget nec metus. Vivamus porttitor auctor dolor et aliquam. Sed molestie lacus tellus, semper cursus ante mollis vel. Etiam vel massa mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec euismod dui. Quisque eget mattis turpis.',
-    'Maritime',
-    6,
-    [],
-    [],
-    []
-  );
+  model = new OcupationalProfile('', '', '', '', 1, [], [], []);
 
   public value: string[];
   public current: string;
 
   isFilteringCompetences = false;
+  selectedProfile: OcupationalProfile;
+  _id: string;
 
   @ViewChild('boktitle') boktitleEl: ElementRef;
   @ViewChild('bokskills') bokskills: ElementRef;
@@ -87,13 +81,15 @@ export class NewopComponent implements OnInit {
 
   constructor(
     private elementRef: ElementRef,
-    private occuprofilesService: OcuprofilesService
+    private occuprofilesService: OcuprofilesService,
+    private route: ActivatedRoute
   ) {
     console.log('newOP');
   }
 
   ngOnInit() {
     bok.visualizeBOKData('#bubbles', 'assets/saved-bok.xml', '#textBoK');
+    this.getMode();
   }
 
   addCompetence(c: string) {
@@ -146,5 +142,25 @@ export class NewopComponent implements OnInit {
 
   saveOccuProfile() {
     this.occuprofilesService.addNewOccuProfile(this.model);
+  }
+
+  getMode(): void {
+    const mode = this.route.snapshot.paramMap.get('mode');
+    if (mode === 'duplicate') {
+      this.getOccuProfileId();
+      this.fillForm();
+    }
+  }
+  getOccuProfileId(): void {
+    this._id = this.route.snapshot.paramMap.get('name');
+    this.occuprofilesService
+      .getOccuProfileById(this._id)
+      .subscribe(profile => (this.selectedProfile = profile));
+  }
+
+  fillForm(): void {
+    this.occuprofilesService
+      .getOccuProfileById(this._id)
+      .subscribe(profile => (this.model = profile));
   }
 }
