@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 // Import firebase-firestore
 import { AngularFireModule } from '@angular/fire';
@@ -49,6 +50,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { DetailComponent } from './views/detail/detail.component';
 import { NewopComponent } from './views/newop/newop.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
+import { SelectDropDownModule } from 'ngx-select-dropdown';
 
 @NgModule({
   imports: [
@@ -66,7 +68,9 @@ import { LoadingIndicatorComponent } from './components/loading-indicator/loadin
     TooltipModule.forRoot(),
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    SelectDropDownModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,
