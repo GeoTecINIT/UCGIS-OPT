@@ -4,7 +4,6 @@ import * as bok from '@eo4geo/bok-dataviz';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { FieldsService, Field } from '../../services/fields.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-newop',
@@ -40,35 +39,8 @@ export class NewopComponent implements OnInit {
     'Think proactively'
   ];
 
-  filteredCompetences = [
-    'Team building',
-    'Think creatively',
-    'Manage time',
-    'Demonstrate intercultural competence',
-    'Work in an international environment',
-    'Demonstrate willingness to learn',
-    'Develop strategy to solve problems',
-    'Identify opportunities',
-    'Work independently',
-    'Work efficientlyAdapt to change',
-    'Digital competencies',
-    'Meet commitments',
-    'Attend to detail',
-    'Interact with othersCope with pressure',
-    'Manage frustrationListen actively',
-    'Lead others',
-    'Assertiveness',
-    'Make decisions',
-    'Motivate others',
-    'Report facts',
-    'Customer relationship management',
-    'Show enterpreneurial spirit',
-    'Develop company strategies',
-    'Think proactively'
-  ];
+  filteredCompetences = [];
 
-
-  // tslint:disable-next-line:max-line-length
   model = new OcupationalProfile('', '', '', '', 1, [], [], []);
 
   public value: string[];
@@ -78,67 +50,46 @@ export class NewopComponent implements OnInit {
   selectedProfile: OcupationalProfile;
   _id: string;
 
-  fields: Observable<Field[]>;
-  filteredFields = [];
-  parentFields = [];
-  hierarchyFields = {};
-
   configFields = {
     displayKey: 'name', // if objects array passed which key to be displayed defaults to description
     search: true, // true/false for the search functionlity defaults to false,
-    // tslint:disable-next-line:max-line-length
-    height: 'auto', // height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
+    height: 10, // height of the list so that if there are more no of items it can show a scroll defaults to auto.
     placeholder: 'Select Field', // text to be displayed when no item is selected defaults to Select,
-    // tslint:disable-next-line:max-line-length
-    customComparator: () => {}, // a custom function using which user wants to sort the items. default is undefined and Array.sort() will be used in that case,
-    limitTo: this.parentFields.length, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
+    customComparator: () => { }, // a custom function to sort the items. default is undefined and Array.sort() will be used
+    limitTo: 10, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
     moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
     noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
     searchPlaceholder: 'Search Field', // label thats displayed in search input,
-    // tslint:disable-next-line:max-line-length
-    searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
-    };
+    searchOnKey: 'name' // key on which search should be performed. if undefined this will be extensive search on all keys
+  };
 
 
   configCompetences = {
     displayKey: 'name', // if objects array passed which key to be displayed defaults to description
     search: true, // true/false for the search functionlity defaults to false,
-    // tslint:disable-next-line:max-line-length
-    height: 'auto', // height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
+    height: 5, // height of the list so that if there are more no of items it can show a scroll defaults to auto.
     placeholder: 'Select Competences', // text to be displayed when no item is selected defaults to Select,
-    // tslint:disable-next-line:max-line-length
-    customComparator: () => {}, // a custom function using which user wants to sort the items. default is undefined and Array.sort() will be used in that case,
-    limitTo: this.competences.length, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
+    customComparator: () => { }, // a custom function to sort the items. default is undefined and Array.sort() will be used
+    limitTo: 5, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
     moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
     noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
     searchPlaceholder: 'Search Competences', // label thats displayed in search input,
-    // tslint:disable-next-line:max-line-length
-    searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
-    };
+    searchOnKey: 'name' // key on which search should be performed. if undefined this will be extensive search on all keys
+  };
 
   @ViewChild('textBoK') textBoK: ElementRef;
 
   constructor(
-    private elementRef: ElementRef,
     private occuprofilesService: OcuprofilesService,
-    private fieldsService: FieldsService,
+    public fieldsService: FieldsService,
     private route: ActivatedRoute
   ) {
-    console.log('newOP');
+    this.filteredCompetences = this.competences;
   }
 
   ngOnInit() {
     bok.visualizeBOKData('#bubbles', 'assets/saved-bok.xml', '#textBoK');
     this.getMode();
-    this.fieldsService.subscribeToFields().subscribe(allfiel => {
-      allfiel.forEach(f => {
-       // tslint:disable-next-line:max-line-length
-       this.hierarchyFields[f.greatgrandparent] ? this.hierarchyFields[f.greatgrandparent].push(f.name) : this.hierarchyFields[f.greatgrandparent] = [];
-       this.filteredFields.push(f.name);
-       console.log(f.name);
-      });
-      this.parentFields = Object.keys(this.hierarchyFields);
-    });
   }
 
   addBokKnowledge() {
@@ -159,6 +110,14 @@ export class NewopComponent implements OnInit {
     if (!this.model.knowledge.includes(concept)) {
       this.model.knowledge.push(concept);
     }
+  }
+
+  removeCompetence(name: string, array: string[]) {
+    array.forEach((item, index) => {
+      if (item === name) {
+        array.splice(index, 1);
+      }
+    });
   }
 
   saveOccuProfile() {

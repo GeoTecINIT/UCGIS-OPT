@@ -30,7 +30,7 @@
                   <label for="field">Field</label>
                   <span tooltip="The term relates directly to a specific area of study."
                     class="badge badge-primary badge-pill">i</span>
-                  <ngx-select-dropdown [config]="configFields" [options]="fields | async" [multiple]="false" [(ngModel)]="model.field">
+                <ngx-select-dropdown name="field" [config]="configFields" [options]="fieldsService.allfields" [multiple]="false" [(ngModel)]="model.field">
                   </ngx-select-dropdown>
                 </div>
               </div>
@@ -49,13 +49,12 @@
                   <span
                     tooltip="The core of the EQF concerns eight reference levels describing what a learner knows, understands and is able to do – 'learning outcomes', ranging from basic (Level 1) to advanced (Level 8)."
                     class="badge badge-primary badge-pill">i</span>
-                  <input type="number" size="1" class="form-control" id="eqf" [(ngModel)]="model.eqf" name="eqf" />
+                  <input type="number" size="1" class="form-control" id="eqf" [(ngModel)]="model.eqf" name="eqf" min="1" max="8"/>
                 </div>
               </div>
             </div>
           </form>
           <hr />
-
           <div class="row">
             <div class="col-md-4">
               <label>Knowledge</label>
@@ -125,7 +124,7 @@
                 class="badge badge-primary badge-pill">i</span>
             </div>
           </div>
-          <div class="row text-center">
+          <div class="row">
             <div class="col-md-4">
               <div class="input-group">
                 <ngx-select-dropdown [config]="configCompetences" [options]="competences" [(ngModel)]="model.competences"

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 // Import firebase-firestore
 import { AngularFireModule } from '@angular/fire';
@@ -68,7 +69,8 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    SelectDropDownModule
+    SelectDropDownModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,

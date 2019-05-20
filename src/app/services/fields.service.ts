@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import * as fData from './fields.data';
+import { HttpClient } from '@angular/common/http';
 
 const collection = 'Fields';
 
@@ -13,27 +12,20 @@ export interface Field { name: string; code: Number; parent: string; grandparent
 export class FieldsService {
 
   private db: AngularFirestore;
-  constructor(db: AngularFirestore) {
-    this.db = db;
-  }
+  public allfields: any;
+  public result: any;
+  constructor(
+    db: AngularFirestore,
+    private http: HttpClient) {
 
-  subscribeToFields(): Observable<Field[]> {
-    return this.db.collection<Field>(collection).valueChanges();
-  }
+    // TODO: Move fields.json to firebase storage - gives a CORS error
+    // const ref = this.storage.ref('fields.json');
+    //  ref.getDownloadURL().subscribe(function(url) {
 
-  addFields() {
-    fData.allFields.forEach(f => {
-      fData.parents.forEach(p => {
-        if (f.code.substring(0, 2) === p.code) {
-          f.greatgrandparent = p.name;
-        } else if (f.code.substring(0, 3) === p.code) {
-          f.grandparent = p.name;
-        } else if (f.code === p.code) {
-          f.parent = p.name;
-        }
-      });
-      this.db.collection(collection).add(f);
+    this.http.get('assets/json/fields.json').subscribe((data) => {
+      this.allfields = data;
     });
+    //  });
   }
 }
 
