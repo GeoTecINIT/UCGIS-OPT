@@ -41,7 +41,7 @@ export class NewopComponent implements OnInit {
 
   filteredCompetences = [];
 
-  model = new OcupationalProfile('', '', '', '', 1, [], [], []);
+  model = new OcupationalProfile('', '', '', null, 1, [], [], []);
 
   public value: string[];
   public current: string;
