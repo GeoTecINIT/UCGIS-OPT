@@ -23,22 +23,86 @@
                 <input
                   class="form-control"
                   id="input1-group2"
-                  type="text"
+                  type="search"
                   name="input1-group2"
                   placeholder="Search"
                   autocomplete="search"
+                  [(ngModel)]="searchText"
+                  (keyup)="filter()"
                 />
               </div>
             </div>
             <div class="col-sm-4 col-md-2">
-              <button type="button" class="btn btn-block btn-link">
+              <button
+                type="button"
+                class="btn btn-block btn-link"
+                (click)="advancedSearch = !advancedSearch"
+              >
                 Advanced Search
               </button>
             </div>
+
+            <!-- Advanced search -->
+            <ng-container *ngIf="advancedSearch">
+              <div class="card-body" style="justify-content: right">
+                <span class="input-group-prepend">
+                  <label
+                    class="switch switch-label switch-pill switch-outline-primary-alt"
+                  >
+                    <input
+                      class="switch-input"
+                      type="checkbox"
+                      value="knowledges"
+                    />
+                    <span
+                      class="switch-slider"
+                      data-checked="✓"
+                      data-unchecked="X"
+                    ></span>
+                  </label>
+                  <div class="pl-1">Knowledges</div>
+                </span>
+                <span class="input-group-prepend">
+                  <label
+                    class="switch switch-label switch-pill switch-outline-primary-alt"
+                  >
+                    <input
+                      class="switch-input"
+                      type="checkbox"
+                      value="skills"
+                    />
+                    <span
+                      class="switch-slider"
+                      data-checked="✓"
+                      data-unchecked="X"
+                    ></span>
+                  </label>
+                  <div class="pl-1">Skills</div>
+                </span>
+                <span class="input-group-prepend">
+                  <label
+                    class="switch switch-label switch-pill switch-outline-primary-alt"
+                  >
+                    <input
+                      class="switch-input"
+                      type="checkbox"
+                      vale="competences"
+                    />
+                    <span
+                      class="switch-slider"
+                      data-checked="✓"
+                      data-unchecked="X"
+                    ></span>
+                  </label>
+                  <div class="pl-1">Compentences</div>
+                </span>
+              </div>
+            </ng-container>
           </div>
         </div>
+
         <div class="card-body">
-          <div *ngFor="let o of occupationalProfiles | async" class="row">
+          <div *ngFor="let o of filteredOccuProfiles" class="row">
             <div class="col-md-10">
               <button
                 type="button"
