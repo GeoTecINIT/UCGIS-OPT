@@ -13,10 +13,13 @@ import { FormControl } from '@angular/forms';
 })
 export class ListComponent implements OnInit {
   occupationalProfiles: OcupationalProfile[];
+  advancedFilteredProfiles: OcupationalProfile[] = [];
   advancedSearch = false;
   filteredOccuProfiles: any[];
   searchText: string;
-  searchInKnowledges = false;
+  knowledgeFilter: Boolean;
+  skillFilter: Boolean;
+  competencesFilter: Boolean;
 
   constructor(private occuprofilesService: OcuprofilesService) {}
 
@@ -41,5 +44,47 @@ export class ListComponent implements OnInit {
         it.title.toLowerCase().includes(search) ||
         it.description.toLowerCase().includes(search)
     );
+  }
+
+  applyFilters() {
+    this.filteredOccuProfiles = [];
+    if (this.knowledgeFilter) {
+      this.occupationalProfiles.forEach(occ => {
+        occ.knowledge.forEach(know => {
+          if (know.toLowerCase().includes(this.searchText)) {
+            if (this.advancedFilteredProfiles.indexOf(occ) === -1) {
+              this.advancedFilteredProfiles.push(occ);
+            }
+          }
+        });
+      });
+    }
+    if (this.skillFilter) {
+      this.occupationalProfiles.forEach(occ => {
+        occ.skills.forEach(ski => {
+          if (ski.toLowerCase().includes(this.searchText)) {
+            if (this.advancedFilteredProfiles.indexOf(occ) === -1) {
+              this.advancedFilteredProfiles.push(occ);
+            }
+          }
+        });
+      });
+    }
+    if (this.competencesFilter) {
+      this.occupationalProfiles.forEach(occ => {
+        occ.competences.forEach(comp => {
+          if (comp.toLowerCase().includes(this.searchText)) {
+            if (this.advancedFilteredProfiles.indexOf(occ) === -1) {
+              this.advancedFilteredProfiles.push(occ);
+            }
+          }
+        });
+      });
+    }
+    this.filteredOccuProfiles = this.filteredOccuProfiles.concat(
+      this.advancedFilteredProfiles
+    );
+
+    this.advancedFilteredProfiles = [];
   }
 }

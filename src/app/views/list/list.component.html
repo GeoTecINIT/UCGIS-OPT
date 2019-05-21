@@ -44,7 +44,8 @@
 
             <!-- Advanced search -->
             <ng-container *ngIf="advancedSearch">
-              <div class="card-body" style="justify-content: right">
+              <div class="card-body">
+                <!-- Knowledge checkbox -->
                 <span class="input-group-prepend">
                   <label
                     class="switch switch-label switch-pill switch-outline-primary-alt"
@@ -53,6 +54,7 @@
                       class="switch-input"
                       type="checkbox"
                       value="knowledges"
+                      [(ngModel)]="knowledgeFilter"
                     />
                     <span
                       class="switch-slider"
@@ -62,6 +64,7 @@
                   </label>
                   <div class="pl-1">Knowledges</div>
                 </span>
+                <!-- Skills checkbox -->
                 <span class="input-group-prepend">
                   <label
                     class="switch switch-label switch-pill switch-outline-primary-alt"
@@ -70,6 +73,7 @@
                       class="switch-input"
                       type="checkbox"
                       value="skills"
+                      [(ngModel)]="skillFilter"
                     />
                     <span
                       class="switch-slider"
@@ -79,6 +83,7 @@
                   </label>
                   <div class="pl-1">Skills</div>
                 </span>
+                <!-- Competences checkbox -->
                 <span class="input-group-prepend">
                   <label
                     class="switch switch-label switch-pill switch-outline-primary-alt"
@@ -87,6 +92,7 @@
                       class="switch-input"
                       type="checkbox"
                       vale="competences"
+                      [(ngModel)]="competencesFilter"
                     />
                     <span
                       class="switch-slider"
@@ -96,6 +102,13 @@
                   </label>
                   <div class="pl-1">Compentences</div>
                 </span>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-pill-primary"
+                  (click)="applyFilters()"
+                >
+                  Apply filter
+                </button>
               </div>
             </ng-container>
           </div>
