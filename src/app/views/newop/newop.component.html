@@ -90,7 +90,7 @@
               <div #textBoK id="textBoK"></div>
             </div>
             <div class="col-md-3">
-              <button *ngFor="let mk of model.knowledge" type="button" class="btn btn-pill btn-danger"
+              <button *ngFor="let mk of model.knowledge" type="button" class="btn btn-pill" [ngClass]="'bok-' + ( mk | slice:1:3 )"
                 (click)="removeCompetence(mk, model.knowledge)">
                 <i class="fa fa-close"></i> {{ mk }}
               </button>
