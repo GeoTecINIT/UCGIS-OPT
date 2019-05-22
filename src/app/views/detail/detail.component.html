@@ -41,52 +41,33 @@
                 <h1>{{ selectedProfile.title }}</h1>
               </div>
               <div class="col-md-2 offset-md-3">
-                <h5>{{ selectedProfile.field }}</h5>
+                <h5>{{ selectedProfile.field.name }}</h5>
               </div>
               <div class="col-md-1">
-                <button
-                  type="button"
-                  class="btn btn-default btn-secondary"
+                <button type="button" class="btn btn-default btn-secondary"
                   tooltip="The threshold of knowledge by which a person is capable to understand the information given in a certain domain."
-                  placement="left"
-                >
+                  placement="left">
                   EQF {{ selectedProfile.eqf }}
                 </button>
               </div>
             </div>
             <p>{{ selectedProfile.description }}</p>
-            <div class="row text-center">
+            <hr />
+            <div class="row">
               <div class="col-md-4">
-                <h5>Knowledge</h5>
-                <button
-                  type="button"
-                  class="btn btn-pill btn-danger"
-                  tooltip="Geospatial Data"
-                >
-                  [GD1] Geolocating Data to Earth
+                <label>Knowledge</label>
+                <span
+                  tooltip="The occupational profile knowledge represent the comprehensive awareness in certain areas/domains, which complete the list of theoretical capacity learning."
+                  class="badge badge-primary badge-pill">i</span>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-md-8">
+                <button *ngFor="let mk of selectedProfile.knowledge" type="button" class="btn btn-pill btn-danger">
+                  {{ mk }}
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-pill btn-primary"
-                  tooltip="Analytical Methods"
-                >
-                  [AM7-7] Bayesian methods
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-pill btn-success"
-                  tooltip="Data Modeling, Storage and Exploitation"
-                >
-                  [DM3-5] The Triangulated Irregular Network (TIN) model
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-pill btn-success"
-                  tooltip="Data Modeling, Storage and Exploitation"
-                >
-                  [DM5-3] Modelling 3D model
-                </button>
-
+              </div>
+              <div class="col-md-4">
                 <p><small class="text-muted"> BoK Coverage </small></p>
                 <div class="row">
                   <div class="col-md-2">
@@ -96,14 +77,8 @@
                   </div>
                   <div class="col-md-8">
                     <div class="progress progress-xs">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 25%"
-                        aria-valuenow="25"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </div>
@@ -115,14 +90,8 @@
                   </div>
                   <div class="col-md-8">
                     <div class="progress progress-xs">
-                      <div
-                        class="progress-bar bg-primary"
-                        role="progressbar"
-                        style="width: 25%"
-                        aria-valuenow="25"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </div>
@@ -134,55 +103,44 @@
                   </div>
                   <div class="col-md-8">
                     <div class="progress progress-xs">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 50%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
+            <hr />
+            <div class="row">
               <div class="col-md-4">
-                <h5>Skills</h5>
-                <button type="button" class="btn btn-pill btn-light">
-                  Describe the architecture of the TIN model
-                </button>
-                <button type="button" class="btn btn-pill btn-light">
-                  Construct a TIN manually from a set of spot elevations
-                </button>
-                <button type="button" class="btn btn-pill btn-light">
-                  Demonstrate how the spatial weights matrix is fundamental in
-                  spatial econometrics models
-                </button>
-                <button type="button" class="btn btn-pill btn-light">
-                  Demonstrate why spatial autocorrelation among regression
-                  residuals can be an indication that spatial variables have
-                  been omitted from the models
-                </button>
-                <button type="button" class="btn btn-pill btn-light">
-                  Describe the general types of spatial econometric model
-                </button>
+                <label>Skills</label>
+                <span
+                  tooltip="Skills represent the ability to apply knowledge and use know-how to complete tasks and solve problems in a certain occupational profile."
+                  class="badge badge-primary badge-pill">i</span>
               </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-md-12">
+                <div *ngIf="selectedProfile.skills.length > 0">
+                  <button *ngFor="let ms of selectedProfile.skills" type="button" class="btn btn-pill btn-light">
+                    {{ ms }}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
               <div class="col-md-4">
-                <h5>Competences</h5>
-                <button type="button" class="btn btn-pill btn-primary">
-                  Digital competencies
-                </button>
-                <button type="button" class="btn btn-pill btn-primary">
-                  Manage time
-                </button>
-                <button type="button" class="btn btn-pill btn-primary">
-                  Think creatively
-                </button>
-                <button type="button" class="btn btn-pill btn-primary">
-                  Develop strategy to solve problems
-                </button>
-                <button type="button" class="btn btn-pill btn-primary">
-                  Team building
+                <label>Competences</label>
+                <span
+                  tooltip="Competence is the proven ability to use knowledge, skills and personal, social and/or methodological abilities, in work or study situations and in professional and personal development."
+                  class="badge badge-primary badge-pill">i</span>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-md-12">
+                <button *ngFor="let mc of selectedProfile.competences" type="button" class="btn btn-pill btn-primary">
+                  {{ mc }}
                 </button>
               </div>
             </div>

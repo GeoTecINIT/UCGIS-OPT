@@ -47,15 +47,9 @@
               >
                 <h1>{{ o.title }}</h1>
                 <p>{{ o.description }}</p>
-                <span class="badge badge-pill badge-danger float-right"
-                  >[GD1] Geolocating Data to Earth
+                <span *ngFor="let mk of o.knowledge" class="badge badge-pill badge-danger float-right"
+                  > {{mk}}
                 </span>
-                <span class="badge badge-pill badge-primary float-right"
-                  >[AM7-7] Bayesian methods</span
-                >
-                <span class="badge badge-pill badge-success float-right"
-                  >[DM3-5] The Triangulated Irregular Network (TIN) model</span
-                >
               </button>
             </div>
             <div class="col-md-2">
