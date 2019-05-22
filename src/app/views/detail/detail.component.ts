@@ -18,7 +18,7 @@ export class DetailComponent implements OnInit {
   };*/
   selectedProfile: OcupationalProfile;
   constructor(
-    private occuprofilesService: OcuprofilesService,
+    public occuprofilesService: OcuprofilesService,
     private route: ActivatedRoute
   ) {}
 
@@ -31,5 +31,9 @@ export class DetailComponent implements OnInit {
     this.occuprofilesService
       .getOccuProfileById(_id)
       .subscribe(profile => (this.selectedProfile = profile));
+  }
+
+  removeAndGoToList() {
+
   }
 }

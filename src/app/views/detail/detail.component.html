@@ -16,17 +16,17 @@
                   </button>
                 </div>
                 <div class="cols-xs-2 col-md-3">
-                  <button type="button" class="btn btn-block btn-link">
+                  <button type="button" class="btn btn-block btn-link" routerLink="/newop/duplicate/{{ selectedProfile._id }}">
                     <i class="fa fa-copy fa-lg"></i>
                   </button>
                 </div>
                 <div class="cols-xs-2 col-md-3">
-                  <button type="button" class="btn btn-block btn-link">
+                  <button type="button" class="btn btn-block btn-link" routerLink="/newop/copy/{{ selectedProfile._id }}">
                     <i class="fa fa-edit fa-lg"></i>
                   </button>
                 </div>
                 <div class="cols-xs-2 col-md-3">
-                  <button type="button" class="btn btn-block btn-link">
+                  <button type="button" class="btn btn-block btn-link" (click)="occuprofilesService.removeOccuProfile(selectedProfile._id)" routerLink="/list">
                     <i class="fa fa-trash-o fa-lg"></i>
                   </button>
                 </div>
