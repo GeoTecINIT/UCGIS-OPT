@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import { OcupationalProfile } from '../../ocupational-profile';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
+import { removeDebugNodeFromIndex } from '@angular/core/src/debug/debug_node';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -22,4 +23,5 @@ export class ListComponent implements OnInit {
   removeOccuProfile(id: string) {
     this.occuprofilesService.removeOccuProfile(id);
   }
+
 }
