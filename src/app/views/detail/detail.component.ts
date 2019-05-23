@@ -10,12 +10,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
-  /*occupationalProfile = {
-    title: 'Occupational Profile A',
-    // tslint:disable-next-line:max-line-length
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate non augue ac ornare. Duis pretium dictum elit vitae bibendum. Donec tristique tincidunt malesuada. Morbi a nulla urna. Praesent sit amet lectus ut nisi sodales pretium eu quis felis. Duis et felis ac risus aliquam iaculis eget nec metus. Vivamus porttitor auctor dolor et aliquam. Sed molestie lacus tellus, semper cursus ante mollis vel. Etiam vel massa mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec euismod dui. Quisque eget mattis turpis.'
-  };*/
+
+statistics = [];
+
   selectedProfile: OcupationalProfile;
   constructor(
     public occuprofilesService: OcuprofilesService,
@@ -30,10 +27,22 @@ export class DetailComponent implements OnInit {
     const _id = this.route.snapshot.paramMap.get('name');
     this.occuprofilesService
       .getOccuProfileById(_id)
-      .subscribe(profile => (this.selectedProfile = profile));
+      .subscribe(profile => {
+        this.selectedProfile = profile;
+        this.calculateStatistics();
+      });
   }
 
-  removeAndGoToList() {
-
+  calculateStatistics() {
+    let tempStats = {};
+    let tempTotal = 0;
+    this.selectedProfile.knowledge.forEach(kn => {
+      const code = kn.slice(1, 3);
+      tempStats[code] !== undefined ? tempStats[code]++ : tempStats[code] = 1;
+      tempTotal++;
+    });
+    Object.keys(tempStats).forEach(k => {
+      this.statistics.push({code: k, value:  Math.round(tempStats[k] * 100 / tempTotal )});
+    });
   }
 }
