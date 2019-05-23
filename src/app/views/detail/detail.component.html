@@ -9,28 +9,28 @@
             </div>
             <div class="col-sm-4 offset-md-4 col-md-4"></div>
             <div class="col-sm-4 col-md-2">
-              <div class="row">
+              <div *ngIf="selectedProfile; else loading" class="row">
                 <div class="cols-xs-2 col-md-3">
                   <button type="button" class="btn btn-block btn-link">
                     <i class="fa fa-share-alt fa-lg"></i>
                   </button>
                 </div>
                 <div class="cols-xs-2 col-md-3">
-                  <button type="button" class="btn btn-block btn-link">
+                  <button type="button" class="btn btn-block btn-link" routerLink="/newop/duplicate/{{ selectedProfile._id }}">
                     <i class="fa fa-copy fa-lg"></i>
                   </button>
                 </div>
                 <div class="cols-xs-2 col-md-3">
-                  <button type="button" class="btn btn-block btn-link">
+                  <button type="button" class="btn btn-block btn-link" routerLink="/newop/copy/{{ selectedProfile._id }}">
                     <i class="fa fa-edit fa-lg"></i>
                   </button>
                 </div>
                 <div class="cols-xs-2 col-md-3">
-                  <button type="button" class="btn btn-block btn-link">
+                  <button type="button" class="btn btn-block btn-link" (click)="occuprofilesService.removeOccuProfile(selectedProfile._id)" routerLink="/list">
                     <i class="fa fa-trash-o fa-lg"></i>
                   </button>
                 </div>
-              </div>
+              </div> 
             </div>
           </div>
         </div>
@@ -69,41 +69,15 @@
               </div>
               <div class="col-md-4">
                 <p><small class="text-muted"> BoK Coverage </small></p>
-                <div class="row">
+                <div *ngFor="let k of statistics" class="row">
                   <div class="col-md-2">
                     <div class="float-right">
-                      <small class="text-muted"> [GD] 25% </small>
+                      <small class="text-muted"> [{{k.code}}] {{k.value}}% </small>
                     </div>
                   </div>
                   <div class="col-md-8">
                     <div class="progress progress-xs">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25"
-                        aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <div class="float-right">
-                      <small class="text-muted"> [AM] 25% </small>
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25"
-                        aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <div class="float-right">
-                      <small class="text-muted"> [DM] 50% </small>
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50"
+                      <div class="progress-bar" [ngClass]="'bok-' + k.code" role="progressbar" aria-valuenow="k.value" [style.width.%]="k.value"
                         aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
