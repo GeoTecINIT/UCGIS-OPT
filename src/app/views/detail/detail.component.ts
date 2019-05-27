@@ -34,7 +34,7 @@ statistics = [];
   }
 
   calculateStatistics() {
-    let tempStats = {};
+    const tempStats = {};
     let tempTotal = 0;
     this.selectedProfile.knowledge.forEach(kn => {
       const code = kn.slice(1, 3);
@@ -42,7 +42,7 @@ statistics = [];
       tempTotal++;
     });
     Object.keys(tempStats).forEach(k => {
-      this.statistics.push({code: k, value:  Math.round(tempStats[k] * 100 / tempTotal )});
+      this.statistics.push({code: k, value: Math.round(tempStats[k] * 100 / tempTotal )});
     });
   }
 }

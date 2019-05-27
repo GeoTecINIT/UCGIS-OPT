@@ -73,7 +73,7 @@
                         <i class="fa fa-search"></i>
                       </button>
                     </div>
-                    <input type="text" id="input-competence-filter" name="input-competence-filter" class="form-control"
+                    <input #searchInput type="text" id="input-competence-filter" name="input-competence-filter" class="form-control" (keyup)="searchInBok(searchInput.value)"
                       placeholder="Search Knowledge" />
                   </div>
                 </div>
@@ -86,7 +86,7 @@
               </div>
               <svg id="bubbles" width="350" height="350"></svg>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 text-justify">
               <div #textBoK id="textBoK"></div>
             </div>
             <div class="col-md-3">

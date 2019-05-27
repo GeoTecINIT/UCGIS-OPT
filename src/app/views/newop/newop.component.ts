@@ -91,6 +91,7 @@ export class NewopComponent implements OnInit {
   ngOnInit() {
     bok.visualizeBOKData('#bubbles', 'assets/saved-bok.xml', '#textBoK');
     this.getMode();
+
   }
 
   addBokKnowledge() {
@@ -147,5 +148,9 @@ export class NewopComponent implements OnInit {
     this.occuprofilesService
       .getOccuProfileById(this._id)
       .subscribe(profile => (this.model = profile));
+  }
+
+  searchInBok(text) {
+   const results = bok.searchInBoK(text);
   }
 }
