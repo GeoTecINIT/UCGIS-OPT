@@ -10,9 +10,12 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
+
+statistics = [];
+
   selectedProfile: OcupationalProfile;
   constructor(
-    private occuprofilesService: OcuprofilesService,
+    public occuprofilesService: OcuprofilesService,
     private route: ActivatedRoute
   ) {}
 
@@ -24,6 +27,22 @@ export class DetailComponent implements OnInit {
     const _id = this.route.snapshot.paramMap.get('name');
     this.occuprofilesService
       .getOccuProfileById(_id)
-      .subscribe(profile => (this.selectedProfile = profile));
+      .subscribe(profile => {
+        this.selectedProfile = profile;
+        this.calculateStatistics();
+      });
+  }
+
+  calculateStatistics() {
+    let tempStats = {};
+    let tempTotal = 0;
+    this.selectedProfile.knowledge.forEach(kn => {
+      const code = kn.slice(1, 3);
+      tempStats[code] !== undefined ? tempStats[code]++ : tempStats[code] = 1;
+      tempTotal++;
+    });
+    Object.keys(tempStats).forEach(k => {
+      this.statistics.push({code: k, value:  Math.round(tempStats[k] * 100 / tempTotal )});
+    });
   }
 }
