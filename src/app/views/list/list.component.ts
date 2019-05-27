@@ -15,15 +15,14 @@ import { removeDebugNodeFromIndex } from '@angular/core/src/debug/debug_node';
 })
 export class ListComponent implements OnInit {
   occupationalProfiles: OcupationalProfile[];
-  advancedFilteredProfiles: OcupationalProfile[] = [];
   advancedSearch = false;
   filteredOccuProfiles: any[];
   searchText: string;
-  knowledgeFilter: Boolean;
-  skillFilter: Boolean;
-  competencesFilter: Boolean;
+  knowledgeFilter: Boolean = true;
+  skillFilter: Boolean = true;
+  competencesFilter: Boolean = true;
 
-  constructor(private occuprofilesService: OcuprofilesService) {}
+  constructor(private occuprofilesService: OcuprofilesService) { }
 
   ngOnInit() {
     this.occuprofilesService
@@ -52,44 +51,34 @@ export class ListComponent implements OnInit {
   }
 
   applyFilters() {
-    this.filteredOccuProfiles = [];
-    if (this.knowledgeFilter) {
-      this.occupationalProfiles.forEach(occ => {
+    this.occupationalProfiles.forEach(occ => {
+      if (this.knowledgeFilter) {
         occ.knowledge.forEach(know => {
           if (know.toLowerCase().includes(this.searchText.toLowerCase())) {
-            if (this.advancedFilteredProfiles.indexOf(occ) === -1) {
-              this.advancedFilteredProfiles.push(occ);
+            if (this.filteredOccuProfiles.indexOf(occ) === -1) {
+              this.filteredOccuProfiles.push(occ);
             }
           }
         });
-      });
-    }
-    if (this.skillFilter) {
-      this.occupationalProfiles.forEach(occ => {
+      }
+      if (this.skillFilter) {
         occ.skills.forEach(ski => {
           if (ski.toLowerCase().includes(this.searchText.toLowerCase())) {
-            if (this.advancedFilteredProfiles.indexOf(occ) === -1) {
-              this.advancedFilteredProfiles.push(occ);
+            if (this.filteredOccuProfiles.indexOf(occ) === -1) {
+              this.filteredOccuProfiles.push(occ);
             }
           }
         });
-      });
-    }
-    if (this.competencesFilter) {
-      this.occupationalProfiles.forEach(occ => {
+      }
+      if (this.competencesFilter) {
         occ.competences.forEach(comp => {
           if (comp.toLowerCase().includes(this.searchText.toLowerCase())) {
-            if (this.advancedFilteredProfiles.indexOf(occ) === -1) {
-              this.advancedFilteredProfiles.push(occ);
+            if (this.filteredOccuProfiles.indexOf(occ) === -1) {
+              this.filteredOccuProfiles.push(occ);
             }
           }
         });
-      });
-    }
-    this.filteredOccuProfiles = this.filteredOccuProfiles.concat(
-      this.advancedFilteredProfiles
-    );
-
-    this.advancedFilteredProfiles = [];
+      }
+    });
   }
 }
