@@ -52,6 +52,10 @@ import { NewopComponent } from './views/newop/newop.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 
+// Custom Pipes
+import { TruncatePipe } from './pipes/truncate.pipe';
+import { HighlightPipe } from './pipes/highlight.pipe';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -82,7 +86,9 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
     ListComponent,
     DetailComponent,
     NewopComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    TruncatePipe,
+    HighlightPipe
   ],
   providers: [
     {

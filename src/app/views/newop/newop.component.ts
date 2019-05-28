@@ -51,6 +51,11 @@ export class NewopComponent implements OnInit {
   _id: string;
   mode: string;
 
+  selectedNodes = [];
+  hasResults = false;
+  limitSearch = 5;
+  currentConcept = 'GIST';
+
   configFields = {
     displayKey: 'name', // if objects array passed which key to be displayed defaults to description
     search: true, // true/false for the search functionlity defaults to false,
@@ -95,17 +100,14 @@ export class NewopComponent implements OnInit {
 
   addBokKnowledge() {
     const divs = this.textBoK.nativeElement.getElementsByTagName('div');
-
     if (divs['bokskills'] != null) {
       const as = divs['bokskills'].getElementsByTagName('a');
-
       for (const skill of as) {
         if (!this.model.skills.includes(skill.innerText)) {
           this.model.skills.push(skill.innerText);
         }
       }
     }
-
     const concept = this.textBoK.nativeElement.getElementsByTagName('h4')[0]
       .textContent;
     if (!this.model.knowledge.includes(concept)) {
@@ -136,6 +138,7 @@ export class NewopComponent implements OnInit {
       this.fillForm();
     }
   }
+
   getOccuProfileId(): void {
     this._id = this.route.snapshot.paramMap.get('name');
     this.occuprofilesService
@@ -147,5 +150,22 @@ export class NewopComponent implements OnInit {
     this.occuprofilesService
       .getOccuProfileById(this._id)
       .subscribe(profile => (this.model = profile));
+  }
+
+  searchInBok(text: string) {
+    this.selectedNodes = bok.searchInBoK(text);
+    this.hasResults = this.selectedNodes.length > 0 ? true : false;
+    this.currentConcept = '';
+  }
+
+  navigateToConcept(conceptName) {
+    bok.browseToConcept(conceptName);
+    this.currentConcept = conceptName;
+    this.hasResults = false;
+    console.log('Navigate to concept :' + conceptName);
+  }
+
+  incrementLimit() {
+    this.limitSearch = this.limitSearch + 5;
   }
 }
