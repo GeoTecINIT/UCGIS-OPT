@@ -30,7 +30,8 @@
                   <label for="field">Field</label>
                   <span tooltip="The term relates directly to a specific area of study."
                     class="badge badge-primary badge-pill">i</span>
-                <ngx-select-dropdown name="field" [config]="configFields" [options]="fieldsService.allfields" [multiple]="false" [(ngModel)]="model.field">
+                  <ngx-select-dropdown name="field" [config]="configFields" [options]="fieldsService.allfields"
+                    [multiple]="false" [(ngModel)]="model.field">
                   </ngx-select-dropdown>
                 </div>
               </div>
@@ -49,7 +50,8 @@
                   <span
                     tooltip="The core of the EQF concerns eight reference levels describing what a learner knows, understands and is able to do – 'learning outcomes', ranging from basic (Level 1) to advanced (Level 8)."
                     class="badge badge-primary badge-pill">i</span>
-                  <input type="number" size="1" class="form-control" id="eqf" [(ngModel)]="model.eqf" name="eqf" min="1" max="8"/>
+                  <input type="number" size="1" class="form-control" id="eqf" [(ngModel)]="model.eqf" name="eqf" min="1"
+                    max="8" />
                 </div>
               </div>
             </div>
@@ -73,8 +75,8 @@
                         <i class="fa fa-search"></i>
                       </button>
                     </div>
-                    <input #searchInput type="text" id="input-competence-filter" name="input-competence-filter" class="form-control" (keyup)="searchInBok(searchInput.value)"
-                      placeholder="Search Knowledge" />
+                    <input #searchInput type="text" id="input-competence-filter" name="input-competence-filter"
+                      class="form-control" (keyup)="searchInBok(searchInput.value)" placeholder="Search Knowledge" />
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -87,61 +89,78 @@
               <svg id="bubbles" width="350" height="350"></svg>
             </div>
             <div class="col-md-5 text-justify">
-              <div #textBoK id="textBoK"></div>
+              <a [hidden]="currentConcept!= ''" (click)="navigateToConcept('GIST')"> < Back </a> 
+            <div #textBoK id="textBoK" [hidden]="currentConcept== '' && currentConcept!= 'GIST' ">
             </div>
-            <div class="col-md-3">
-              <button *ngFor="let mk of model.knowledge" type="button" class="btn btn-pill" [ngClass]="'bok-' + ( mk | slice:1:3 )"
-                (click)="removeCompetence(mk, model.knowledge)">
-                <i class="fa fa-close"></i> {{ mk }}
-              </button>
-            </div>
-          </div>
-          <hr />
-          <div class="row">
-            <div class="col-md-4">
-              <label>Skills</label>
-              <span
-                tooltip="Skills represent the ability to apply knowledge and use know-how to complete tasks and solve problems in a certain occupational profile."
-                class="badge badge-primary badge-pill">i</span>
-            </div>
-          </div>
-          <div class="row text-center">
-            <div class="col-md-12">
-              <div *ngIf="model.skills.length > 0">
-                <button *ngFor="let ms of model.skills" (click)="removeCompetence(ms, model.skills)" type="button"
-                  class="btn btn-pill btn-light">
-                  <i class="fa fa-close"></i> {{ ms }}
-                </button>
+            <div class="col" *ngIf="hasResults">
+              <h3 class="center">{{selectedNodes.length}} result(s) for {{ searchInput.value }} </h3>
+              <div *ngFor="let item of selectedNodes; index as i">
+                <div *ngIf="i < limitSearch">
+                  <div class="inline"> {{item.nameShort}}</div>
+                  <div class="inline" [innerHTML]="item.name | truncate: 100:searchInput.value"></div>
+                  <a class="inline" (click)="navigateToConcept(item.nameShort)"> Details </a>
+                  <div class="small" [innerHTML]="item.description | truncate: 100:searchInput.value"></div>
+                </div>
+              </div>
+              <div>
+                <br>
+                <a *ngIf="limitSearch < selectedNodes.length" (click)="incrementLimit()"> Show more ... </a>
               </div>
             </div>
           </div>
-          <hr />
-          <div class="row">
-            <div class="col-md-4">
-              <label>Competences</label>
-              <span
-                tooltip="Competence is the proven ability to use knowledge, skills and personal, social and/or methodological abilities, in work or study situations and in professional and personal development."
-                class="badge badge-primary badge-pill">i</span>
-            </div>
+          <div class="col-md-3">
+            <button *ngFor="let mk of model.knowledge" type="button" class="btn btn-pill"
+              [ngClass]="'bok-' + ( mk | slice:1:3 )" (click)="removeCompetence(mk, model.knowledge)">
+              <i class="fa fa-close"></i> {{ mk }}
+            </button>
           </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="input-group">
-                <ngx-select-dropdown [config]="configCompetences" [options]="competences" [(ngModel)]="model.competences"
-                  [multiple]="true"></ngx-select-dropdown>
-              </div>
-            </div>
-            <div class="col-md-8">
-              <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary"
-                (click)="removeCompetence(mc, model.competences)">
-                <i class="fa fa-close"></i> {{ mc }}
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-md-4">
+            <label>Skills</label>
+            <span
+              tooltip="Skills represent the ability to apply knowledge and use know-how to complete tasks and solve problems in a certain occupational profile."
+              class="badge badge-primary badge-pill">i</span>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-md-12">
+            <div *ngIf="model.skills.length > 0">
+              <button *ngFor="let ms of model.skills" (click)="removeCompetence(ms, model.skills)" type="button"
+                class="btn btn-pill btn-light">
+                <i class="fa fa-close"></i> {{ ms }}
               </button>
             </div>
           </div>
         </div>
+        <hr />
+        <div class="row">
+          <div class="col-md-4">
+            <label>Competences</label>
+            <span
+              tooltip="Competence is the proven ability to use knowledge, skills and personal, social and/or methodological abilities, in work or study situations and in professional and personal development."
+              class="badge badge-primary badge-pill">i</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-group">
+              <ngx-select-dropdown [config]="configCompetences" [options]="competences" [(ngModel)]="model.competences"
+                [multiple]="true"></ngx-select-dropdown>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary"
+              (click)="removeCompetence(mc, model.competences)">
+              <i class="fa fa-close"></i> {{ mc }}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <!--/.col-->
   </div>
-  <!--/.row-->
+  <!--/.col-->
+</div>
+<!--/.row-->
 </div>
