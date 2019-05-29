@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { OcupationalProfile } from '../../ocupational-profile';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { FormControl } from '@angular/forms';
-import { removeDebugNodeFromIndex } from '@angular/core/src/debug/debug_node';
+
 
 @Component({
   selector: 'app-list',
@@ -21,7 +21,6 @@ export class ListComponent implements OnInit {
   knowledgeFilter: Boolean = true;
   skillFilter: Boolean = true;
   competencesFilter: Boolean = true;
-
   constructor(private occuprofilesService: OcuprofilesService) { }
 
   ngOnInit() {
@@ -81,4 +80,5 @@ export class ListComponent implements OnInit {
       }
     });
   }
+
 }

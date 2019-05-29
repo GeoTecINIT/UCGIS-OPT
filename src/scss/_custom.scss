@@ -41,3 +41,8 @@
 .bok-no {
     background-color: #7f7f7f;
 }
+
+popover-container {
+    min-width: max-content !important;
+    max-width: none !important;
+}
