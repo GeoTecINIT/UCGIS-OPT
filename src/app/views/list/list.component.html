@@ -80,7 +80,7 @@
               <div class="row">
                 <div class="col-sm-3 col-md-3">
                   <button type="button" class="btn btn-block btn-link" [popover]="popTemplate"
-                    popoverTitle="Copy link, export to PDF or XML" placement="top">
+                    popoverTitle="Copy link, export to PDF or XML" placement="top" [outsideClick]="true">
                     <i class="fa fa-share-alt fa-lg mt-4"></i>
                   </button>
                 </div>
@@ -101,14 +101,14 @@
                 </div>
               </div>
             </div>
+            <ng-template #popTemplate>
+              <app-popup idOP="{{o._id}}"></app-popup>
+            </ng-template>
           </div>
         </div>
       </div>
     </div>
-    <!--/.col-->
   </div>
-  <!--/.row-->
+  <!--/.col-->
 </div>
-<ng-template #popTemplate>
-  <app-popup></app-popup>
-</ng-template>
+<!--/.row-->

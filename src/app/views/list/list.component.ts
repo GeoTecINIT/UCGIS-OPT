@@ -7,7 +7,6 @@ import { OcupationalProfile } from '../../ocupational-profile';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { FormControl } from '@angular/forms';
 
-
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -80,5 +79,4 @@ export class ListComponent implements OnInit {
       }
     });
   }
-
 }

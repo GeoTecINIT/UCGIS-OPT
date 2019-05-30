@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-popup',
@@ -6,20 +6,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent implements OnInit {
-
+  @Input() idOP: any;
   constructor() { }
 
   ngOnInit() {
   }
 
-  copyText(val: string) {
-    console.log('copy text' + val);
+  copyText() {
+    console.log(location.href);
+    let url = location.href;
+    if (url.includes('list')) {
+      url = url.replace('list', 'detail') + '/' + this.idOP;
+    }
     const selBox = document.createElement('textarea');
       selBox.style.position = 'fixed';
       selBox.style.left = '0';
       selBox.style.top = '0';
       selBox.style.opacity = '0';
-      selBox.value = val;
+      selBox.value = url;
       document.body.appendChild(selBox);
       selBox.focus();
       selBox.select();
