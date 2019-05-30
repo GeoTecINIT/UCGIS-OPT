@@ -47,6 +47,8 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url(assets/img/eo4geo_back_satellites.png);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
+    0 6px 20px 0 rgba(161, 161, 161, 0.19);
 }
 
 .navbar-brand {
@@ -64,9 +66,14 @@
 
 body {
   font-family: 'Open Sans', sans-serif;
+  color: #7e8890;
 }
 
 h1 {
   font-family: 'Roboto Slab', serif;
   color: #333c4e;
+}
+p {
+  font-family: 'Open Sans', sans-serif;
+  color: #7e8890;
 }
