@@ -25,7 +25,6 @@
                 Advanced Search
               </button>
             </div>
-
             <!-- Advanced search -->
             <ng-container *ngIf="advancedSearch">
               <div class="card-body">
@@ -34,7 +33,8 @@
                     <!-- Knowledge checkbox -->
                     <span class="input-group-prepend">
                       <label class="switch switch-label switch-pill switch-outline-primary-alt">
-                        <input class="switch-input" type="checkbox" value="knowledges" [(ngModel)]="knowledgeFilter" checked/>
+                        <input class="switch-input" type="checkbox" value="knowledges" [(ngModel)]="knowledgeFilter"
+                          checked />
                         <span class="switch-slider" data-checked="✓" data-unchecked="X"></span>
                       </label>
                       <div class="pl-1">Knowledges</div>
@@ -44,7 +44,7 @@
                     <!-- Skills checkbox -->
                     <span class="input-group-prepend">
                       <label class="switch switch-label switch-pill switch-outline-primary-alt">
-                        <input class="switch-input" type="checkbox" value="skills" [(ngModel)]="skillFilter" checked/>
+                        <input class="switch-input" type="checkbox" value="skills" [(ngModel)]="skillFilter" checked />
                         <span class="switch-slider" data-checked="✓" data-unchecked="X"></span>
                       </label>
                       <div class="pl-1">Skills</div>
@@ -54,8 +54,8 @@
                     <!-- Competences checkbox -->
                     <span class="input-group-prepend">
                       <label class="switch switch-label switch-pill switch-outline-primary-alt">
-                        <input class="switch-input" type="checkbox" vale="competences"
-                          [(ngModel)]="competencesFilter" checked/>
+                        <input class="switch-input" type="checkbox" vale="competences" [(ngModel)]="competencesFilter"
+                          checked />
                         <span class="switch-slider" data-checked="✓" data-unchecked="X"></span>
                       </label>
                       <div class="pl-1">Compentences</div>
@@ -66,7 +66,6 @@
             </ng-container>
           </div>
         </div>
-
         <div class="card-body">
           <div *ngFor="let o of filteredOccuProfiles" class="row">
             <div class="col-md-10">
@@ -79,28 +78,37 @@
             </div>
             <div class="col-md-2">
               <div class="row">
-                <div class="col-sm-4 col-md-4">
+                <div class="col-sm-3 col-md-3">
+                  <button type="button" class="btn btn-block btn-link" [popover]="popTemplate"
+                    popoverTitle="Copy link, export to PDF or XML" placement="top" [outsideClick]="true">
+                    <i class="fa fa-share-alt fa-lg mt-4"></i>
+                  </button>
+                </div>
+                <div class="col-sm-3 col-md-3">
                   <button type="button" class="btn btn-block btn-link" routerLink="/newop/duplicate/{{ o._id }}">
                     <i class="fa fa-copy fa-lg mt-4"></i>
                   </button>
                 </div>
-                <div class="col-sm-4 col-md-4">
+                <div class="col-sm-3 col-md-3">
                   <button type="button" class="btn btn-block btn-link" routerLink="/newop/copy/{{ o._id }}">
                     <i class="fa fa-edit fa-lg mt-4"></i>
                   </button>
                 </div>
-                <div class="col-sm-4 col-md-4">
+                <div class="col-sm-3 col-md-3">
                   <button type="button" class="btn btn-block btn-link" (click)="removeOccuProfile(o._id)">
                     <i class="fa fa-trash-o fa-lg mt-4"></i>
                   </button>
                 </div>
               </div>
             </div>
+            <ng-template #popTemplate>
+              <app-popup idOP="{{o._id}}"></app-popup>
+            </ng-template>
           </div>
         </div>
       </div>
     </div>
-    <!--/.col-->
   </div>
-  <!--/.row-->
+  <!--/.col-->
 </div>
+<!--/.row-->
