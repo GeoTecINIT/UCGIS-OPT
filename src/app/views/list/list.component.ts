@@ -22,7 +22,7 @@ export class ListComponent implements OnInit {
   skillFilter: Boolean = true;
   competencesFilter: Boolean = true;
 
-  constructor(private occuprofilesService: OcuprofilesService) { }
+  constructor(private occuprofilesService: OcuprofilesService) {}
 
   ngOnInit() {
     this.occuprofilesService
