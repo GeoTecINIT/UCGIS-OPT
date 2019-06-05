@@ -56,7 +56,9 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 // Custom Pipes
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { HighlightPipe } from './pipes/highlight.pipe';
+
 import { PopupComponent } from './components/popup/popup.component';
+import { Base64img } from './components/popup/base64img';
 
 @NgModule({
   imports: [
@@ -77,7 +79,7 @@ import { PopupComponent } from './components/popup/popup.component';
     AngularFirestoreModule,
     SelectDropDownModule,
     HttpClientModule,
-    PopoverModule.forRoot(),
+    PopoverModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -98,7 +100,8 @@ import { PopupComponent } from './components/popup/popup.component';
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
-    }
+    },
+    Base64img
   ],
   bootstrap: [AppComponent]
 })
