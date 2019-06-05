@@ -51,10 +51,12 @@ import { DetailComponent } from './views/detail/detail.component';
 import { NewopComponent } from './views/newop/newop.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 // Custom Pipes
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { HighlightPipe } from './pipes/highlight.pipe';
+import { PopupComponent } from './components/popup/popup.component';
 
 @NgModule({
   imports: [
@@ -74,7 +76,8 @@ import { HighlightPipe } from './pipes/highlight.pipe';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     SelectDropDownModule,
-    HttpClientModule
+    HttpClientModule,
+    PopoverModule.forRoot(),
   ],
   declarations: [
     AppComponent,
@@ -88,7 +91,8 @@ import { HighlightPipe } from './pipes/highlight.pipe';
     NewopComponent,
     LoadingIndicatorComponent,
     TruncatePipe,
-    HighlightPipe
+    HighlightPipe,
+    PopupComponent
   ],
   providers: [
     {
