@@ -67,12 +67,16 @@
 body {
   font-family: 'Open Sans', sans-serif;
   color: $gray-body;
-  background-color: white;
+  background-color: #faf9f8;
 }
 
 h1 {
   font-family: 'Roboto Slab', serif;
   color: #333c4e;
+}
+.title {
+  text-align: center;
+  margin-bottom: 2rem;
 }
 p {
   font-family: 'Open Sans', sans-serif;

@@ -50,6 +50,7 @@ export class NewopComponent implements OnInit {
   selectedProfile: OcupationalProfile;
   _id: string;
   mode: string;
+  title: string;
 
   selectedNodes = [];
   hasResults = false;
@@ -61,7 +62,7 @@ export class NewopComponent implements OnInit {
     search: true, // true/false for the search functionlity defaults to false,
     height: 10, // height of the list so that if there are more no of items it can show a scroll defaults to auto.
     placeholder: 'Select Field', // text to be displayed when no item is selected defaults to Select,
-    customComparator: () => { }, // a custom function to sort the items. default is undefined and Array.sort() will be used
+    customComparator: () => {}, // a custom function to sort the items. default is undefined and Array.sort() will be used
     limitTo: 10, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
     moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
     noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
@@ -69,13 +70,12 @@ export class NewopComponent implements OnInit {
     searchOnKey: 'name' // key on which search should be performed. if undefined this will be extensive search on all keys
   };
 
-
   configCompetences = {
     displayKey: 'name', // if objects array passed which key to be displayed defaults to description
     search: true, // true/false for the search functionlity defaults to false,
     height: 5, // height of the list so that if there are more no of items it can show a scroll defaults to auto.
     placeholder: 'Select Competences', // text to be displayed when no item is selected defaults to Select,
-    customComparator: () => { }, // a custom function to sort the items. default is undefined and Array.sort() will be used
+    customComparator: () => {}, // a custom function to sort the items. default is undefined and Array.sort() will be used
     limitTo: 5, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
     moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
     noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
@@ -134,8 +134,15 @@ export class NewopComponent implements OnInit {
   getMode(): void {
     this.mode = this.route.snapshot.paramMap.get('mode');
     if (this.mode === 'duplicate' || this.mode === 'copy') {
+      if (this.mode === 'copy') {
+        this.title = 'Copy Occupational Profile';
+      } else {
+        this.title = 'Duplicate Occupational Profile';
+      }
       this.getOccuProfileId();
       this.fillForm();
+    } else {
+      this.title = 'Add New Occupational Profile';
     }
   }
 
