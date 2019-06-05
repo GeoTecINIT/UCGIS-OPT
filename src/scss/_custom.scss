@@ -87,3 +87,8 @@ p {
   background-color: white;
   border-bottom: none;
 }
+
+popover-container {
+    min-width: max-content !important;
+    max-width: none !important;
+}
