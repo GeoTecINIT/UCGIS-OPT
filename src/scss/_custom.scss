@@ -3,43 +3,85 @@
 // Bok Concepts colors
 
 .bok-AM {
-    background-color: #1f77b4;
+  background-color: #1f77b4;
 }
 .bok-CF {
-    background-color: #2ca02c;
+  background-color: #2ca02c;
 }
 .bok-CV {
-    background-color: #d62728;
+  background-color: #d62728;
 }
 .bok-DA {
-    background-color: #8c564b;
+  background-color: #8c564b;
 }
 .bok-DM {
-    background-color: #bcbd22;
+  background-color: #bcbd22;
 }
 .bok-DN {
-    background-color: #8c564b;
+  background-color: #8c564b;
 }
 .bok-GC {
-    background-color: #17becf;
+  background-color: #17becf;
 }
 .bok-GD {
-    background-color: #ff7f0e;
+  background-color: #ff7f0e;
 }
 .bok-GI {
-    background-color: #7f7f7f;
+  background-color: #7f7f7f;
 }
 .bok-GS {
-    background-color: #e377c2;
+  background-color: #e377c2;
 }
 .bok-OI {
-    background-color: #9467bd;
+  background-color: #9467bd;
 }
 .bok-WB {
-    background-color: #7f7f7f;
+  background-color: #7f7f7f;
 }
 .bok-no {
-    background-color: #7f7f7f;
+  background-color: #7f7f7f;
+}
+
+.nav-bar-eo4geo {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(assets/img/eo4geo_back_satellites.png);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
+    0 6px 20px 0 rgba(161, 161, 161, 0.19);
+}
+
+.navbar-brand {
+  margin: auto !important;
+  margin-right: none !important;
+}
+
+.footer-eo4geo {
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Roboto', sans-serif;
+  background-image: url(assets/img/eo4geo_back_satellites.png);
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: $gray-body;
+  background-color: white;
+}
+
+h1 {
+  font-family: 'Roboto Slab', serif;
+  color: #333c4e;
+}
+p {
+  font-family: 'Open Sans', sans-serif;
+  color: $gray-body;
+}
+
+.card-header {
+  background-color: white;
+  border-bottom: none;
 }
 
 popover-container {
