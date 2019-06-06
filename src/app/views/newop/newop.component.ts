@@ -175,4 +175,8 @@ export class NewopComponent implements OnInit {
   incrementLimit() {
     this.limitSearch = this.limitSearch + 5;
   }
+
+  addExtraSkill(skill) {
+    this.model.skills.push(skill);
+  }
 }
