@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -74,10 +75,11 @@ import { Base64img } from './components/popup/base64img';
     TabsModule.forRoot(),
     ChartsModule,
     TooltipModule.forRoot(),
+    NgSelectModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    SelectDropDownModule,
+    SelectDropDownModule, // TODO: LLEVAR
     HttpClientModule,
     PopoverModule.forRoot()
   ],
