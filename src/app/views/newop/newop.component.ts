@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { OcupationalProfile } from '../../ocupational-profile';
+import { OcupationalProfile, Competence } from '../../ocupational-profile';
 import * as bok from '@eo4geo/bok-dataviz';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { FieldsService } from '../../services/fields.service';
@@ -168,17 +168,37 @@ export class NewopComponent implements OnInit {
     this.model.skills.push(skill);
   }
 
+  // Add custom competence to model to force updating component, and to competences lists to find it again if removed
   addExtraCompetence(comp) {
-    this.model.competences.push({preferredLabel: comp});
+    this.model.competences = [...this.model.competences, { preferredLabel: comp }];
+    this.escoService.allcompetences = [...this.escoService.allcompetences, { preferredLabel: comp }];
+    this.escoService.basicCompetences = [...this.escoService.basicCompetences, { preferredLabel: comp }];
   }
 
   fullListESCO() {
-   /* this.escoService.allcompetences.forEach(com => {
-     if (com.preferredLabel == null) {
-      console.log('ERROR ' + com.uri);
-     }
-    });
-    */
+    /* this.escoService.allcompetences.forEach(com => {
+      if (com.preferredLabel == null) {
+       console.log('ERROR ' + com.uri);
+      }
+     });
+     */
     this.isfullESCOcompetences = !this.isfullESCOcompetences;
+  }
+
+  // custom search to match term also in altLabels
+  customSearchFn(term: string, item: Competence) {
+    let found = false;
+    term = term.toLocaleLowerCase();
+    if (item.preferredLabel.toLocaleLowerCase().indexOf(term) > -1) {
+      found = true;
+    }
+    if (item.altLabels && item.altLabels.length > 0) {
+      item.altLabels.forEach((alt) => {
+        if (alt.toLocaleLowerCase().indexOf(term) > -1) {
+        found = true;
+        }
+      });
+    }
+    return found;
   }
 }

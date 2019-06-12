@@ -51,7 +51,6 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { DetailComponent } from './views/detail/detail.component';
 import { NewopComponent } from './views/newop/newop.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
-import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 
 // Custom Pipes
@@ -79,7 +78,6 @@ import { Base64img } from './components/popup/base64img';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    SelectDropDownModule, // TODO: LLEVAR
     HttpClientModule,
     PopoverModule.forRoot()
   ],
