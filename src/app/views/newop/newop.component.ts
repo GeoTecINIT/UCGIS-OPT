@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { OcupationalProfile } from '../../ocupational-profile';
+import { OcupationalProfile, Competence } from '../../ocupational-profile';
 import * as bok from '@eo4geo/bok-dataviz';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
-import { FieldsService, Field } from '../../services/fields.service';
+import { FieldsService } from '../../services/fields.service';
+import { EscoCompetenceService } from '../../services/esco-competence.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,42 +12,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./newop.component.scss']
 })
 export class NewopComponent implements OnInit {
-  // TODO: Retrieve this from the DB
-  competences = [
-    'Assertiveness',
-    'Attend to detail',
-    'Customer relationship management',
-    'Demonstrate intercultural competence',
-    'Demonstrate willingness to learn',
-    'Develop company strategies',
-    'Develop strategy to solve problems',
-    'Digital competencies',
-    'Identify opportunities',
-    'Interact with othersCope with pressure',
-    'Lead others',
-    'Make decisions',
-    'Manage frustrationListen actively',
-    'Manage time',
-    'Meet commitments',
-    'Motivate others',
-    'Report facts',
-    'Show enterpreneurial spirit',
-    'Team building',
-    'Think creatively',
-    'Think proactively',
-    'Work efficientlyAdapt to change',
-    'Work in an international environment',
-    'Work independently'
-  ];
 
+  competences = [];
   filteredCompetences = [];
+  fullcompetences = [];
 
   model = new OcupationalProfile('', '', '', null, 1, [], [], []);
 
   public value: string[];
   public current: string;
 
-  isFilteringCompetences = false;
   selectedProfile: OcupationalProfile;
   _id: string;
   mode: string;
@@ -57,27 +32,41 @@ export class NewopComponent implements OnInit {
   limitSearch = 5;
   currentConcept = 'GIST';
 
+  isfullESCOcompetences = false;
+
   configFields = {
     displayKey: 'concatName', // if objects array passed which key to be displayed defaults to description
     search: true, // true/false for the search functionlity defaults to false,
     height: '200px', // height of the list so that if there are more no of items it can show a scroll defaults to auto.
     placeholder: 'Select Field', // text to be displayed when no item is selected defaults to Select,
-    customComparator: () => {}, // a custom function to sort the items. default is undefined and Array.sort() will be used
+    customComparator: () => { }, // a custom function to sort the items. default is undefined and Array.sort() will be used
     noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
     searchPlaceholder: 'Search Field', // label thats displayed in search input,
     searchOnKey: 'concatName' // key on which search should be performed. if undefined this will be extensive search on all keys
   };
 
   configCompetences = {
-    displayKey: 'name', // if objects array passed which key to be displayed defaults to description
+    displayKey: 'preferredLabel', // if objects array passed which key to be displayed defaults to description
     search: true, // true/false for the search functionlity defaults to false,
     height: '200px', // height of the list so that if there are more no of items it can show a scroll defaults to auto.
     placeholder: 'Select Competences', // text to be displayed when no item is selected defaults to Select,
-    customComparator: () => {}, // a custom function to sort the items. default is undefined and Array.sort() will be used
+    customComparator: () => { }, // a custom function to sort the items. default is undefined and Array.sort() will be used
     moreText: 'competences more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
     noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
     searchPlaceholder: 'Search Competences', // label thats displayed in search input,
-    searchOnKey: 'name' // key on which search should be performed. if undefined this will be extensive search on all keys
+    searchOnKey: 'preferredLabel' // key on which search should be performed. if undefined this will be extensive search on all keys
+  };
+
+  configfullCompetences = {
+    displayKey: 'preferredLabel', // if objects array passed which key to be displayed defaults to description
+    search: true, // true/false for the search functionlity defaults to false,
+    height: '200px', // height of the list so that if there are more no of items it can show a scroll defaults to auto.
+    placeholder: 'Select Competences', // text to be displayed when no item is selected defaults to Select,
+    customComparator: () => { }, // a custom function to sort the items. default is undefined and Array.sort() will be used
+    moreText: 'competences more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
+    noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
+    searchPlaceholder: 'Search Competences', // label thats displayed in search input,
+    searchOnKey: 'preferredLabel' // key on which search should be performed. if undefined this will be extensive search on all keys
   };
 
   @ViewChild('textBoK') textBoK: ElementRef;
@@ -85,8 +74,10 @@ export class NewopComponent implements OnInit {
   constructor(
     private occuprofilesService: OcuprofilesService,
     public fieldsService: FieldsService,
+    public escoService: EscoCompetenceService,
     private route: ActivatedRoute
   ) {
+    this.competences = this.escoService.basicCompetences;
     this.filteredCompetences = this.competences;
   }
 
@@ -175,5 +166,39 @@ export class NewopComponent implements OnInit {
 
   addExtraSkill(skill) {
     this.model.skills.push(skill);
+  }
+
+  // Add custom competence to model to force updating component, and to competences lists to find it again if removed
+  addExtraCompetence(comp) {
+    this.model.competences = [...this.model.competences, { preferredLabel: comp }];
+    this.escoService.allcompetences = [...this.escoService.allcompetences, { preferredLabel: comp }];
+    this.escoService.basicCompetences = [...this.escoService.basicCompetences, { preferredLabel: comp }];
+  }
+
+  fullListESCO() {
+    /* this.escoService.allcompetences.forEach(com => {
+      if (com.preferredLabel == null) {
+       console.log('ERROR ' + com.uri);
+      }
+     });
+     */
+    this.isfullESCOcompetences = !this.isfullESCOcompetences;
+  }
+
+  // custom search to match term also in altLabels
+  customSearchFn(term: string, item: Competence) {
+    let found = false;
+    term = term.toLocaleLowerCase();
+    if (item.preferredLabel.toLocaleLowerCase().indexOf(term) > -1) {
+      found = true;
+    }
+    if (item.altLabels && item.altLabels.length > 0) {
+      item.altLabels.forEach((alt) => {
+        if (alt.toLocaleLowerCase().indexOf(term) > -1) {
+        found = true;
+        }
+      });
+    }
+    return found;
   }
 }

@@ -41,9 +41,12 @@
                       <label for="field">Field</label>
                       <span tooltip="The term relates directly to a specific area of study."
                         class="badge badge-primary badge-pill">i</span>
-                      <ngx-select-dropdown name="field" [config]="configFields" [options]="fieldsService.allfields"
+                      <ng-select [items]="fieldsService.allfields" name="field" bindLabel="name" groupBy="grandparent"
                         [multiple]="false" [(ngModel)]="model.field">
-                      </ngx-select-dropdown>
+                        <ng-template ng-optgroup-tmp let-item="item">
+                          {{item.grandparent || 'Unnamed group'}}
+                        </ng-template>
+                      </ng-select>
                     </div>
                   </div>
                 </div>
@@ -138,10 +141,10 @@
           </div>
         </div>
         <!-- Knowledge added card -->
-        <div class="card card-accent-secondary">      
+        <div class="card card-accent-secondary">
           <div class="card-header">Knowledge required <span
-            tooltip="Knowledge is the body of facts, principles and theories and practices that is related to a field of work or study."
-            class="badge badge-primary badge-pill">i</span></div>
+              tooltip="Knowledge is the body of facts, principles and theories and practices that is related to a field of work or study."
+              class="badge badge-primary badge-pill">i</span></div>
           <div class="card-body" style="background-color: #faf9f8">
             <div class="col-md-12">
               <p *ngIf="model.knowledge.length == 0">You didn't add any knowledge required yet. Browse in the BoK in
@@ -164,8 +167,8 @@
           <div class="card-body" style="background-color: #faf9f8">
             <div class="row">
               <div class="col-md-12">
-                  <p *ngIf="model.skills.length == 0">You didn't add any skills required yet. Browse in the BoK in
-                      previous section to add some.</p>
+                <p *ngIf="model.skills.length == 0">You didn't add any skills required yet. Browse in the BoK in
+                  previous section to add some.</p>
                 <div *ngIf="model.skills.length > 0">
                   <button *ngFor="let ms of model.skills" (click)="removeCompetence(ms, model.skills)" type="button"
                     class="btn btn-pill btn-light">
@@ -183,8 +186,8 @@
                   name="skillExtra" />
               </div>
               <div class="col-md-2">
-                <button type="submit" class="btn btn-primary"
-                  tooltip="Search or navigate in the graph to add knowledge." (click)="addExtraSkill(skillExtra.value); skillExtra.value= ''">
+                <button type="submit" class="btn btn-primary" tooltip="Add your custom skill."
+                  (click)="addExtraSkill(skillExtra.value); skillExtra.value= ''">
                   Add Skill
                 </button>
               </div>
@@ -201,16 +204,56 @@
           </div>
           <div class="card-body" style="background-color: #faf9f8">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-12">
                 <div class="input-group">
-                  <ngx-select-dropdown [config]="configCompetences" [options]="competences"
-                    [(ngModel)]="model.competences" [multiple]="true"></ngx-select-dropdown>
+                    <ng-select *ngIf="isfullESCOcompetences" [items]="escoService.allcompetences" name="competences" bindLabel="preferredLabel" groupBy="reuseLevel"
+                    [multiple]="true" [(ngModel)]="model.competences" [searchFn]="customSearchFn" placeholder="Search...">
+                    <ng-template ng-optgroup-tmp let-item="item">
+                      {{item.reuseLevel || 'Unnamed group'}}
+                    </ng-template>
+                  </ng-select>
+                    <ng-select *ngIf="!isfullESCOcompetences" [items]="competences" name="competences" bindLabel="preferredLabel" groupBy="reuseLevel"
+                    [multiple]="true" [(ngModel)]="model.competences" [searchFn]="customSearchFn" placeholder="Search...">
+                    <ng-template ng-optgroup-tmp let-item="item">
+                      {{item.reuseLevel || 'Unnamed group'}}
+                    </ng-template>
+                  </ng-select>
                 </div>
               </div>
-              <div class="col-md-8">
+             <!--  <div class="col-md-8">
                 <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary"
                   (click)="removeCompetence(mc, model.competences)">
-                  <i class="fa fa-close"></i> {{ mc }}
+                  <i class="fa fa-close"></i> {{ mc.preferredLabel }}
+                </button>
+              </div> -->
+            </div>
+            <div class="row pt-1">
+              <div class="col-md-12">
+                <span class="input-group-prepend">
+                  <label class="switch switch-label switch-pill switch-outline-primary-alt">
+                    <input class="switch-input" type="checkbox" value="isfullESCOcompetences"
+                      [(ngModel)]="isfullESCOcompetences" checked />
+                    <span class="switch-slider" tooltip="Click here to add to the dropdown full list of ESCO skills."
+                      data-checked="✓" data-unchecked="X"></span>
+                  </label>
+                  <div class="pl-1">Add <a href="https://ec.europa.eu/esco/portal/skill">ESCO</a> competences to
+                    dropdown - This service uses the <a href="http://ec.europa.eu/esco"> ESCO </a> classification of the
+                    European Commission. </div>
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 text-right">
+                If you cannot find the specified competence, you can also add your own competences here:
+              </div>
+              <div class="col-md-6">
+                <input #competenceExtra type="text" class="form-control" id="competenceExtra"
+                  placeholder="Competence description" name="competenceExtra" />
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-primary" tooltip="Add your custom competence."
+                  (click)="addExtraCompetence(competenceExtra.value); competenceExtra.value= ''">
+                  Add Competence
                 </button>
               </div>
             </div>

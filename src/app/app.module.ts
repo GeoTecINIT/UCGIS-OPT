@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -50,7 +51,6 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { DetailComponent } from './views/detail/detail.component';
 import { NewopComponent } from './views/newop/newop.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
-import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 
 // Custom Pipes
@@ -74,10 +74,10 @@ import { Base64img } from './components/popup/base64img';
     TabsModule.forRoot(),
     ChartsModule,
     TooltipModule.forRoot(),
+    NgSelectModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    SelectDropDownModule,
     HttpClientModule,
     PopoverModule.forRoot()
   ],

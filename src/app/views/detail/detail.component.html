@@ -45,7 +45,7 @@
                 <h1>{{ selectedProfile.title }}</h1>
               </div>
               <div class="col-md-2 offset-md-3">
-                <h5>{{ selectedProfile.field.name }}</h5>
+                <h5>{{ selectedProfile.field.name }} ({{ selectedProfile.field.grandparent }})</h5>
               </div>
               <div class="col-md-1">
                 <button type="button" class="btn btn-default btn-secondary"
@@ -119,7 +119,7 @@
             <div class="row text-center">
               <div class="col-md-12">
                 <button *ngFor="let mc of selectedProfile.competences" type="button" class="btn btn-pill btn-primary">
-                  {{ mc }}
+                  {{ mc.preferredLabel }}
                 </button>
               </div>
             </div>
