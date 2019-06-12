@@ -1,12 +1,12 @@
 import { Field } from './services/fields.service';
 
 export interface Competence {
-  uri: String;
-  skillType: String;
-  reuseLevel: String;
+  uri?: String;
+  skillType?: String;
+  reuseLevel?: String;
   preferredLabel: String;
-  description: String;
-  altLabels: String[];
+  description?: String;
+  altLabels?: String[];
 }
 
 export class OcupationalProfile extends Object {
