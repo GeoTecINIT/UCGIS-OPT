@@ -203,17 +203,34 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="input-group">
-                  <ngx-select-dropdown [config]="configCompetences" [options]="competences"
+                  <ngx-select-dropdown *ngIf="isfullESCOcompetences" [config]="configfullCompetences" [options]="escoService.allcompetences"
                     [(ngModel)]="model.competences" [multiple]="true"></ngx-select-dropdown>
-                </div>
+                   
+                    <ngx-select-dropdown *ngIf="!isfullESCOcompetences" [config]="configCompetences" [options]="competences"
+                    [(ngModel)]="model.competences" [multiple]="true"></ngx-select-dropdown>
+                   
+                   
+                </div> 
               </div>
               <div class="col-md-8">
                 <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary"
                   (click)="removeCompetence(mc, model.competences)">
-                  <i class="fa fa-close"></i> {{ mc }}
+                  <i class="fa fa-close"></i> {{ mc.preferredLabel }}
                 </button>
               </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="input-group-prepend">
+                        <label class="switch switch-label switch-pill switch-outline-primary-alt">
+                          <input class="switch-input" type="checkbox" value="isfullESCOcompetences" [(ngModel)]="isfullESCOcompetences"
+                            checked />
+                          <span class="switch-slider" tooltip="Click here to add to the dropdown full list of ESCO skills." data-checked="✓" data-unchecked="X"></span>
+                        </label>
+                        <div class="pl-1">Add <a href="https://ec.europa.eu/esco/portal/skill">ESCO</a> competences to dropdown - This service uses the <a href="http://ec.europa.eu/esco"> ESCO </a> classification  of the European Commission. </div>
+                      </span>
+          </div>
+          </div>
           </div>
         </div>
       </div>

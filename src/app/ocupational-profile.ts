@@ -1,5 +1,14 @@
 import { Field } from './services/fields.service';
 
+export interface Competence {
+  uri: String;
+  skillType: String;
+  reuseLevel: String;
+  preferredLabel: String;
+  description: String;
+  altLabels: String[];
+}
+
 export class OcupationalProfile extends Object {
   constructor(
     public _id: string,
@@ -9,7 +18,7 @@ export class OcupationalProfile extends Object {
     public eqf: number,
     public knowledge: string[],
     public skills: string[],
-    public competences: string[]
+    public competences: Competence[]
   ) {
     super();
   }

@@ -70,7 +70,7 @@ export class ListComponent implements OnInit {
       }
       if (this.competencesFilter) {
         occ.competences.forEach(comp => {
-          if (comp.toLowerCase().includes(this.searchText.toLowerCase())) {
+          if (comp.preferredLabel.toLowerCase().includes(this.searchText.toLowerCase())) {
             if (this.filteredOccuProfiles.indexOf(occ) === -1) {
               this.filteredOccuProfiles.push(occ);
             }

@@ -18161,9 +18161,9 @@
         "uri": "http://data.europa.eu/esco/skill/d52426a8-e84f-4652-a655-7a6195381fcd",
         "skillType": "skill/competence",
         "reuseLevel": "cross-sector",
+        "preferredLabel": "identify GIS issues",
         "description": "Highlight GIS-issues that require special attention. Report on these issues and their development on a regular basis.",
         "altLabels": [
-            "identify GIS issues",
             "GIS issues highlighting",
             "highlighting GIS issues",
             "highlight GIS issues",
