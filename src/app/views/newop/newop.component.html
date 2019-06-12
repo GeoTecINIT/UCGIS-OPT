@@ -184,7 +184,7 @@
               </div>
               <div class="col-md-2">
                 <button type="submit" class="btn btn-primary"
-                  tooltip="Search or navigate in the graph to add knowledge." (click)="addExtraSkill(skillExtra.value); skillExtra.value= ''">
+                  tooltip="Add your custom skill." (click)="addExtraSkill(skillExtra.value); skillExtra.value= ''">
                   Add Skill
                 </button>
               </div>
@@ -205,11 +205,8 @@
                 <div class="input-group">
                   <ngx-select-dropdown *ngIf="isfullESCOcompetences" [config]="configfullCompetences" [options]="escoService.allcompetences"
                     [(ngModel)]="model.competences" [multiple]="true"></ngx-select-dropdown>
-                   
                     <ngx-select-dropdown *ngIf="!isfullESCOcompetences" [config]="configCompetences" [options]="competences"
                     [(ngModel)]="model.competences" [multiple]="true"></ngx-select-dropdown>
-                   
-                   
                 </div> 
               </div>
               <div class="col-md-8">
@@ -231,6 +228,21 @@
                       </span>
           </div>
           </div>
+          <div class="row">
+              <div class="col-md-4 text-right">
+                If you cannot find the specified competence, you can also add your own competences here:
+              </div>
+              <div class="col-md-6">
+                <input #competenceExtra type="text" class="form-control" id="competenceExtra" placeholder="Competence description"
+                  name="competenceExtra" />
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-primary"
+                  tooltip="Add your custom competence." (click)="addExtraCompetence(competenceExtra.value); competenceExtra.value= ''">
+                  Add Competence
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

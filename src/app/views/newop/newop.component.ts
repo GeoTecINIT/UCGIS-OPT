@@ -168,6 +168,10 @@ export class NewopComponent implements OnInit {
     this.model.skills.push(skill);
   }
 
+  addExtraCompetence(comp) {
+    this.model.competences.push({preferredLabel: comp});
+  }
+
   fullListESCO() {
    /* this.escoService.allcompetences.forEach(com => {
      if (com.preferredLabel == null) {
