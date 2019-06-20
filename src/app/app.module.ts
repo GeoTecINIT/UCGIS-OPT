@@ -60,6 +60,9 @@ import { HighlightPipe } from './pipes/highlight.pipe';
 import { PopupComponent } from './components/popup/popup.component';
 import { Base64img } from './components/popup/base64img';
 
+import { ModalModule } from 'ngx-bootstrap/modal';
+
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -79,7 +82,8 @@ import { Base64img } from './components/popup/base64img';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     HttpClientModule,
-    PopoverModule.forRoot()
+    PopoverModule.forRoot(),
+    ModalModule.forRoot()
   ],
   declarations: [
     AppComponent,
