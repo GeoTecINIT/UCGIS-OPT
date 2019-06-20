@@ -8,11 +8,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col-sm-4 col-md-2">
-              <button
-                type="button"
-                class="btn btn-block btn-outline-primary"
-                routerLink="/newop/empty"
-              >
+              <button type="button" class="btn btn-block btn-outline-primary" routerLink="/newop/empty">
                 New Occupational Profile
               </button>
             </div>
@@ -23,24 +19,12 @@
                     <i class="fa fa-search"></i>
                   </button>
                 </span>
-                <input
-                  class="form-control"
-                  id="input1-group2"
-                  type="search"
-                  name="input1-group2"
-                  placeholder="Search"
-                  autocomplete="search"
-                  [(ngModel)]="searchText"
-                  (keyup)="filter()"
-                />
+                <input class="form-control" id="input1-group2" type="search" name="input1-group2" placeholder="Search"
+                  autocomplete="search" [(ngModel)]="searchText" (keyup)="filter()" />
               </div>
             </div>
             <div class="col-sm-4 col-md-2">
-              <button
-                type="button"
-                class="btn btn-block btn-link"
-                (click)="advancedSearch = !advancedSearch"
-              >
+              <button type="button" class="btn btn-block btn-link" (click)="advancedSearch = !advancedSearch">
                 Advanced Search
               </button>
             </div>
@@ -48,10 +32,7 @@
             <ng-container *ngIf="advancedSearch">
               <div class="card-body">
                 <div class="row">
-                  <div
-                    class="col-md-2 offset-md-6 col-sm-4"
-                    style="display: inline-flex"
-                  >
+                  <div class="col-md-2 offset-md-6 col-sm-4" style="display: inline-flex">
                     <!-- Knowledge checkbox -->
                     <span class="input-group-prepend">
                       <label class="switch switch-label switch-pill switch-outline-primary-alt">
@@ -91,17 +72,13 @@
         <div class="card-body">
           <div *ngFor="let o of filteredOccuProfiles" class="row">
             <div class="col-md-10">
-              <button
-                type="button"
-                class="btn text-justify"
-                routerLink="/detail/{{ o._id }}"
-              >
-                <span
-                  ><h1>{{ o.title }}</h1>
+              <button type="button" class="btn text-justify" routerLink="/detail/{{ o._id }}">
+                <span>
+                  <h1>{{ o.title }}</h1>
                   {{ o.knowledge.length }} Knowledge
                   {{ o.skills.length }} Skills
-                  {{ o.competences.length }} Competences</span
-                >
+                  {{ o.competences.length }} Competences
+                </span>
 
                 <p>{{ o.description }}</p>
 
@@ -134,7 +111,8 @@
                   </button>
                 </div>
                 <div class="col-sm-3 col-md-3">
-                  <button type="button" class="btn btn-block btn-link" (click)="removeOccuProfile(o._id)">
+                  <button type="button" class="btn btn-block btn-link"
+                  data-toggle="modal" (click)="dangerModal.show()">
                     <i class="fa fa-trash-o fa-lg mt-4"></i>
                   </button>
                 </div>
@@ -143,6 +121,26 @@
             <ng-template #popTemplateList>
               <app-popup idOP="{{o._id}}"></app-popup>
             </ng-template>
+
+            <div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-danger" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Are you sure you want to delete this Occupational Profile?</h4>
+                      <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>After you delete it it won't be accessible to anyone.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Close</button>
+                      <button type="button" class="btn btn-danger" (click)="removeOccuProfile(o._id)">Delete</button>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
           </div>
         </div>
       </div>

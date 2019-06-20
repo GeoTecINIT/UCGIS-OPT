@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { NgForOf } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { OcupationalProfile } from '../../ocupational-profile';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { FormControl } from '@angular/forms';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-list',
@@ -20,6 +21,8 @@ export class ListComponent implements OnInit {
   knowledgeFilter: Boolean = true;
   skillFilter: Boolean = true;
   competencesFilter: Boolean = true;
+  @ViewChild('dangerModal') public dangerModal: ModalDirective;
+
   constructor(private occuprofilesService: OcuprofilesService) { }
 
   ngOnInit() {
@@ -32,6 +35,8 @@ export class ListComponent implements OnInit {
   }
 
   removeOccuProfile(id: string) {
+
+
     this.occuprofilesService.removeOccuProfile(id);
   }
 
