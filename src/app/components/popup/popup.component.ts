@@ -63,26 +63,29 @@ export class PopupComponent implements OnInit {
     doc.setFontSize(38);
     doc.setFontType('bold');
     doc.setTextColor('#1a80b6');
+    if (this.selectedProfile.title != null) {
+      const titleLines = doc.setFontSize(38).splitTextToSize(this.selectedProfile.title, 150);
+      doc.text(30, currentLinePoint, titleLines);
+      currentLinePoint = currentLinePoint + (15 * titleLines.length);
+    }
 
-    const titleLines = doc.setFontSize(38).splitTextToSize(this.selectedProfile.title, 150);
-    doc.text(30, currentLinePoint, titleLines);
-    currentLinePoint = currentLinePoint + (15 * titleLines.length);
+    if (this.selectedProfile.field != null) {
+      doc.setFontSize(12).setTextColor('#1a80b6').setFontType('bold'); // headline
+      doc.text(30, currentLinePoint, 'EQF' + this.selectedProfile.eqf + ' - ' + this.selectedProfile.field.name);
+      currentLinePoint = currentLinePoint + 5;
+    }
 
-    doc.setFontSize(12).setTextColor('#1a80b6').setFontType('bold'); // headline
-    doc.text(30, currentLinePoint, 'EQF' + this.selectedProfile.eqf + ' - ' + this.selectedProfile.field.name);
-    currentLinePoint = currentLinePoint + 5;
-
-    // titulo sección
-    doc.setTextColor('#000').setFontType('normal');
-    const lines = doc.setFontSize(10).splitTextToSize(this.selectedProfile.description, 150);
+    if (this.selectedProfile.description != null) {
+      doc.setTextColor('#000').setFontType('normal');
+      const lines = doc.setFontSize(10).splitTextToSize(this.selectedProfile.description, 150);
+      doc.text(30, currentLinePoint, lines); // description
+      currentLinePoint = currentLinePoint + 10 + (4 * lines.length);
+    }
     // fecha
     // const d = new Date();
     // doc.text(90, 90, d.toLocaleDateString('es-ES'));
 
-    doc.text(30, currentLinePoint, lines); // description
-
     if (this.selectedProfile.knowledge.length > 0) {
-      currentLinePoint = currentLinePoint + 10 + (4 * lines.length);
       doc.setFontSize(12).setTextColor('#1a80b6').setFontType('bold'); // headline
       doc.text(30, currentLinePoint, 'Knowledge required');
       currentLinePoint = currentLinePoint + 5;
