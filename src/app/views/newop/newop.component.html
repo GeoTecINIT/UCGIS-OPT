@@ -39,7 +39,7 @@
                   <div class="col-md-8">
                     <div class="form-group">
                       <label for="field">Field</label>
-                      <span tooltip="The term relates directly to a specific area of study."
+                      <span tooltip="The term relates directly to a specific area of study. The International Standard Classification of Education: Fields of Education and Training 2013 (ISCED-F). Maintained by the UNESCO Institute for Statistics."
                         class="badge badge-primary badge-pill">i</span>
                       <ng-select [items]="fieldsService.allfields" name="field" bindLabel="name" groupBy="grandparent"
                         [multiple]="false" [(ngModel)]="model.field">
@@ -161,7 +161,7 @@
           <div class="card-header">
             Skills required
             <span
-              tooltip="Skills are the learning outcomes from BoK. Skills represent the ability to apply knowledge and use know-how to complete tasks and solve problems in a certain occupational profile."
+              tooltip="Skills represent the ability to apply knowledge and use know-how to complete tasks and solve problems in a certain occupational profile. Skills are associated with Body of Knowledge concepts or can be manually added."
               class="badge badge-primary badge-pill">i</span>
           </div>
           <div class="card-body" style="background-color: #faf9f8">
@@ -248,11 +248,11 @@
               </div>
               <div class="col-md-6">
                 <input #competenceExtra type="text" class="form-control" id="competenceExtra"
-                  placeholder="Competence description" name="competenceExtra" />
+                  placeholder="Competence description" name="competenceExtra" (keyup)="competenceExtraAdd.disabled = false"/>
               </div>
               <div class="col-md-2">
-                <button type="submit" class="btn btn-primary" tooltip="Add your custom competence."
-                  (click)="addExtraCompetence(competenceExtra.value); competenceExtra.value= ''">
+                <button #competenceExtraAdd type="submit" class="btn btn-primary" tooltip="Add your custom competence."
+                  (click)="addExtraCompetence(competenceExtra.value); competenceExtra.value= ''; competenceExtraAdd.disabled = true" disabled >
                   Add Competence
                 </button>
               </div>
