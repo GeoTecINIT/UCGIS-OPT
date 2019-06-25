@@ -89,10 +89,11 @@ export class NewopComponent implements OnInit {
   addBokKnowledge() {
     const divs = this.textBoK.nativeElement.getElementsByTagName('div');
     if (divs['bokskills'] != null) {
+      const shortCode = this.textBoK.nativeElement.getElementsByTagName('h4')[0].innerText.split(' ')[0];
       const as = divs['bokskills'].getElementsByTagName('a');
       for (const skill of as) {
-        if (!this.model.skills.includes(skill.innerText)) {
-          this.model.skills.push(skill.innerText);
+        if (!this.model.skills.includes(shortCode + ' ' + skill.innerText)) {
+          this.model.skills.push(shortCode + ' ' + skill.innerText);
         }
       }
     }
