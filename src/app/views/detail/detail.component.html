@@ -30,7 +30,7 @@
                 </div>
                 <div class="cols-xs-2 col-md-3">
                   <button type="button" class="btn btn-block btn-link"
-                    (click)="occuprofilesService.removeOccuProfile(selectedProfile._id)" routerLink="/list">
+                  data-toggle="modal" (click)="dangerModal.show()">
                     <i class="fa fa-trash-o fa-lg"></i>
                   </button>
                 </div>
@@ -137,3 +137,22 @@
 <ng-template #popTemplate>
     <app-popup  idOP="{{selectedProfile._id}}"></app-popup>
   </ng-template>
+  <div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Are you sure you want to delete this Occupational Profile?</h4>
+          <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>After you delete it it won't be accessible to anyone.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">Close</button>
+          <button type="button" class="btn btn-danger" (click)="occuprofilesService.removeOccuProfile(selectedProfile._id)" routerLink="/list">Delete</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
