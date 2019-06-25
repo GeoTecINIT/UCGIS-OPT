@@ -35,8 +35,6 @@ export class ListComponent implements OnInit {
   }
 
   removeOccuProfile(id: string) {
-
-
     this.occuprofilesService.removeOccuProfile(id);
   }
 

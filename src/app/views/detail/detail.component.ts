@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { Observable, Subscription } from 'rxjs';
 import { OcupationalProfile } from '../../ocupational-profile';
 import { ActivatedRoute } from '@angular/router';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+
 
 @Component({
   selector: 'app-detail',
@@ -11,13 +13,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetailComponent implements OnInit {
 
-statistics = [];
+  statistics = [];
 
   selectedProfile: OcupationalProfile;
+  @ViewChild('dangerModal') public dangerModal: ModalDirective;
+
   constructor(
     public occuprofilesService: OcuprofilesService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getOccuProfileId();
@@ -34,15 +38,17 @@ statistics = [];
   }
 
   calculateStatistics() {
-    const tempStats = {};
-    let tempTotal = 0;
-    this.selectedProfile.knowledge.forEach(kn => {
-      const code = kn.slice(1, 3);
-      tempStats[code] !== undefined ? tempStats[code]++ : tempStats[code] = 1;
-      tempTotal++;
-    });
-    Object.keys(tempStats).forEach(k => {
-      this.statistics.push({code: k, value: Math.round(tempStats[k] * 100 / tempTotal )});
-    });
+    if (this.selectedProfile) {
+      const tempStats = {};
+      let tempTotal = 0;
+      this.selectedProfile.knowledge.forEach(kn => {
+        const code = kn.slice(1, 3);
+        tempStats[code] !== undefined ? tempStats[code]++ : tempStats[code] = 1;
+        tempTotal++;
+      });
+      Object.keys(tempStats).forEach(k => {
+        this.statistics.push({ code: k, value: Math.round(tempStats[k] * 100 / tempTotal) });
+      });
+    }
   }
 }
