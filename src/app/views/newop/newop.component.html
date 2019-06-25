@@ -171,7 +171,7 @@
                   previous section to add some.</p>
                 <div *ngIf="model.skills.length > 0">
                   <button *ngFor="let ms of model.skills" (click)="removeCompetence(ms, model.skills)" type="button"
-                  [ngClass]="'bok-' + (ms | slice: 1:3)" class="btn btn-pill btn-light">
+                  [ngClass]="'bok-skills-' + (ms | slice: 1:3)" class="btn btn-pill btn-light">
                     <i class="fa fa-close"></i> {{ ms }}
                   </button>
                 </div>
