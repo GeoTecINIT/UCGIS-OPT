@@ -101,7 +101,7 @@
             <div class="row text-center">
               <div class="col-md-12">
                 <div *ngIf="selectedProfile.skills.length > 0">
-                  <button *ngFor="let ms of selectedProfile.skills" type="button" class="btn btn-pill btn-light" [ngClass]="'bok-skills-' + (ms | slice: 1:3)" >
+                  <button *ngFor="let ms of selectedProfile.skills" type="button" class="btn btn-pill btn-light">
                     {{ ms }}
                   </button>
                 </div>
