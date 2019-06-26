@@ -4,14 +4,8 @@
   [fixed]="true"
   [navbarBrandFull]="{
     src: 'assets/img/brand/icon-inline.svg',
-    width: 500,
-    height: 100,
-    alt: 'CoreUI Logo'
-  }"
-  [navbarBrandMinimized]="{
-    src: 'assets/img/brand/sygnet.svg',
-    width: 30,
-    height: 30,
+    width: 255,
+    height: 45,
     alt: 'CoreUI Logo'
   }"
   [sidebarToggler]="false"
@@ -41,26 +35,26 @@
     <!-- Breadcrumb -->
     <!-- breaking change 'cui-breadcrumb' -->
     <cui-breadcrumb>
-        <!-- Breadcrumb Menu-->
-        <li class="breadcrumb-menu d-md-down-none">
-          <div
-            class="btn-group"
-            role="group"
-            aria-label="Button group with nested dropdown"
+      <!-- Breadcrumb Menu-->
+      <li class="breadcrumb-menu d-md-down-none">
+        <div
+          class="btn-group"
+          role="group"
+          aria-label="Button group with nested dropdown"
+        >
+          <a class="btn" href="#"> Hello username! </a>
+          <a class="btn" href="http://eo4geo.uji.es"
+            ><i class="icon-home"></i>&nbsp;Home</a
           >
-            <a class="btn" href="#"> Hello username! </a>
-            <a class="btn" href="http://eo4geo.uji.es"
-              ><i class="icon-home"></i>&nbsp;Home</a
-            >
-            <a class="btn" routerLink="#"
-              ><i class="icon-list"></i> &nbsp;Tools</a
-            >
-            <a class="btn" href="#"
-              ><i class="icon-settings"></i> &nbsp;Settings</a
-            >
-          </div>
-        </li>
-      </cui-breadcrumb>
+          <a class="btn" routerLink="#"
+            ><i class="icon-list"></i> &nbsp;Tools</a
+          >
+          <a class="btn" href="#"
+            ><i class="icon-settings"></i> &nbsp;Settings</a
+          >
+        </div>
+      </li>
+    </cui-breadcrumb>
     <div class="container-fluid">
       <router-outlet></router-outlet>
     </div>

@@ -4,42 +4,55 @@
 
 .bok-AM {
   background-color: #1f77b4 !important;
+  color: #faf9f8;
 }
 .bok-CF {
   background-color: #2ca02c !important;
+  color: #faf9f8;
 }
 .bok-CV {
   background-color: #d62728 !important;
+  color: #faf9f8;
 }
 .bok-DA {
   background-color: #8c564b !important;
+  color: #faf9f8;
 }
 .bok-DM {
   background-color: #bcbd22 !important;
+  color: #faf9f8;
 }
 .bok-DN {
   background-color: #8c564b !important;
+  color: #faf9f8;
 }
 .bok-GC {
   background-color: #17becf !important;
+  color: #faf9f8;
 }
 .bok-GD {
   background-color: #ff7f0e !important;
+  color: #faf9f8;
 }
 .bok-GI {
   background-color: #7f7f7f !important;
+  color: #faf9f8;
 }
 .bok-GS {
   background-color: #e377c2 !important;
+  color: #faf9f8;
 }
 .bok-OI {
   background-color: #9467bd !important;
+  color: #faf9f8;
 }
 .bok-WB {
   background-color: #7f7f7f !important;
+  color: #faf9f8;
 }
 .bok-no {
   background-color: #7f7f7f !important;
+  color: #faf9f8;
 }
 
 /*
@@ -93,6 +106,10 @@
     0 6px 20px 0 rgba(161, 161, 161, 0.19);
 }
 
+.nav-bar-eo4geo a {
+  position: unset !important;
+}
+
 .navbar-brand {
   margin: auto !important;
   margin-right: none !important;
@@ -131,6 +148,6 @@ p {
 }
 
 popover-container {
-    min-width: max-content !important;
-    max-width: none !important;
+  min-width: max-content !important;
+  max-width: none !important;
 }
