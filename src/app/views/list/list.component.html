@@ -94,23 +94,23 @@
 
             <div class="col-md-2">
               <div class="row">
-                <div class="col-sm-3 col-md-3">
+                <div class="col-3 col-sm-3 col-md-3">
                   <button type="button" class="btn btn-block btn-link" [popover]="popTemplateList"  tooltip="Share"
                     popoverTitle="Copy link, export to PDF or XML" placement="top" [outsideClick]="true">
                     <i class="fa fa-share-alt fa-lg mt-4"></i>
                   </button>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-3 col-sm-3 col-md-3">
                   <button type="button" class="btn btn-block btn-link" tooltip="Duplicate" routerLink="/newop/duplicate/{{ o._id }}">
                     <i class="fa fa-copy fa-lg mt-4"></i>
                   </button>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-3 col-sm-3 col-md-3">
                   <button type="button" class="btn btn-block btn-link" tooltip="Edit" routerLink="/newop/copy/{{ o._id }}">
                     <i class="fa fa-edit fa-lg mt-4"></i>
                   </button>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-3 col-sm-3 col-md-3">
                   <button type="button" class="btn btn-block btn-link" tooltip="Remove"
                   data-toggle="modal" (click)="dangerModal.show()">
                     <i class="fa fa-trash-o fa-lg mt-4"></i>
