@@ -151,3 +151,7 @@ popover-container {
   min-width: max-content !important;
   max-width: none !important;
 }
+// ng-select from newop, hide selected options inside the dropdown
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+  display: none !important;
+}
