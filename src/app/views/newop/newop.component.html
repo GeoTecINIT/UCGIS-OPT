@@ -39,7 +39,8 @@
                   <div class="col-md-8">
                     <div class="form-group">
                       <label for="field">Field</label>
-                      <span tooltip="The term relates directly to a specific area of study. The International Standard Classification of Education: Fields of Education and Training 2013 (ISCED-F). Maintained by the UNESCO Institute for Statistics."
+                      <span
+                        tooltip="The term relates directly to a specific area of study. The International Standard Classification of Education: Fields of Education and Training 2013 (ISCED-F). Maintained by the UNESCO Institute for Statistics."
                         class="badge badge-primary badge-pill">i</span>
                       <ng-select [items]="fieldsService.allfields" name="field" bindLabel="name" groupBy="grandparent"
                         [multiple]="false" [(ngModel)]="model.field">
@@ -171,7 +172,7 @@
                   previous section to add some.</p>
                 <div *ngIf="model.skills.length > 0">
                   <button *ngFor="let ms of model.skills" (click)="removeCompetence(ms, model.skills)" type="button"
-                   class="btn btn-pill btn-light">
+                    class="btn btn-pill btn-light">
                     <i class="fa fa-close"></i> {{ ms }}
                   </button>
                 </div>
@@ -204,55 +205,63 @@
           </div>
           <div class="card-body" style="background-color: #faf9f8">
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-2">
                 <div class="input-group">
-                    <ng-select *ngIf="isfullESCOcompetences" [items]="escoService.allcompetences" name="competences" bindLabel="preferredLabel" groupBy="reuseLevel"
-                    [multiple]="true" [(ngModel)]="model.competences" [searchFn]="customSearchFn" placeholder="Search...">
+                  <ng-select *ngIf="isfullESCOcompetences" [items]="escoService.allcompetences" name="competences"
+                    bindLabel="preferredLabel" groupBy="reuseLevel" [multiple]="true" [searchFn]="customSearchFn"
+                    placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences">
                     <ng-template ng-optgroup-tmp let-item="item">
                       {{item.reuseLevel || 'Unnamed group'}}
                     </ng-template>
                   </ng-select>
-                    <ng-select *ngIf="!isfullESCOcompetences" [items]="competences" name="competences" bindLabel="preferredLabel" groupBy="reuseLevel"
-                    [multiple]="true" [(ngModel)]="model.competences" [searchFn]="customSearchFn" placeholder="Search...">
+                  <ng-select *ngIf="!isfullESCOcompetences" [items]="competences" name="competences"
+                    bindLabel="preferredLabel" groupBy="reuseLevel" [multiple]="true" [searchFn]="customSearchFn"
+                    placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences" >
                     <ng-template ng-optgroup-tmp let-item="item">
                       {{item.reuseLevel || 'Unnamed group'}}
                     </ng-template>
                   </ng-select>
                 </div>
               </div>
-             <!--  <div class="col-md-8">
-                <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary"
-                  (click)="removeCompetence(mc, model.competences)">
-                  <i class="fa fa-close"></i> {{ mc.preferredLabel }}
-                </button>
-              </div> -->
+              <div class="col-md-3">
+                  <span class="input-group-prepend">
+                      <label class="switch switch-label switch-pill switch-outline-primary-alt">
+                        <input class="switch-input" type="checkbox" value="isfullESCOcompetences"
+                          [(ngModel)]="isfullESCOcompetences" checked />
+                        <span class="switch-slider" tooltip="Click here to add to the dropdown full list of ESCO skills."
+                          data-checked="✓" data-unchecked="X"></span>
+                      </label>
+                      <div class="pl-1">Search <a href="https://ec.europa.eu/esco/portal/skill">ESCO</a> skills</div>
+                    </span>
+                </div>
+              <div class="col-md-7">
+                  <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary"
+                    (click)="removeCompetence(mc, model.competences)">
+                    <i class="fa fa-close"></i> {{ mc.preferredLabel }}
+                  </button>
+                </div>
             </div>
             <div class="row pt-1">
               <div class="col-md-12">
-                <span class="input-group-prepend">
-                  <label class="switch switch-label switch-pill switch-outline-primary-alt">
-                    <input class="switch-input" type="checkbox" value="isfullESCOcompetences"
-                      [(ngModel)]="isfullESCOcompetences" checked />
-                    <span class="switch-slider" tooltip="Click here to add to the dropdown full list of ESCO skills."
-                      data-checked="✓" data-unchecked="X"></span>
-                  </label>
-                  <div class="pl-1">Add <a href="https://ec.europa.eu/esco/portal/skill">ESCO</a> competences to
-                    dropdown - This service uses the <a href="http://ec.europa.eu/esco"> ESCO </a> classification of the
-                    European Commission. </div>
-                </span>
+                
+                This service uses the <a href="http://ec.europa.eu/esco"> ESCO </a> classification of the
+                    European Commission.
               </div>
             </div>
-            <div class="row">
+            <div class="row pt-1">
+       
               <div class="col-md-4 text-right">
                 If you cannot find the specified competence, you can also add your own competences here:
               </div>
               <div class="col-md-6">
                 <input #competenceExtra type="text" class="form-control" id="competenceExtra"
-                  placeholder="Competence description" name="competenceExtra" (keyup)="competenceExtraAdd.disabled = false"/>
+                  placeholder="Competence description" name="competenceExtra"
+                  (keyup)="competenceExtraAdd.disabled = false" />
               </div>
               <div class="col-md-2">
                 <button #competenceExtraAdd type="submit" class="btn btn-primary" tooltip="Add your custom competence."
-                  (click)="addExtraCompetence(competenceExtra.value); competenceExtra.value= ''; competenceExtraAdd.disabled = true" disabled >
+                  (click)="addExtraCompetence(competenceExtra.value); competenceExtra.value= ''; competenceExtraAdd.disabled = true"
+                  disabled>
                   Add Competence
                 </button>
               </div>
