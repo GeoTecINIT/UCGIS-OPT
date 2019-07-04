@@ -84,7 +84,7 @@
             </div>
             <div class="card-body" style="background-color: #faf9f8">
               <div class="row text-center">
-                <div class="col-lg-5 col-sm-6">
+                <div class="col-lg-4 col-sm-6">
                   <div class="row text-center">
                     <div class="offset-md-2 col-md-6">
                       <div class="input-group">
@@ -105,9 +105,10 @@
                       </button>
                     </div>
                   </div>
-                  <svg id="bubbles" width="350" height="350"></svg>
+                  <div id="bubbles">
+                  </div>
                 </div>
-                <div class="col-lg-7 col-sm-6 text-justify">
+                <div class="col-lg-8 col-sm-6 text-justify">
                   <a [hidden]="currentConcept != ''" (click)="navigateToConcept('GIST')">
                     < Back </a> <div #textBoK id="textBoK" [hidden]="currentConcept == '' && currentConcept != 'GIST'">
                 </div>
