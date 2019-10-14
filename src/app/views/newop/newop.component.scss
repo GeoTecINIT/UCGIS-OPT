@@ -23,14 +23,14 @@ h5 {
     font-size: smaller;
 }
 
-ngx-select-dropdown {
-    width: 100%;
-}
-
 .inline {
     display: inline-block;
     margin-left: 1em;
     margin-top: 1em;
+}
+
+ng-select {
+    width: inherit;
 }
 
 a {
