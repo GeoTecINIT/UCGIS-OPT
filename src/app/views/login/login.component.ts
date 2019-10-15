@@ -1,12 +1,12 @@
-import { Component , NgZone} from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: 'login.component.html'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   public email: string;
   public pwd: string;
@@ -16,22 +16,33 @@ export class LoginComponent {
   public pwdRegister: string;
   public pwdRepRegister: string;
   public isRegistering = false;
+  return = '';
 
   constructor(
     private afAuth: AngularFireAuth,
     private ngZone: NgZone,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.email = '';
     this.pwd = '';
+
     this.afAuth.auth.onAuthStateChanged(user => {
       if (user) {
         // User is signed in.
-        console.log('login inside ' + this.afAuth.auth.currentUser);
-     //   this.router.navigateByUrl('/list');
-        this.ngZone.run(() => this.router.navigateByUrl('/list')).then();
+        //  console.log('login inside ' + this.afAuth.auth.currentUser.email + ' - route:' + this.return );
+        this.ngZone.run(() => this.router.navigateByUrl(this.return)).then();
       }
     });
+  }
+
+  ngOnInit() {
+    this.route.queryParams
+      .subscribe(params => this.return = params['return'] || '/list');
+    if (this.afAuth.auth.currentUser) {
+      // User is signed in.
+      this.ngZone.run(() => this.router.navigateByUrl(this.return)).then();
+    }
   }
 
   login() {

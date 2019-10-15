@@ -158,7 +158,7 @@ export class NewopComponent implements OnInit {
     bok.browseToConcept(conceptName);
     this.currentConcept = conceptName;
     this.hasResults = false;
-    console.log('Navigate to concept :' + conceptName);
+    // console.log('Navigate to concept :' + conceptName);
   }
 
   incrementLimit() {
@@ -174,7 +174,7 @@ export class NewopComponent implements OnInit {
     this.model.competences = [...this.model.competences, { preferredLabel: comp }];
     this.escoService.allcompetences = [...this.escoService.allcompetences, { preferredLabel: comp }];
     this.escoService.basicCompetences = [...this.escoService.basicCompetences, { preferredLabel: comp }];
-    console.log('add compr:' + comp);
+    // console.log('add compr:' + comp);
   }
 
   fullListESCO() {

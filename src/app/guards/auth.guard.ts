@@ -16,12 +16,15 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.afAuth.auth.currentUser) {
-      console.log('AuthGuard - not logged in ');
-      this.ngZone.run(() => this.router.navigateByUrl('/login')).then();
-    //  this.router.navigateByUrl('/login');
+      // console.log('AuthGuard - not logged in ');
+      this.ngZone.run(() => this.router.navigateByUrl('/login', {
+        queryParams: {
+          return: state.url
+        }
+      })).then();
       return false;
     } else {
-      console.log('AuthGuard - logged in ' + this.afAuth.auth.currentUser.uid  );
+      // console.log('AuthGuard - logged in ' + this.afAuth.auth.currentUser.uid  );
       return true;
     }
   }

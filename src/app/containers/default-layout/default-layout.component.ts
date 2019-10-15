@@ -46,8 +46,4 @@ export class DefaultLayoutComponent implements OnDestroy {
     this.afAuth.auth.signOut();
     this.ngZone.run(() => this.router.navigateByUrl('/login')).then();
   }
-
-  navigateToList() {
-    this.ngZone.run(() => this.router.navigateByUrl('/list')).then();
-  }
 }
