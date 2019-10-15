@@ -10,12 +10,12 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import {
+/* import {
   AngularAuthFactory,
   AngularFirestoreFactory,
   FirestoreExtensionService,
   FirestoreAuthExtensionService
-} from '../app/services/firestore-extension.service';
+} from '../app/services/firestore-extension.service'; */
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -86,8 +86,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     TooltipModule.forRoot(),
     NgSelectModule,
     FormsModule,
-    // AngularFireModule.initializeApp(environment.firebase, 'primary'),
-    // AngularFireModule.initializeApp(environment.firebaseAuth, 'auth'),
+  // AngularFireModule.initializeApp(environment.firebase, 'primary'),
+   AngularFireModule.initializeApp(environment.firebaseAuth, 'auth'),
     AngularFirestoreModule,
     AngularFireAuthModule,
     HttpClientModule,
@@ -110,8 +110,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: FirestoreExtensionService, deps: [PLATFORM_ID, NgZone], useFactory: AngularFirestoreFactory },
-    { provide: FirestoreAuthExtensionService, deps: [PLATFORM_ID, NgZone], useFactory: AngularAuthFactory },
+   // { provide: FirestoreExtensionService, deps: [PLATFORM_ID, NgZone], useFactory: AngularFirestoreFactory },
+   // { provide: FirestoreAuthExtensionService, deps: [PLATFORM_ID, NgZone], useFactory: AngularAuthFactory },
 
     Base64img
   ],

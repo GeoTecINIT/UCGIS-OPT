@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { NgForOf } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
 

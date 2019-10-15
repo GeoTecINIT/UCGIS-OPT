@@ -1,9 +1,6 @@
-import { Component } from '@angular/core';
+import { Component , NgZone} from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  FirestoreExtensionService,
-  FirestoreAuthExtensionService,
-} from '../../services/firestore-extension.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,23 +18,24 @@ export class LoginComponent {
   public isRegistering = false;
 
   constructor(
-    private firebase: FirestoreExtensionService,
-    private fbAuth: FirestoreAuthExtensionService,
+    private afAuth: AngularFireAuth,
+    private ngZone: NgZone,
     private router: Router
   ) {
     this.email = '';
     this.pwd = '';
-    this.fbAuth.auth.onAuthStateChanged(user => {
+    this.afAuth.auth.onAuthStateChanged(user => {
       if (user) {
         // User is signed in.
-        console.log('login inside ' + this.fbAuth.auth.currentUser);
-        this.router.navigateByUrl('/list');
+        console.log('login inside ' + this.afAuth.auth.currentUser);
+     //   this.router.navigateByUrl('/list');
+        this.ngZone.run(() => this.router.navigateByUrl('/list')).then();
       }
     });
   }
 
   login() {
-    this.fbAuth.auth.signInWithEmailAndPassword(this.email, this.pwd)
+    this.afAuth.auth.signInWithEmailAndPassword(this.email, this.pwd)
       .catch(error => {
         // Handle Errors here.
         const errorCode = error.code;
@@ -48,12 +46,12 @@ export class LoginComponent {
   }
 
   logout() {
-    this.fbAuth.auth.signOut();
+    this.afAuth.auth.signOut();
   }
 
   register() {
     if (this.pwdRegister === this.pwdRepRegister) {
-      this.fbAuth.auth.createUserWithEmailAndPassword(this.emailRegister, this.pwdRegister)
+      this.afAuth.auth.createUserWithEmailAndPassword(this.emailRegister, this.pwdRegister)
         .catch(error => {
           // Handle Errors here.
           const errorCode = error.code;
@@ -72,7 +70,7 @@ export class LoginComponent {
       handleCodeInApp: false
     };
 
-    this.fbAuth.auth.sendPasswordResetEmail(this.email, actionCodeSettings)
+    this.afAuth.auth.sendPasswordResetEmail(this.email, actionCodeSettings)
       .then(() => {
         // Password reset email sent.
         this.errorLogin = 'An email has been sent to your address. It contains a link to recover your password.';
