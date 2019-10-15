@@ -34,7 +34,6 @@ import { DefaultLayoutComponent } from './containers';
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
-import { RegisterComponent } from './views/register/register.component';
 import { ListComponent } from './views/list/list.component';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -101,7 +100,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent,
     ListComponent,
     DetailComponent,
     NewopComponent,

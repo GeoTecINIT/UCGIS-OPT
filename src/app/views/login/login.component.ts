@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   FirestoreExtensionService,
   FirestoreAuthExtensionService,
@@ -22,16 +23,15 @@ export class LoginComponent {
   constructor(
     private firebase: FirestoreExtensionService,
     private fbAuth: FirestoreAuthExtensionService,
+    private router: Router
   ) {
     this.email = '';
     this.pwd = '';
-    console.log('login ' + this.fbAuth.auth.currentUser);
-    // this.fac.app
-
     this.fbAuth.auth.onAuthStateChanged(user => {
       if (user) {
         // User is signed in.
         console.log('login inside ' + this.fbAuth.auth.currentUser);
+        this.router.navigateByUrl('/list');
       }
     });
   }
