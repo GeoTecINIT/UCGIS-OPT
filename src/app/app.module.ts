@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, PLATFORM_ID, NgZone } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +8,14 @@ import { HttpClientModule } from '@angular/common/http';
 // Import firebase-firestore
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+import {
+  AngularAuthFactory,
+  AngularFirestoreFactory,
+  FirestoreExtensionService,
+  FirestoreAuthExtensionService
+} from '../app/services/firestore-extension.service';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -79,8 +87,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     TooltipModule.forRoot(),
     NgSelectModule,
     FormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    // AngularFireModule.initializeApp(environment.firebase, 'primary'),
+    // AngularFireModule.initializeApp(environment.firebaseAuth, 'auth'),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     HttpClientModule,
     PopoverModule.forRoot(),
     ModalModule.forRoot()
@@ -101,12 +111,12 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     PopupComponent
   ],
   providers: [
-    {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy
-    },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: FirestoreExtensionService, deps: [PLATFORM_ID, NgZone], useFactory: AngularFirestoreFactory },
+    { provide: FirestoreAuthExtensionService, deps: [PLATFORM_ID, NgZone], useFactory: AngularAuthFactory },
+
     Base64img
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

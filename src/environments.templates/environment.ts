@@ -12,5 +12,13 @@ export const environment = {
     authDomain: '',
     messagingSenderId: '',
     projectId: ''
+  },
+  firebaseAuth: {
+    apiKey: '',
+    databaseURL: '',
+    storageBucket: '',
+    authDomain: '',
+    messagingSenderId: '',
+    projectId: ''
   }
 };
