@@ -5,16 +5,11 @@
   },
   "hosting": {
     "public": "dist",
+    "site": "eo4geo-opt",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
     ]
   }
 }
