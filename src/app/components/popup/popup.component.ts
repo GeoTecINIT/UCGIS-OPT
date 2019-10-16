@@ -114,7 +114,7 @@ export class PopupComponent implements OnInit {
     if (this.selectedProfile.competences.length > 0) {
       currentLinePoint = currentLinePoint + 10;
       doc.setFontSize(12).setTextColor('#1a80b6').setFontType('bold'); // headline
-      doc.text(30, currentLinePoint, 'Competences');
+      doc.text(30, currentLinePoint, 'Transversal skills required');
       currentLinePoint = currentLinePoint + 5;
       doc.setTextColor('#000').setFontType('normal').setFontSize(8); // normal text
       this.selectedProfile.competences.forEach(co => {
@@ -125,7 +125,7 @@ export class PopupComponent implements OnInit {
       });
     }
 
-    // doc.textWithLink('asdfasdf', 20, 260, { url: 'https://renhata.es/es/ciudadania/consejos-sostenibilidad-edificio' });
+    // doc.textWithLink('asdfasdf', 20, 260, { url: 'https://' });
     doc.save('OccupationalProfile.pdf');
   }
 

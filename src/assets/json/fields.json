@@ -1,11 +1,11 @@
 [
     {
-        "code": "0031",
-        "grandparent": "Personal skills and development",
-        "greatgrandparent": "Generic programmes and qualifications",
-        "name": "Time management",
-        "concatName": "Time management -> Personal skills and development",
-        "parent": "Personal skills and development"
+        "code": "0612",
+        "grandparent": "Information and Communication Technologies (ICTs)",
+        "greatgrandparent": "Information and Communication Technologies (ICTs)",
+        "name": "Information technology administration",
+        "concatName": "Information technology administration -> Information and Communication Technologies (ICTs)",
+        "parent": "Database and network design and administration"
     },
     {
         "code": "0716",
@@ -16,20 +16,20 @@
         "parent": "Motor vehicles, ships and aircraft"
     },
     {
+        "code": "0031",
+        "grandparent": "Personal skills and development",
+        "greatgrandparent": "Generic programmes and qualifications",
+        "name": "Time management",
+        "concatName": "Time management -> Personal skills and development",
+        "parent": "Personal skills and development"
+    },
+    {
         "code": "0421",
         "grandparent": "Law",
         "greatgrandparent": "Business, administration and law",
         "name": "Legal studies",
         "concatName": "Legal studies -> Law",
         "parent": "Law"
-    },
-    {
-        "code": "0612",
-        "grandparent": "Information and Communication Technologies (ICTs)",
-        "greatgrandparent": "Information and Communication Technologies (ICTs)",
-        "name": "Information technology administration",
-        "concatName": "Information technology administration -> Information and Communication Technologies (ICTs)",
-        "parent": "Database and network design and administration"
     },
     {
         "code": "0721",
