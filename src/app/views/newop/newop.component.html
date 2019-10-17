@@ -109,8 +109,11 @@
                   </div>
                 </div>
                 <div class="col-lg-8 col-sm-6 text-justify">
-                  <a [hidden]="currentConcept != ''" (click)="navigateToConcept('GIST')">
-                    < Back </a> <div #textBoK id="textBoK" [hidden]="currentConcept == '' && currentConcept != 'GIST'">
+                  <a (click)="navigateToConcept('GIST')">
+                    < Back </a>
+                    <br>
+                    <h5 [hidden]="currentConcept == '' && currentConcept != 'GIST'">Knowledge</h5>
+                    <div #textBoK id="textBoK" [hidden]="currentConcept == '' && currentConcept != 'GIST'">
                 </div>
                 <div class="col" *ngIf="hasResults">
                   <h3 class="center">
