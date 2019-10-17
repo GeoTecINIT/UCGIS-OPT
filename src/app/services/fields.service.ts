@@ -20,8 +20,23 @@ export class FieldsService {
 
     this.http.get('assets/json/fields.json').subscribe((data) => {
       this.allfields = data;
+    /* // sort by two or more keys
+      this.allfields.sort((a, b) => {
+        return this.cmp(
+          [this.cmp(a.grandparent, b.grandparent), this.cmp(a.name, b.name)],
+          [this.cmp(b.grandparent, a.grandparent), this.cmp(b.name, a.name)]
+        );
+      });
+      console.log(JSON.stringify(this.allfields));
+      */
     });
-    //  });
   }
+
+  // generic comparison function
+  cmp(x, y) {
+    return x > y ? 1 : x < y ? -1 : 0;
+  }
+
+
 }
 
