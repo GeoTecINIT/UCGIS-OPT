@@ -60,13 +60,13 @@ export class LoginComponent implements OnInit {
   loginWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    this.afAuth.auth.signInWithPopup(provider).then( (result) => {
+    this.afAuth.auth.signInWithPopup(provider).then(result => {
       // This gives you a Google Access Token. You can use it to access the Google API.
       const token = result.credential;
       // The signed-in user info.
       const user = result.user;
       // ...
-    }).catch(function (error) {
+    }).catch(error => {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
