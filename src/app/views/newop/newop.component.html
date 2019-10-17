@@ -109,8 +109,11 @@
                   </div>
                 </div>
                 <div class="col-lg-8 col-sm-6 text-justify">
-                  <a [hidden]="currentConcept != ''" (click)="navigateToConcept('GIST')">
-                    < Back </a> <div #textBoK id="textBoK" [hidden]="currentConcept == '' && currentConcept != 'GIST'">
+                  <a (click)="navigateToConcept('GIST')">
+                    < Back </a>
+                    <br>
+                    <h5 [hidden]="currentConcept == '' && currentConcept != 'GIST'">Knowledge</h5>
+                    <div #textBoK id="textBoK" [hidden]="currentConcept == '' && currentConcept != 'GIST'">
                 </div>
                 <div class="col" *ngIf="hasResults">
                   <h3 class="center">
@@ -151,8 +154,8 @@
             <div class="col-md-12">
               <p *ngIf="model.knowledge.length == 0">You didn't add any knowledge required yet. Browse in the BoK in
                 previous section to add some.</p>
-              <button *ngFor="let mk of model.knowledge" type="button" class="btn btn-pill"
-                [ngClass]="'bok-' + (mk | slice: 1:3)" (click)="removeCompetence(mk, model.knowledge)">
+              <button *ngFor="let mk of model.knowledge.slice().reverse()" type="button" class="btn btn-pill"
+                [ngClass]="'bok-' + (mk | slice: 1:3)" (click)="removeCompetence(mk, model.knowledge); associatedSkillsToDelete > 0 ? dangerModal.show(): null">
                 <i class="fa fa-close"></i> {{ mk }}
               </button>
             </div>
@@ -172,8 +175,8 @@
                 <p *ngIf="model.skills.length == 0">You didn't add any skills required yet. Browse in the BoK in
                   previous section to add some.</p>
                 <div *ngIf="model.skills.length > 0">
-                  <button *ngFor="let ms of model.skills" (click)="removeCompetence(ms, model.skills)" type="button"
-                    class="btn btn-pill btn-light">
+                  <button *ngFor="let ms of model.skills.slice().reverse()" (click)="removeCompetence(ms, model.skills)" type="button"
+                    class="btn btn-pill btn-light btn-list">
                     <i class="fa fa-close"></i> {{ ms }}
                   </button>
                 </div>
@@ -217,7 +220,7 @@
                   </ng-select>
                   <ng-select *ngIf="!isfullESCOcompetences" [items]="competences" name="competences"
                     bindLabel="preferredLabel" groupBy="reuseLevel" [multiple]="true" [searchFn]="customSearchFn"
-                    placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences" >
+                    placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences">
                     <ng-template ng-optgroup-tmp let-item="item">
                       {{item.reuseLevel || 'Unnamed group'}}
                     </ng-template>
@@ -225,32 +228,32 @@
                 </div>
               </div>
               <div class="col-md-3">
-                  <span class="input-group-prepend">
-                      <label class="switch switch-label switch-pill switch-outline-primary-alt">
-                        <input class="switch-input" type="checkbox" value="isfullESCOcompetences"
-                          [(ngModel)]="isfullESCOcompetences" checked />
-                        <span class="switch-slider" tooltip="Click here to add to the dropdown full list of ESCO skills."
-                          data-checked="✓" data-unchecked="X"></span>
-                      </label>
-                      <div class="pl-1">Search <a href="https://ec.europa.eu/esco/portal/skill">ESCO</a> skills</div>
-                    </span>
-                </div>
+                <span class="input-group-prepend">
+                  <label class="switch switch-label switch-pill switch-outline-primary-alt">
+                    <input class="switch-input" type="checkbox" value="isfullESCOcompetences"
+                      [(ngModel)]="isfullESCOcompetences" checked />
+                    <span class="switch-slider" tooltip="Click here to add to the dropdown full list of ESCO skills."
+                      data-checked="✓" data-unchecked="X"></span>
+                  </label>
+                  <div class="pl-1">Search full <a href="https://ec.europa.eu/esco/portal/skill">ESCO</a> skills</div>
+                </span>
+              </div>
               <div class="col-md-6">
-                  <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary"
-                    (click)="removeCompetence(mc, model.competences)">
-                    <i class="fa fa-close"></i> {{ mc.preferredLabel }}
-                  </button>
-                </div>
-            </div>
-            <div class="row pt-1">
-              <div class="col-md-12">
-                
-                This service uses the <a href="http://ec.europa.eu/esco"> ESCO </a> classification of the
-                    European Commission.
+                <button *ngFor="let mc of model.competences" type="button" class="btn btn-pill btn-primary"
+                  (click)="removeCompetence(mc, model.competences)">
+                  <i class="fa fa-close"></i> {{ mc.preferredLabel }}
+                </button>
               </div>
             </div>
             <div class="row pt-1">
-       
+              <div class="col-md-12">
+
+                This service uses the <a href="http://ec.europa.eu/esco"> ESCO </a> classification of the
+                European Commission.
+              </div>
+            </div>
+            <div class="row pt-1">
+
               <div class="col-md-4 text-right">
                 If you cannot find the specified transversal skill, you can also add your own here:
               </div>
@@ -260,7 +263,8 @@
                   (keyup)="competenceExtraAdd.disabled = false" />
               </div>
               <div class="col-md-2">
-                <button #competenceExtraAdd type="submit" class="btn btn-primary" tooltip="Add your custom transversal skill."
+                <button #competenceExtraAdd type="submit" class="btn btn-primary"
+                  tooltip="Add your custom transversal skill."
                   (click)="addExtraCompetence(competenceExtra.value); competenceExtra.value= ''; competenceExtraAdd.disabled = true"
                   disabled>
                   Add transversal skill
@@ -276,3 +280,22 @@
 </div>
 <!--/.row-->
 </div>
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-primary" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Do you want to delete the skills associated with this knowledge?</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>There are {{associatedSkillsToDelete}} skills associated with the knowledge you deleted.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="dangerModal.hide()">No, keep them.</button>
+        <button type="button" class="btn btn-danger" (click)="removeSkillsAssociated(); dangerModal.hide()">Yes, delete them.</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

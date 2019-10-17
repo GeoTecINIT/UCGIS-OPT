@@ -34,6 +34,9 @@ export class NewopComponent implements OnInit {
 
   isfullESCOcompetences = false;
 
+  associatedSkillsToDelete = 0;
+  nameCodeToDelete = '';
+
   configFields = {
     displayKey: 'concatName', // if objects array passed which key to be displayed defaults to description
     search: true, // true/false for the search functionlity defaults to false,
@@ -105,11 +108,34 @@ export class NewopComponent implements OnInit {
   }
 
   removeCompetence(name: string, array: string[]) {
+    this.nameCodeToDelete = '';
     array.forEach((item, index) => {
       if (item === name) {
+        //  console.log('removing concept' + name);
         array.splice(index, 1);
+        this.nameCodeToDelete = name.split(']')[0];
       }
     });
+
+    const skillsFiltered = [];
+    this.model.skills.forEach((sk, i) => {
+      //  console.log('code skill' + sk.split(']')[0] + '=' + this.nameCodeToDelete);
+      if (sk.split(']')[0] === this.nameCodeToDelete) { // There is a knowledge that starts with same code, don't include it
+        skillsFiltered.push(sk);
+      }
+    });
+    this.associatedSkillsToDelete = skillsFiltered.length;
+  }
+
+  removeSkillsAssociated() {
+    const skillsFiltered = [];
+    this.model.skills.forEach((sk, i) => {
+      // console.log('code skill' + sk.split(']')[0] + '=' + this.nameCodeToDelete);
+      if (sk.split(']')[0] !== this.nameCodeToDelete) { // There is a knowledge that starts with same code, don't include it
+        skillsFiltered.push(sk);
+      }
+    });
+    this.model.skills = skillsFiltered;
   }
 
   saveOccuProfile() {
@@ -197,7 +223,7 @@ export class NewopComponent implements OnInit {
     if (item.altLabels && item.altLabels.length > 0) {
       item.altLabels.forEach((alt) => {
         if (alt.toLocaleLowerCase().indexOf(term) > -1) {
-        found = true;
+          found = true;
         }
       });
     }

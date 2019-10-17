@@ -1,6 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-dashboard',
@@ -54,6 +55,24 @@ export class LoginComponent implements OnInit {
         this.errorLogin = errorMessage;
         console.log(errorCode + ' - ' + errorMessage);
       });
+  }
+
+  loginWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    this.afAuth.auth.signInWithPopup(provider).then(function (result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const token = result.credential;
+      // The signed-in user info.
+      const user = result.user;
+      // ...
+    }).catch(function (error) {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      this.errorLogin = errorMessage;
+      console.log(errorCode + ' - ' + errorMessage);
+    });
   }
 
   logout() {
