@@ -91,7 +91,8 @@ export class PopupComponent implements OnInit {
       currentLinePoint = currentLinePoint + 5;
       doc.setTextColor('#000').setFontType('normal').setFontSize(8); // normal text
       this.selectedProfile.knowledge.forEach(kn => {
-        const knLines = doc.setFontSize(8).splitTextToSize('· ' + kn, 150);
+        const knTitle = kn.split('] ')[1];
+        const knLines = doc.setFontSize(8).splitTextToSize('· ' + knTitle, 150);
         doc.text(30, currentLinePoint, knLines);
         currentLinePoint = currentLinePoint + 4 * knLines.length;
       });
@@ -104,8 +105,9 @@ export class PopupComponent implements OnInit {
       currentLinePoint = currentLinePoint + 5;
       doc.setTextColor('#000').setFontType('normal').setFontSize(8); // normal text
       this.selectedProfile.skills.forEach(sk => {
+        const skTitle = sk.split('] ')[1];
         currentLinePoint = this.checkEndOfPage(currentLinePoint, doc);
-        const skLines = doc.setFontSize(8).splitTextToSize('· ' + sk, 150);
+        const skLines = doc.setFontSize(8).splitTextToSize('· ' + skTitle, 150);
         doc.text(30, currentLinePoint, skLines);
         currentLinePoint = currentLinePoint + 4 * skLines.length;
       });
