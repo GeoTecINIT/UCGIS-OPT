@@ -77,12 +77,20 @@
           <!-- Search Knowledge and skills card -->
           <div class="card card-accent-secondary">
             <div class="card-header">
-              Search knowledge and skills
+              Search knowledge
+              <small>Associated skills will be automatically added</small>
               <span
                 tooltip="Browse in the BoK for knowledge required for your new occupational profile. Once in the required knowledge, press the button 'Add' it will link the concept and the skills dependent on it."
                 class="badge badge-primary badge-pill">i</span>
             </div>
             <div class="card-body" style="background-color: #faf9f8">
+              <div class="row text-left">
+                <div class="col-md-12">
+                  <div *ngIf="isShowingSkillsTip" class="skillsTip">
+                    You added knowledge, and {{associatedSkillsToDelete}} related skills were added.
+                  </div>
+                </div>
+              </div>
               <div class="row text-center">
                 <div class="col-lg-4 col-sm-6">
                   <div class="row text-center">
@@ -100,12 +108,13 @@
                     </div>
                     <div class="col-md-3">
                       <button type="submit" class="btn btn-primary"
-                        tooltip="Search or navigate in the graph to add knowledge." (click)="addBokKnowledge()">
+                        tooltip="Search or navigate in the graph to add knowledge." (click)="addBokKnowledge();">
                         Add
                       </button>
                     </div>
+
                   </div>
-                  <div id="bubbles">
+                  <div id="bubbles" (click)="cleanTip()">
                   </div>
                 </div>
                 <div class="col-lg-8 col-sm-6 text-justify">
@@ -214,14 +223,16 @@
                   <div class="input-group">
                     <ng-select *ngIf="isfullESCOcompetences" [items]="escoService.allcompetences" name="competences"
                       bindLabel="preferredLabel" groupBy="reuseLevel" [multiple]="true" [searchFn]="customSearchFn"
-                      placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences" [clearable]="false">
+                      placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences"
+                      [clearable]="false">
                       <ng-template ng-optgroup-tmp let-item="item">
                         {{item.reuseLevel || 'Unnamed group'}}
                       </ng-template>
                     </ng-select>
                     <ng-select *ngIf="!isfullESCOcompetences" [items]="competences" name="competences"
                       bindLabel="preferredLabel" groupBy="reuseLevel" [multiple]="true" [searchFn]="customSearchFn"
-                      placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences" [clearable]="false">
+                      placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences"
+                      [clearable]="false">
                       <ng-template ng-optgroup-tmp let-item="item">
                         {{item.reuseLevel || 'Unnamed group'}}
                       </ng-template>

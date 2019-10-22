@@ -33,6 +33,7 @@ export class NewopComponent implements OnInit {
   currentConcept = 'GIST';
 
   isfullESCOcompetences = false;
+  isShowingSkillsTip = false;
 
   associatedSkillsToDelete = 0;
   nameCodeToDelete = '';
@@ -90,6 +91,7 @@ export class NewopComponent implements OnInit {
   }
 
   addBokKnowledge() {
+    this.associatedSkillsToDelete = 0;
     const divs = this.textBoK.nativeElement.getElementsByTagName('div');
     if (divs['bokskills'] != null) {
       const shortCode = this.textBoK.nativeElement.getElementsByTagName('h4')[0].innerText.split(' ')[0];
@@ -97,6 +99,7 @@ export class NewopComponent implements OnInit {
       for (const skill of as) {
         if (!this.model.skills.includes(shortCode + ' ' + skill.innerText)) {
           this.model.skills.push(shortCode + ' ' + skill.innerText);
+          this.associatedSkillsToDelete++;
         }
       }
     }
@@ -105,6 +108,8 @@ export class NewopComponent implements OnInit {
     if (!this.model.knowledge.includes(concept)) {
       this.model.knowledge.push(concept);
     }
+    console.log('added knowledge');
+    this.isShowingSkillsTip = true;
   }
 
   removeCompetence(name: string, array: string[]) {
@@ -178,13 +183,18 @@ export class NewopComponent implements OnInit {
     this.selectedNodes = bok.searchInBoK(text);
     this.hasResults = this.selectedNodes.length > 0 ? true : false;
     this.currentConcept = '';
+    this.cleanTip();
   }
 
   navigateToConcept(conceptName) {
     bok.browseToConcept(conceptName);
     this.currentConcept = conceptName;
     this.hasResults = false;
-    // console.log('Navigate to concept :' + conceptName);
+    this.cleanTip();
+  }
+
+  cleanTip() {
+    this.isShowingSkillsTip = false;
   }
 
   incrementLimit() {
