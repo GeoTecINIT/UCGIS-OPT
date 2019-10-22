@@ -2,13 +2,14 @@
   <div class="row">
     <div class="col-sm-12 col-md-12">
       <h1 class="title">
-        Your Occupational Profiles
+        Occupational Profiles
       </h1>
+      <div class="text-center" [hidden]="!isAnonymous"><h5>You have limited functionality because you are not logged in. Login to use all functionality in the tool.</h5></div>
       <div class="card card-accent-primary">
         <div class="card-header">
           <div class="row">
-            <div class="col-sm-4 col-md-2">
-              <button type="button" class="btn btn-block btn-outline-primary" routerLink="/newop/empty">
+            <div class="col-sm-4 col-md-2" tooltip="{{isAnonymous? 'Login to be able to add ocupational profiles' : ''}}">
+              <button type="button" class="btn btn-block btn-outline-primary" routerLink="/newop/empty" [disabled]="isAnonymous">
                 New Occupational Profile
               </button>
             </div>
@@ -100,19 +101,19 @@
                     <i class="fa fa-share-alt fa-lg mt-4"></i>
                   </button>
                 </div>
-                <div class="col-3 col-sm-3 col-md-3 no-padding">
-                  <button type="button" class="btn btn-block btn-link" tooltip="Duplicate" routerLink="/newop/duplicate/{{ o._id }}">
+                <div class="col-3 col-sm-3 col-md-3 no-padding" tooltip="{{isAnonymous? 'Login to be able to duplicate' : 'Duplicate'}}">
+                  <button type="button" class="btn btn-block btn-link" routerLink="/newop/duplicate/{{ o._id }}" [disabled]="isAnonymous">
                     <i class="fa fa-copy fa-lg mt-4"></i>
                   </button>
                 </div>
-                <div class="col-3 col-sm-3 col-md-3 no-padding">
-                  <button type="button" class="btn btn-block btn-link" tooltip="Edit" routerLink="/newop/copy/{{ o._id }}">
+                <div class="col-3 col-sm-3 col-md-3 no-padding" tooltip="{{isAnonymous? 'Login to be able to edit' : 'Edit'}}">
+                  <button type="button" class="btn btn-block btn-link" routerLink="/newop/copy/{{ o._id }}" [disabled]="isAnonymous">
                     <i class="fa fa-edit fa-lg mt-4"></i>
                   </button>
                 </div>
-                <div class="col-3 col-sm-3 col-md-3 no-padding">
-                  <button type="button" class="btn btn-block btn-link" tooltip="Remove"
-                  data-toggle="modal" (click)="dangerModal.show()">
+                <div class="col-3 col-sm-3 col-md-3 no-padding" tooltip="{{isAnonymous? 'Login to be able to remove' : 'Remove'}}">
+                  <button type="button" class="btn btn-block btn-link"
+                  data-toggle="modal" (click)="dangerModal.show()" [disabled]="isAnonymous">
                     <i class="fa fa-trash-o fa-lg mt-4"></i>
                   </button>
                 </div>

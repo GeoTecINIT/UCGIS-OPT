@@ -17,7 +17,7 @@ import { AuthGuard} from './guards/auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'list',
     pathMatch: 'full'
   },
   {
@@ -44,7 +44,6 @@ export const routes: Routes = [
   {
     path: '',
     component: DefaultLayoutComponent,
-    canActivate: [AuthGuard],
     data: {
       title: 'OPT'
     },
@@ -68,6 +67,7 @@ export const routes: Routes = [
         data: {
           title: 'New'
         },
+       // canActivate: [AuthGuard],
         component: NewopComponent
       },
       {
@@ -75,6 +75,7 @@ export const routes: Routes = [
         data: {
           title: 'Duplicate'
         },
+       // canActivate: [AuthGuard],
         component: NewopComponent
       }
     ]
