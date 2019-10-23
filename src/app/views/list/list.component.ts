@@ -23,7 +23,15 @@ export class ListComponent implements OnInit {
   isAnonymous = null;
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
 
-  constructor(private occuprofilesService: OcuprofilesService, public afAuth: AngularFireAuth) { }
+  constructor(private occuprofilesService: OcuprofilesService, public afAuth: AngularFireAuth) {
+    this.afAuth.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.isAnonymous = user.isAnonymous;
+      } else {
+        this.isAnonymous = true;
+      }
+    });
+  }
 
   ngOnInit() {
     this.occuprofilesService
@@ -32,9 +40,6 @@ export class ListComponent implements OnInit {
         this.occupationalProfiles = occuProfiles;
         this.filteredOccuProfiles = occuProfiles;
       });
-      if (this.afAuth.auth.currentUser) {
-       this.isAnonymous = this.afAuth.auth.currentUser.isAnonymous;
-      }
   }
 
   removeOccuProfile(id: string) {

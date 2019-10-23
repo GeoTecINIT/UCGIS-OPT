@@ -12,7 +12,7 @@ import { ListComponent } from './views/list/list.component';
 import { DetailComponent } from './views/detail/detail.component';
 import { NewopComponent } from './views/newop/newop.component';
 
-import { AuthGuard} from './guards/auth.guard';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 export const routes: Routes = [
   {
@@ -67,7 +67,7 @@ export const routes: Routes = [
         data: {
           title: 'New'
         },
-       // canActivate: [AuthGuard],
+        canActivate: [AngularFireAuthGuard],
         component: NewopComponent
       },
       {
@@ -75,7 +75,7 @@ export const routes: Routes = [
         data: {
           title: 'Duplicate'
         },
-       // canActivate: [AuthGuard],
+        canActivate: [AngularFireAuthGuard],
         component: NewopComponent
       }
     ]

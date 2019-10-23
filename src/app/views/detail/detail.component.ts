@@ -25,17 +25,16 @@ export class DetailComponent implements OnInit {
     public afAuth: AngularFireAuth
   ) {
     this.afAuth.auth.onAuthStateChanged(user => {
-      if (user && !user.isAnonymous) {
-        this.isAnonymous = this.afAuth.auth.currentUser.isAnonymous;
+      if (user) {
+        this.isAnonymous = user.isAnonymous;
+      } else {
+        this.isAnonymous = true;
       }
     });
   }
 
   ngOnInit() {
     this.getOccuProfileId();
-    if (this.afAuth.auth.currentUser) {
-      this.isAnonymous = this.afAuth.auth.currentUser.isAnonymous;
-    }
   }
 
   getOccuProfileId(): void {
