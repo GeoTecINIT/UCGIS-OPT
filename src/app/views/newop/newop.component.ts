@@ -5,6 +5,7 @@ import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { FieldsService } from '../../services/fields.service';
 import { EscoCompetenceService } from '../../services/esco-competence.service';
 import { ActivatedRoute } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-newop',
@@ -17,7 +18,7 @@ export class NewopComponent implements OnInit {
   filteredCompetences = [];
   fullcompetences = [];
 
-  model = new OcupationalProfile('', '', '', null, 1, [], [], []);
+  model = new OcupationalProfile('', '', '', '', null, 1, [], [], []);
 
   public value: string[];
   public current: string;
@@ -79,7 +80,8 @@ export class NewopComponent implements OnInit {
     private occuprofilesService: OcuprofilesService,
     public fieldsService: FieldsService,
     public escoService: EscoCompetenceService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private afAuth: AngularFireAuth
   ) {
     this.competences = this.escoService.basicCompetences;
     this.filteredCompetences = this.competences;
@@ -147,6 +149,7 @@ export class NewopComponent implements OnInit {
     if (this.mode === 'copy') {
       this.occuprofilesService.updateOccuProfile(this._id, this.model);
     } else {
+      this.model.userId = this.afAuth.auth.currentUser.uid;
       this.occuprofilesService.addNewOccuProfile(this.model);
     }
   }

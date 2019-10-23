@@ -24,13 +24,13 @@
                 </div>
                 <div class="cols-xs-2 col-md-3" tooltip="{{isAnonymous? 'Login to be able to edit' : 'Edit'}}">
                   <button type="button" class="btn btn-block btn-link"
-                    routerLink="/newop/copy/{{ selectedProfile._id }}" [disabled]="isAnonymous">
+                    routerLink="/newop/copy/{{ selectedProfile._id }}"  [disabled]="isAnonymous || selectedProfile.userId!=afAuth.auth.currentUser?.uid">
                     <i class="fa fa-edit fa-lg"></i>
                   </button>
                 </div>
                 <div class="cols-xs-2 col-md-3" tooltip="{{isAnonymous? 'Login to be able to remove' : 'Remove'}}">
                   <button type="button" class="btn btn-block btn-link"
-                  data-toggle="modal" (click)="dangerModal.show()" [disabled]="isAnonymous">
+                  data-toggle="modal" (click)="dangerModal.show()"  [disabled]="isAnonymous || selectedProfile.userId!=afAuth.auth.currentUser?.uid">
                     <i class="fa fa-trash-o fa-lg"></i>
                   </button>
                 </div>

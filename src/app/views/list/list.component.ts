@@ -20,10 +20,10 @@ export class ListComponent implements OnInit {
   knowledgeFilter: Boolean = true;
   skillFilter: Boolean = true;
   competencesFilter: Boolean = true;
-  isAnonymous = true;
+  isAnonymous = null;
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
 
-  constructor(private occuprofilesService: OcuprofilesService, private afAuth: AngularFireAuth) { }
+  constructor(private occuprofilesService: OcuprofilesService, public afAuth: AngularFireAuth) { }
 
   ngOnInit() {
     this.occuprofilesService

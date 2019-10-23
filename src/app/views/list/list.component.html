@@ -107,13 +107,13 @@
                   </button>
                 </div>
                 <div class="col-3 col-sm-3 col-md-3 no-padding" tooltip="{{isAnonymous? 'Login to be able to edit' : 'Edit'}}">
-                  <button type="button" class="btn btn-block btn-link" routerLink="/newop/copy/{{ o._id }}" [disabled]="isAnonymous">
+                  <button type="button" class="btn btn-block btn-link" routerLink="/newop/copy/{{ o._id }}" [disabled]="isAnonymous || o.userId!=afAuth.auth.currentUser?.uid">
                     <i class="fa fa-edit fa-lg mt-4"></i>
                   </button>
                 </div>
                 <div class="col-3 col-sm-3 col-md-3 no-padding" tooltip="{{isAnonymous? 'Login to be able to remove' : 'Remove'}}">
                   <button type="button" class="btn btn-block btn-link"
-                  data-toggle="modal" (click)="dangerModal.show()" [disabled]="isAnonymous">
+                  data-toggle="modal" (click)="dangerModal.show()" [disabled]="isAnonymous || o.userId!=afAuth.auth.currentUser?.uid">
                     <i class="fa fa-trash-o fa-lg mt-4"></i>
                   </button>
                 </div>

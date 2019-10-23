@@ -14,7 +14,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class DetailComponent implements OnInit {
 
   statistics = [];
-  isAnonymous = true;
+  isAnonymous = null;
 
   selectedProfile: OcupationalProfile;
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
@@ -22,7 +22,7 @@ export class DetailComponent implements OnInit {
   constructor(
     public occuprofilesService: OcuprofilesService,
     private route: ActivatedRoute,
-    private afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth
   ) {
     this.afAuth.auth.onAuthStateChanged(user => {
       if (user && !user.isAnonymous) {
