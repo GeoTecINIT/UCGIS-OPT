@@ -86,8 +86,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     TooltipModule.forRoot(),
     NgSelectModule,
     FormsModule,
-  // AngularFireModule.initializeApp(environment.firebase, 'primary'),
-   AngularFireModule.initializeApp(environment.firebaseAuth, 'auth'),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
     HttpClientModule,
@@ -110,8 +109,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-   // { provide: FirestoreExtensionService, deps: [PLATFORM_ID, NgZone], useFactory: AngularFirestoreFactory },
-   // { provide: FirestoreAuthExtensionService, deps: [PLATFORM_ID, NgZone], useFactory: AngularAuthFactory },
+    // { provide: FirestoreExtensionService, deps: [PLATFORM_ID, NgZone], useFactory: AngularFirestoreFactory },
+    // { provide: FirestoreAuthExtensionService, deps: [PLATFORM_ID, NgZone], useFactory: AngularAuthFactory },
 
     Base64img
   ],

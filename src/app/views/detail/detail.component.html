@@ -16,21 +16,21 @@
                     <i class="fa fa-share-alt fa-lg"></i>
                   </button>
                 </div>
-                <div class="cols-xs-2 col-md-3">
+                <div class="cols-xs-2 col-md-3" tooltip="{{isAnonymous? 'Login to be able to duplicate' : 'Duplicate'}}">
                   <button type="button" class="btn btn-block btn-link" tooltip="Duplicate"
-                    routerLink="/newop/duplicate/{{ selectedProfile._id }}">
+                    routerLink="/newop/duplicate/{{ selectedProfile._id }}" [disabled]="isAnonymous">
                     <i class="fa fa-copy fa-lg"></i>
                   </button>
                 </div>
-                <div class="cols-xs-2 col-md-3">
-                  <button type="button" class="btn btn-block btn-link" tooltip="Edit"
-                    routerLink="/newop/copy/{{ selectedProfile._id }}">
+                <div class="cols-xs-2 col-md-3" tooltip="{{isAnonymous? 'Login to be able to edit' : 'Edit'}}">
+                  <button type="button" class="btn btn-block btn-link"
+                    routerLink="/newop/copy/{{ selectedProfile._id }}"  [disabled]="isAnonymous || selectedProfile.userId!=afAuth.auth.currentUser?.uid">
                     <i class="fa fa-edit fa-lg"></i>
                   </button>
                 </div>
-                <div class="cols-xs-2 col-md-3">
-                  <button type="button" class="btn btn-block btn-link" tooltip="Remove"
-                  data-toggle="modal" (click)="dangerModal.show()">
+                <div class="cols-xs-2 col-md-3" tooltip="{{isAnonymous? 'Login to be able to remove' : 'Remove'}}">
+                  <button type="button" class="btn btn-block btn-link"
+                  data-toggle="modal" (click)="dangerModal.show()"  [disabled]="isAnonymous || selectedProfile.userId!=afAuth.auth.currentUser?.uid">
                     <i class="fa fa-trash-o fa-lg"></i>
                   </button>
                 </div>

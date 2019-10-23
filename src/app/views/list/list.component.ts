@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { NgForOf } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
-
 import { OcupationalProfile } from '../../ocupational-profile';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { FormControl } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-list',
@@ -20,9 +20,18 @@ export class ListComponent implements OnInit {
   knowledgeFilter: Boolean = true;
   skillFilter: Boolean = true;
   competencesFilter: Boolean = true;
+  isAnonymous = null;
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
 
-  constructor(private occuprofilesService: OcuprofilesService) { }
+  constructor(private occuprofilesService: OcuprofilesService, public afAuth: AngularFireAuth) {
+    this.afAuth.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.isAnonymous = user.isAnonymous;
+      } else {
+        this.isAnonymous = true;
+      }
+    });
+  }
 
   ngOnInit() {
     this.occuprofilesService

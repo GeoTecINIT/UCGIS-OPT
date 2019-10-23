@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   public pwdRegister: string;
   public pwdRepRegister: string;
   public isRegistering = false;
-  return = '';
+  return = 'list';
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -27,21 +27,16 @@ export class LoginComponent implements OnInit {
   ) {
     this.email = '';
     this.pwd = '';
-
     this.afAuth.auth.onAuthStateChanged(user => {
-      if (user) {
-        // User is signed in.
-        //  console.log('login inside ' + this.afAuth.auth.currentUser.email + ' - route:' + this.return );
+      if (user && !user.isAnonymous) {
         this.ngZone.run(() => this.router.navigateByUrl(this.return)).then();
       }
     });
   }
 
   ngOnInit() {
-    this.route.queryParams
-      .subscribe(params => this.return = params['return'] || '/list');
-    if (this.afAuth.auth.currentUser) {
-      // User is signed in.
+    this.route.queryParams.subscribe(params => this.return = params['return'] || '/list');
+    if (this.afAuth.auth.currentUser && !this.afAuth.auth.currentUser.isAnonymous) {
       this.ngZone.run(() => this.router.navigateByUrl(this.return)).then();
     }
   }

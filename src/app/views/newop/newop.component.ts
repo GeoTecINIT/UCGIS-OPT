@@ -5,6 +5,7 @@ import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { FieldsService } from '../../services/fields.service';
 import { EscoCompetenceService } from '../../services/esco-competence.service';
 import { ActivatedRoute } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-newop',
@@ -17,7 +18,7 @@ export class NewopComponent implements OnInit {
   filteredCompetences = [];
   fullcompetences = [];
 
-  model = new OcupationalProfile('', '', '', null, 1, [], [], []);
+  model = new OcupationalProfile('', '', '', '', null, 1, [], [], []);
 
   public value: string[];
   public current: string;
@@ -33,6 +34,7 @@ export class NewopComponent implements OnInit {
   currentConcept = 'GIST';
 
   isfullESCOcompetences = false;
+  isShowingSkillsTip = false;
 
   associatedSkillsToDelete = 0;
   nameCodeToDelete = '';
@@ -78,7 +80,8 @@ export class NewopComponent implements OnInit {
     private occuprofilesService: OcuprofilesService,
     public fieldsService: FieldsService,
     public escoService: EscoCompetenceService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private afAuth: AngularFireAuth
   ) {
     this.competences = this.escoService.basicCompetences;
     this.filteredCompetences = this.competences;
@@ -90,6 +93,7 @@ export class NewopComponent implements OnInit {
   }
 
   addBokKnowledge() {
+    this.associatedSkillsToDelete = 0;
     const divs = this.textBoK.nativeElement.getElementsByTagName('div');
     if (divs['bokskills'] != null) {
       const shortCode = this.textBoK.nativeElement.getElementsByTagName('h4')[0].innerText.split(' ')[0];
@@ -97,6 +101,7 @@ export class NewopComponent implements OnInit {
       for (const skill of as) {
         if (!this.model.skills.includes(shortCode + ' ' + skill.innerText)) {
           this.model.skills.push(shortCode + ' ' + skill.innerText);
+          this.associatedSkillsToDelete++;
         }
       }
     }
@@ -105,6 +110,8 @@ export class NewopComponent implements OnInit {
     if (!this.model.knowledge.includes(concept)) {
       this.model.knowledge.push(concept);
     }
+    console.log('added knowledge');
+    this.isShowingSkillsTip = true;
   }
 
   removeCompetence(name: string, array: string[]) {
@@ -142,6 +149,7 @@ export class NewopComponent implements OnInit {
     if (this.mode === 'copy') {
       this.occuprofilesService.updateOccuProfile(this._id, this.model);
     } else {
+      this.model.userId = this.afAuth.auth.currentUser.uid;
       this.occuprofilesService.addNewOccuProfile(this.model);
     }
   }
@@ -178,13 +186,18 @@ export class NewopComponent implements OnInit {
     this.selectedNodes = bok.searchInBoK(text);
     this.hasResults = this.selectedNodes.length > 0 ? true : false;
     this.currentConcept = '';
+    this.cleanTip();
   }
 
   navigateToConcept(conceptName) {
     bok.browseToConcept(conceptName);
     this.currentConcept = conceptName;
     this.hasResults = false;
-    // console.log('Navigate to concept :' + conceptName);
+    this.cleanTip();
+  }
+
+  cleanTip() {
+    this.isShowingSkillsTip = false;
   }
 
   incrementLimit() {

@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { OcupationalProfile } from '../../ocupational-profile';
 import { ActivatedRoute } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-detail',
@@ -14,14 +14,24 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 export class DetailComponent implements OnInit {
 
   statistics = [];
+  isAnonymous = null;
 
   selectedProfile: OcupationalProfile;
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
 
   constructor(
     public occuprofilesService: OcuprofilesService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    public afAuth: AngularFireAuth
+  ) {
+    this.afAuth.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.isAnonymous = user.isAnonymous;
+      } else {
+        this.isAnonymous = true;
+      }
+    });
+  }
 
   ngOnInit() {
     this.getOccuProfileId();

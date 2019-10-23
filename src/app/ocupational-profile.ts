@@ -12,6 +12,7 @@ export interface Competence {
 export class OcupationalProfile extends Object {
   constructor(
     public _id: string,
+    public userId: string,
     public title: string,
     public description: string,
     public field: Field,
