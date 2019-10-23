@@ -86,8 +86,11 @@
             <div class="card-body" style="background-color: #faf9f8">
               <div class="row text-left">
                 <div class="col-md-12">
-                  <div *ngIf="isShowingSkillsTip" class="skillsTip">
-                    You added knowledge, and {{associatedSkillsToDelete}} related skills were added.
+                  <div *ngIf="isShowingSkillsTip && associatedSkillsToDelete==0" class="skillsTip">
+                    You added one BoK concept as knowledge.
+                  </div>
+                  <div *ngIf="isShowingSkillsTip && associatedSkillsToDelete>0" class="skillsTip">
+                    You added one BoK concept as knowledge and {{associatedSkillsToDelete}} related skills.
                   </div>
                 </div>
               </div>
@@ -217,7 +220,7 @@
             </div>
           </div>
 
-          
+
           <!-- Knowledge added card 
           <div class="card card-accent-secondary">
             <div class="card-header">Knowledge required <span

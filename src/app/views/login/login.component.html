@@ -1,17 +1,4 @@
-<app-header class="nav-bar-eo4geo" [navbarBrandRouterLink]="['/list']" [fixed]="true" [navbarBrandFull]="{
-    src: 'assets/img/brand/icon-inline.svg',
-    width: 255,
-    height: 45,
-    alt: 'CoreUI Logo'
-  }" [sidebarToggler]="false" [mobileSidebarToggler]="false" [mobileAsideMenuToggler]="false"
-  [asideMenuToggler]="false">
-  <!--   <ul class="nav navbar-nav d-md-down-none">
-    <li class="nav-item px-3">
-      <a class="nav-link" href="#">Home</a>
-      <a class="nav-link" routerLink="/list" routerLinkActive="active" href="#">List</a>
-    </li>
-  </ul> -->
-</app-header>
+<app-eo4geo-header></app-eo4geo-header>
 <div class="app-body">
   <main class="main d-flex align-items-center">
     <div class="container">
@@ -125,7 +112,4 @@
     </div>
   </main>
 </div>
-<app-footer class="footer-eo4geo">
-    <span><a href="http://eo4geo.uji.es">EO4GEO</a></span>
-    <span class="ml-auto"> <a href="https://firebasestorage.googleapis.com/v0/b/eo4geo-uji.appspot.com/o/manual.pdf?alt=media&token=6daace9c-59dc-4b91-b5b0-cd6889136f9f">User Manual</a> <a href="#">FAQ</a> <a href="mailto:eo4geo@gmail.com?subject=EO4GEO Tools Contact">Contact</a></span>
-  </app-footer>
+<app-eo4geo-footer></app-eo4geo-footer>

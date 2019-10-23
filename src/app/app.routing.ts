@@ -73,7 +73,7 @@ export const routes: Routes = [
       {
         path: 'newop/:mode/:name',
         data: {
-          title: 'Duplicate'
+          title: 'Edit'
         },
         canActivate: [AngularFireAuthGuard],
         component: NewopComponent

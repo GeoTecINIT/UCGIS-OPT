@@ -161,6 +161,7 @@ export class NewopComponent implements OnInit {
         this.title = 'Copy Occupational Profile';
       } else {
         this.title = 'Duplicate Occupational Profile';
+
       }
       this.getOccuProfileId();
       this.fillForm();

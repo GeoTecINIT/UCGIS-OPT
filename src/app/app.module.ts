@@ -62,6 +62,8 @@ import { PopupComponent } from './components/popup/popup.component';
 import { Base64img } from './components/popup/base64img';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { Eo4geoFooterComponent } from './components/eo4geo-footer/eo4geo-footer.component';
+import { Eo4geoHeaderComponent } from './components/eo4geo-header/eo4geo-header.component';
 
 
 @NgModule({
@@ -99,7 +101,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     LoadingIndicatorComponent,
     TruncatePipe,
     HighlightPipe,
-    PopupComponent
+    PopupComponent,
+    Eo4geoFooterComponent,
+    Eo4geoHeaderComponent
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
