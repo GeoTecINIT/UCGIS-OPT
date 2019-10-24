@@ -63,7 +63,7 @@
                     <!-- Competences checkbox -->
                     <span class="input-group-prepend">
                       <label class="switch switch-label switch-pill switch-outline-primary-alt">
-                        <input class="switch-input" type="checkbox" vale="competences" [(ngModel)]="competencesFilter"
+                        <input class="switch-input" type="checkbox" value="competences" [(ngModel)]="competencesFilter"
                           checked />
                         <span class="switch-slider" data-checked="✓" data-unchecked="X"></span>
                       </label>
@@ -81,9 +81,9 @@
               <button type="button" class="btn text-justify" routerLink="/detail/{{ o._id }}">
                 <span>
                   <h1>{{ o.title }}</h1>
-                  {{ o.knowledge.length }} Knowledge
-                  {{ o.skills.length }} Skills
-                  {{ o.competences.length }} Competences
+                  {{ o.knowledge.length }} Knowledge |
+                  {{ o.skills.length }} Skills |
+                  {{ o.competences.length }} Transversal skills
                 </span>
 
                 <p>{{ o.description }}</p>
