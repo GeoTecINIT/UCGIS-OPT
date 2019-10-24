@@ -16,6 +16,19 @@ export class DetailComponent implements OnInit {
   statistics = [];
   isAnonymous = null;
 
+  kaCodes = {
+    GC: 'Geocomputation',
+    WB: 'Web-based GI',
+    GS: 'GI and Society',
+    DA: 'Design and Setup of GI Systems',
+    CV: 'Cartography and Visualization',
+    OI: 'Organizational and Institutional Aspects',
+    GD: 'Geospatial Data',
+    CF: 'Conceptual Foundations',
+    DM: 'Data Modeling, Storage and Exploitation',
+    AM: 'Analytical Methods'
+  };
+
   selectedProfile: OcupationalProfile;
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
 
@@ -57,7 +70,8 @@ export class DetailComponent implements OnInit {
         tempTotal++;
       });
       Object.keys(tempStats).forEach(k => {
-        this.statistics.push({ code: k, value: Math.round(tempStats[k] * 100 / tempTotal) });
+        const nameKA = k + ' - ' + this.kaCodes[k];
+        this.statistics.push({ code: nameKA, value: Math.round(tempStats[k] * 100 / tempTotal) });
       });
     }
   }
