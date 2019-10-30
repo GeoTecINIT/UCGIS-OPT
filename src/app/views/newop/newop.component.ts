@@ -18,7 +18,7 @@ export class NewopComponent implements OnInit {
   filteredCompetences = [];
   fullcompetences = [];
 
-  model = new OcupationalProfile('', '', '', '', null, 1, [], [], []);
+  model = new OcupationalProfile('', '', '', '', null, 1, [], [], [], [], []);
 
   public value: string[];
   public current: string;
@@ -207,11 +207,13 @@ export class NewopComponent implements OnInit {
 
   addExtraSkill(skill) {
     this.model.skills.push(skill);
+    this.model.customSkills.push(skill);
   }
 
   // Add custom competence to model to force updating component, and to competences lists to find it again if removed
   addExtraCompetence(comp) {
     this.model.competences = [...this.model.competences, { preferredLabel: comp }];
+    this.model.customCompetences.push(comp);
     this.escoService.allcompetences = [...this.escoService.allcompetences, { preferredLabel: comp }];
     this.escoService.basicCompetences = [...this.escoService.basicCompetences, { preferredLabel: comp }];
     // console.log('add compr:' + comp);
