@@ -4,8 +4,8 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "dist",
-    "site": "eo4geo-opt",
+    "public": "./dist",
+    "site" : "eo4geo-opt",
     "ignore": [
       "firebase.json",
       "**/.*",
