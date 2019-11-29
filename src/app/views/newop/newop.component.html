@@ -8,7 +8,13 @@
             <div class="col-sm-4 col-md-2"></div>
             <div class="col-sm-4 offset-md-4 col-md-4"></div>
             <div class="col-sm-4 col-md-2 text-right">
-              <button type="submit" class="btn btn-pill btn-primary" (click)="saveOccuProfile()" routerLink="/list">
+              <button type="submit" class="btn btn-pill btn-primary" (click)="saveOccuProfile()" routerLink="/list"
+                *ngIf="model.title != '' && model.description != '' ">
+                Save
+              </button>
+              <button type="submit" class="btn btn-pill btn-primary"
+                *ngIf="model.title == '' || model.description == '' "
+                tooltip="Add a title and a description to save your Job Offer.">
                 Save
               </button>
             </div>
