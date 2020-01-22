@@ -9,18 +9,36 @@
 
         <div class="card-header">
           <div class="row">
-            <div class="col-sm-4 col-md-4">
+            <div class="col-sm-3 col-md-3">
               <button type="button" class="btn btn-block btn-outline-primary" (click)="newOrg()">
                 New Organization
               </button>
             </div>
-            <div class="col-sm-8 col-md-8">
-              <p class="text-primary text-center">If you are not a member of any organization, create one to start!</p>
+            <div class="col-sm-3 col-md-3">
+              <p class="text-primary text-right">Ask to join an organization: </p>
+            </div>
+
+            <div class="col-md-3">
+              <ng-select [items]="allOrgs" name="org" bindLabel="name" [multiple]="false" [(ngModel)]="joinOrg">
+                <ng-template ng-optgroup-tmp let-item="item">
+                  {{item.name}}
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-block btn-outline-primary" (click)="userJoinOrg()"
+                [disabled]="!joinOrg">
+                Join
+              </button>
+            </div>
+            <div class="col-md-12 text-center">
+              <p class="text-success mt-3" [innerText]="msgSavedJoin" [hidden]="!msgSavedJoin"> </p>
+              <p class="text-danger mt-3" [innerText]="msgErrorJoin" [hidden]="!msgErrorJoin"> </p>
             </div>
           </div>
         </div>
 
-        <div class="card-body" *ngIf="orgs && user; else loading">
+        <div class="card-body" *ngIf="orgs; else loading">
           <div *ngFor="let o of orgs; index as i;">
             <div *ngIf="(o.admin.indexOf(user._id) > -1  || o.regular.indexOf(user._id) > -1);">
               <form>
@@ -76,7 +94,8 @@
                   </div>
                   <div class="col-sm-6 col-md-2 mb-3 text-center"> Permission
                   </div>
-                  <div class="col-sm-6 col-md-2 mb-3 text-center" [hidden]="!(o.admin.indexOf(user._id) > -1)"> Click to change
+                  <div class="col-sm-6 col-md-2 mb-3 text-center" [hidden]="!(o.admin.indexOf(user._id) > -1)"> Click to
+                    change
                   </div>
                   <div class="col-sm-6 col-md-2 mb-3 text-center" [hidden]="!(o.admin.indexOf(user._id) > -1)"> Remove
                   </div>
@@ -164,10 +183,10 @@
           <ng-template #loading>
             <app-loading-indicator></app-loading-indicator>
           </ng-template>
-          <ng-template #noOrgs>
-            <p class="text-primary text-center">You are not a member of any organization. Create one to start!</p>
-          </ng-template>
         </div>
+        <p class="text-primary text-center" [hidden]="!orgs || orgs.length> 0">You are not a member of any organization.
+          Create
+          one to start!</p>
       </div>
     </div>
   </div>

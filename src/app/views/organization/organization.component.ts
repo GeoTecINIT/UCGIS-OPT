@@ -14,10 +14,14 @@ export class OrganizationComponent implements OnInit {
   public msgUsrSaved: string;
   public msgUsrError: string;
   public msgNoOrg: string;
+  public msgSavedJoin: string;
+  public msgErrorJoin: string;
 
   public name: string;
 
   public orgs: Organization[];
+  public joinOrg: Organization;
+  public allOrgs: Organization[];
   public user: User;
 
   public currentOrg = null;
@@ -37,19 +41,32 @@ export class OrganizationComponent implements OnInit {
         this.userService.getUserById(user.uid).subscribe(userDB => {
           if (userDB) {
             this.user = userDB;
+            // Load organizations
+            this.organizationService.subscribeToOrganizations()
+              .subscribe(res => {
+                this.allOrgs = res;
+                this.filterOrgs();
+              });
           }
         });
       }
     });
-    // Load organizations
-    this.organizationService.subscribeToOrganizations()
-      .subscribe(res => {
-        this.orgs = res;
-        this.setUsersToOrg();
-      });
   }
 
   ngOnInit() {
+  }
+
+  filterOrgs() {
+    if (this.user && this.allOrgs) {
+      this.orgs = [];
+      this.allOrgs.forEach(org => {
+        // If current user is included in that Organization, list it.
+        if (org.admin.indexOf(this.user._id) > -1 || org.regular.indexOf(this.user._id) > -1) {
+          this.orgs.push(org);
+        }
+      });
+      this.setUsersToOrg();
+    }
   }
 
   setUsersToOrg() {
@@ -222,4 +239,17 @@ export class OrganizationComponent implements OnInit {
     this.userService.updateUserWithId(this.user._id, this.user);
   }
 
+  userJoinOrg() {
+    // check if user is already in this organization
+    // tslint:disable-next-line:max-line-length
+    if (this.joinOrg.admin.indexOf(this.user._id) === -1 && this.joinOrg.regular.indexOf(this.user._id) === -1 && this.joinOrg.pending.indexOf(this.user._id) === -1) {
+      this.joinOrg.pending.push(this.user._id);
+      this.organizationService.updateOrganizationWithId(this.joinOrg._id, this.joinOrg);
+      this.msgSavedJoin = 'You requested to join, wait for approval.';
+      this.msgErrorJoin = null;
+    } else {
+      this.msgErrorJoin = 'You are already a member of this organization, if you requested access wait for approval.';
+      this.msgSavedJoin = null;
+    }
+  }
 }

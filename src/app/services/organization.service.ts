@@ -12,8 +12,10 @@ export class Organization extends Object {
   public description: string;
   public admin: string[];
   public regular: string[];
+  public pending: string[];
   public adminUser: User[];
   public regularUser: User[];
+  public pendingUser: User[];
   public isPublic: boolean;
 
   constructor(public org: Organization = null) {
@@ -24,8 +26,10 @@ export class Organization extends Object {
       this.description = org.description != null ? org.description : '';
       this.admin = org.admin != null ? org.admin : [];
       this.regular = org.regular != null ? org.regular : [];
+      this.pending = org.pending != null ? org.pending : [];
       this.adminUser = org.adminUser != null ? org.adminUser : [];
       this.regularUser = org.regularUser != null ? org.regularUser : [];
+      this.pendingUser = org.pendingUser != null ? org.pendingUser : [];
       this.isPublic = org.isPublic != null ? org.isPublic : false;
     } else {
       this._id = null;
@@ -33,8 +37,10 @@ export class Organization extends Object {
       this.description = '';
       this.admin = [];
       this.regular = [];
+      this.pending = [];
       this.adminUser = [];
       this.regularUser = [];
+      this.pendingUser = [];
       this.isPublic = false;
     }
   }
