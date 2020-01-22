@@ -19,9 +19,9 @@ export class User extends Object {
       this._id = user.uid != null ? user.uid : user._id != null ? user._id : '';
       this.email = user.email != null ? user.email : '';
       this.name = user.displayName != null ? user.displayName : user.name != null ? user.name : '';
-      this.affiliation = this.affiliation != null ? user._id : '';
-      this.consortium = this.consortium != null ? user.consortium : false;
-      this.organizations = this.organizations != null ? user.organizations : [];
+      this.affiliation = user.affiliation != null ? user.affiliation : '';
+      this.consortium = user.consortium != null ? user.consortium : false;
+      this.organizations = user.organizations != null ? user.organizations : [];
       this.user = null;
     }
   }

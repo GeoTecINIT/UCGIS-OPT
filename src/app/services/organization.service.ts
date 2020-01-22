@@ -12,34 +12,36 @@ export class Organization extends Object {
   public description: string;
   public admin: string[];
   public regular: string[];
+  public pending: string[];
   public adminUser: User[];
   public regularUser: User[];
+  public pendingUser: User[];
+  public isPublic: boolean;
 
   constructor(public org: Organization = null) {
     super();
     if (org) {
-      this._id = org._id;
-      this.name = org.name;
+      this._id = org._id != null ? org._id : null;
+      this.name = org.name != null ? org.name : '';
+      this.description = org.description != null ? org.description : '';
+      this.admin = org.admin != null ? org.admin : [];
+      this.regular = org.regular != null ? org.regular : [];
+      this.pending = org.pending != null ? org.pending : [];
+      this.adminUser = org.adminUser != null ? org.adminUser : [];
+      this.regularUser = org.regularUser != null ? org.regularUser : [];
+      this.pendingUser = org.pendingUser != null ? org.pendingUser : [];
+      this.isPublic = org.isPublic != null ? org.isPublic : false;
     } else {
       this._id = null;
       this.name = '';
-    }
-  }
-}
-
-export class UserPermission extends Object {
-
-  public _id: string;
-  public permission: string;
-
-  constructor(public up: UserPermission = null) {
-    super();
-    if (up) {
-      this._id = up._id;
-      this.permission = up.permission;
-    } else {
-      this._id = null;
-      this.permission = '';
+      this.description = '';
+      this.admin = [];
+      this.regular = [];
+      this.pending = [];
+      this.adminUser = [];
+      this.regularUser = [];
+      this.pendingUser = [];
+      this.isPublic = false;
     }
   }
 }
@@ -73,6 +75,7 @@ export class OrganizationService {
   updateOrganizationWithId(organizationId: string, updatedOrganization: Organization) {
     updatedOrganization.adminUser = null;
     updatedOrganization.regularUser = null;
+    updatedOrganization.pendingUser = null;
     this.db
       .collection(collection)
       .doc<Organization>(organizationId)
