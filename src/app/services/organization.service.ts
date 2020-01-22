@@ -18,28 +18,21 @@ export class Organization extends Object {
   constructor(public org: Organization = null) {
     super();
     if (org) {
-      this._id = org._id;
-      this.name = org.name;
+      this._id = org._id != null ? org._id : null;
+      this.name = org.name != null ? org.name : '';
+      this.description = org.description != null ? org.description : '';
+      this.admin = org.admin != null ? org.admin : [];
+      this.regular = org.regular != null ? org.regular : [];
+      this.adminUser = org.adminUser != null ? org.adminUser : [];
+      this.regularUser = org.regularUser != null ? org.regularUser : [];
     } else {
       this._id = null;
       this.name = '';
-    }
-  }
-}
-
-export class UserPermission extends Object {
-
-  public _id: string;
-  public permission: string;
-
-  constructor(public up: UserPermission = null) {
-    super();
-    if (up) {
-      this._id = up._id;
-      this.permission = up.permission;
-    } else {
-      this._id = null;
-      this.permission = '';
+      this.description = '';
+      this.admin = [];
+      this.regular = [];
+      this.adminUser = [];
+      this.regularUser = [];
     }
   }
 }
