@@ -99,6 +99,20 @@ export class OrganizationComponent implements OnInit {
           });
         });
       }
+      if (org.pending) {
+        if (!org.pendingUser) {
+          org.pendingUser = [];
+        }
+        org.pending.forEach(pendingId => {
+          const userSubPen = this.userService.getUserById(pendingId).subscribe(pendingDB => {
+            if (pendingDB) {
+              console.log('add user regular:' + pendingDB.name + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
+              org.pendingUser.push(pendingDB);
+            }
+            userSubPen.unsubscribe();
+          });
+        });
+      }
     });
   }
 
@@ -133,7 +147,16 @@ export class OrganizationComponent implements OnInit {
         });
       });
     }
-
+    if (this.currentOrg.pending) {
+      this.currentOrg.pending.forEach(pendingId => {
+        const userSubPen = this.userService.getUserById(pendingId).subscribe(pendingDB => {
+          if (pendingDB) {
+            this.deleteUserFromOrg(pendingDB, this.currentOrg);
+          }
+          userSubPen.unsubscribe();
+        });
+      });
+    }
     // Remove from organizations collection
     this.organizationService.removeOrganization(this.currentOrg);
   }
@@ -148,11 +171,18 @@ export class OrganizationComponent implements OnInit {
 
   makeRegularUser(orgIndex, userId) {
     this.currentOrg = this.orgs[orgIndex];
-
-    const indexToRemove = this.orgs[orgIndex].admin.indexOf(userId);
-    this.orgs[orgIndex].admin.splice(indexToRemove, 1);
+    // Remove from admin if toggling permissions
+    if (this.orgs[orgIndex].admin.indexOf(userId) > -1) {
+      const indexToRemove = this.orgs[orgIndex].admin.indexOf(userId);
+      this.orgs[orgIndex].admin.splice(indexToRemove, 1);
+    }
+    // add to regular users
     this.orgs[orgIndex].regular.push(userId);
-
+    // remove from pending if pending
+    if (this.currentOrg.pending && this.currentOrg.pending.indexOf(userId) > -1) {
+      const indexToRemovePending = this.currentOrg.pending.indexOf(userId);
+      this.currentOrg.pending.splice(indexToRemovePending, 1);
+    }
     this.organizationService.updateOrganizationWithId(this.orgs[orgIndex]._id, this.currentOrg);
     this.msgUsrSaved = 'User made regular!';
     this.msgUsrError = null;
@@ -160,11 +190,18 @@ export class OrganizationComponent implements OnInit {
 
   makeAdminUser(orgIndex, userId) {
     this.currentOrg = this.orgs[orgIndex];
-
-    const indexToRemove = this.currentOrg.regular.indexOf(userId);
-    this.currentOrg.regular.splice(indexToRemove, 1);
+    // remove from regular if toggling permissions
+    if (this.currentOrg.regular.indexOf(userId) > -1) {
+      const indexToRemove = this.currentOrg.regular.indexOf(userId);
+      this.currentOrg.regular.splice(indexToRemove, 1);
+    }
+    // add to admin users
     this.currentOrg.admin.push(userId);
-
+    // remove from pending if pending
+    if (this.currentOrg.pending && this.currentOrg.pending.indexOf(userId) > -1) {
+      const indexToRemovePending = this.currentOrg.pending.indexOf(userId);
+      this.currentOrg.pending.splice(indexToRemovePending, 1);
+    }
     this.organizationService.updateOrganizationWithId(this.orgs[orgIndex]._id, this.currentOrg);
     this.msgUsrSaved = 'User made admin!';
     this.msgUsrError = null;

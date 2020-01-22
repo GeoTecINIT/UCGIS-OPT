@@ -100,7 +100,7 @@
                   <div class="col-sm-6 col-md-2 mb-3 text-center" [hidden]="!(o.admin.indexOf(user._id) > -1)"> Remove
                   </div>
                 </div>
-
+                <!-- Admin users -->
                 <div *ngIf="o.adminUser && o.adminUser.length > 0">
                   <div *ngFor="let admin of o.adminUser" class="row">
                     <div class="col-sm-6 col-md-3 mb-3"> {{admin.name}}
@@ -124,7 +124,7 @@
                     </div>
                   </div>
                 </div>
-
+                <!-- Regular users -->
                 <div *ngIf="o.regularUser && o.regularUser.length > 0">
                   <div *ngFor="let reg of o.regularUser" class="row">
                     <div class="col-sm-6 col-md-3 mb-3"> {{reg.name}}
@@ -144,6 +144,30 @@
                     <div class="col-sm-6 col-md-2 mb-3 text-center">
                       <button type="button" class="btn btn-outline-primary px-4"
                         (click)="removeUser(i, reg._id, 'regular')" [hidden]="!(o.admin.indexOf(user._id) > -1)"><i
+                          class="icon-trash"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Pending users -->
+                <div *ngIf="o.pendingUser && o.pendingUser.length > 0">
+                  <div *ngFor="let pen of o.pendingUser" class="row">
+                    <div class="col-sm-6 col-md-3 mb-3"> {{pen.name}}
+                    </div>
+                    <div class="col-sm-6 col-md-3 mb-3"> {{pen.email}}
+                    </div>
+                    <div class="col-sm-6 col-md-2 mb-3 text-center"> Pending
+                    </div>
+                    <div class="col-sm-6 col-md-2 mb-3 text-center">
+                      <div class="btn-group" role="group" aria-label="Admin or Regular">
+                        <button type="button" class="btn btn-outline-primary" (click)="makeAdminUser(i, pen._id)"
+                          [disabled]="!(o.admin.indexOf(user._id) > -1)">Admin</button>
+                        <button type="button" class="btn btn-outline-primary" (click)="makeRegularUser(i, pen._id)"
+                          [disabled]="!(o.admin.indexOf(user._id) > -1)">Regular</button>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-2 mb-3 text-center">
+                      <button type="button" class="btn btn-outline-primary px-4"
+                        (click)="removeUser(i, reg._id, 'pending')" [hidden]="!(o.admin.indexOf(user._id) > -1)"><i
                           class="icon-trash"></i></button>
                     </div>
                   </div>
