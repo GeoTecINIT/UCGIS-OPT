@@ -6,6 +6,7 @@ import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { FormControl } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { User } from '../../services/user.service';
 
 @Component({
   selector: 'app-list',
@@ -21,12 +22,14 @@ export class ListComponent implements OnInit {
   skillFilter: Boolean = true;
   competencesFilter: Boolean = true;
   isAnonymous = null;
+  currentUser: User;
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
 
   constructor(private occuprofilesService: OcuprofilesService, public afAuth: AngularFireAuth) {
     this.afAuth.auth.onAuthStateChanged(user => {
       if (user) {
         this.isAnonymous = user.isAnonymous;
+        this.currentUser = new User(user);
       } else {
         this.isAnonymous = true;
       }

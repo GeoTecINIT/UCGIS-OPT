@@ -40,6 +40,16 @@
                         name="title" required />
                     </div>
                   </div>
+                  <div *ngIf="canMakePublicProfiles" class="col-md-2" style="display: inline-flex">
+                    <span class="input-group-prepend">
+                      <div class="pr-1"> Visibility: Private </div>
+                      <label class="switch switch-label switch-pill switch-outline-primary-alt">
+                        <input class="switch-input" type="checkbox" value="knowledges" name="isPublic" [(ngModel)]="model.isPublic" />
+                        <span class="switch-slider" data-checked="✓" data-unchecked="X"></span>
+                      </label>
+                      <div class="pl-1">Public </div>
+                    </span>
+                  </div>
                 </div>
                 <div class="row">
                   <div class="col-md-8">

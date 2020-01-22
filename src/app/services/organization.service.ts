@@ -14,6 +14,7 @@ export class Organization extends Object {
   public regular: string[];
   public adminUser: User[];
   public regularUser: User[];
+  public isPublic: boolean;
 
   constructor(public org: Organization = null) {
     super();
@@ -25,6 +26,7 @@ export class Organization extends Object {
       this.regular = org.regular != null ? org.regular : [];
       this.adminUser = org.adminUser != null ? org.adminUser : [];
       this.regularUser = org.regularUser != null ? org.regularUser : [];
+      this.isPublic = org.isPublic != null ? org.isPublic : false;
     } else {
       this._id = null;
       this.name = '';
@@ -33,6 +35,7 @@ export class Organization extends Object {
       this.regular = [];
       this.adminUser = [];
       this.regularUser = [];
+      this.isPublic = false;
     }
   }
 }

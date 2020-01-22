@@ -2,10 +2,12 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { OcupationalProfile, Competence } from '../../ocupational-profile';
 import * as bok from '@eo4geo/bok-dataviz';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
+import { Organization, OrganizationService } from '../../services/organization.service';
 import { FieldsService } from '../../services/fields.service';
 import { EscoCompetenceService } from '../../services/esco-competence.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { User, UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-newop',
@@ -74,10 +76,14 @@ export class NewopComponent implements OnInit {
     searchOnKey: 'preferredLabel' // key on which search should be performed. if undefined this will be extensive search on all keys
   };
 
+  canMakePublicProfiles = false;
+
   @ViewChild('textBoK') textBoK: ElementRef;
 
   constructor(
     private occuprofilesService: OcuprofilesService,
+    private organizationService: OrganizationService,
+    private userService: UserService,
     public fieldsService: FieldsService,
     public escoService: EscoCompetenceService,
     private route: ActivatedRoute,
@@ -85,6 +91,22 @@ export class NewopComponent implements OnInit {
   ) {
     this.competences = this.escoService.basicCompetences;
     this.filteredCompetences = this.competences;
+    this.afAuth.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.userService.getUserById(user.uid).subscribe(userDB => {
+          const u = new User(userDB);
+          if (u.organizations) {
+            u.organizations.forEach(orgId => {
+              this.organizationService.getOrganizationById(orgId).subscribe(org => {
+                if (org.isPublic) { // if Any of the organizations the user belongs if public, can make public profiles
+                  this.canMakePublicProfiles = true;
+                }
+              });
+            });
+          }
+        });
+      }
+    });
   }
 
   ngOnInit() {

@@ -37,7 +37,7 @@
                           </button>
                         </span>
                         <input type="text" class="form-control" placeholder="Organization Name" name="name" required
-                          [(ngModel)]="o.name">
+                          [(ngModel)]="o.name" [disabled]="!(o.admin.indexOf(user._id) > -1)">
                       </div>
                     </div>
 
@@ -49,22 +49,26 @@
                           </button>
                         </span>
                         <input type="text" class="form-control" placeholder="Organization Description"
-                          name="description" required [(ngModel)]="o.description">
+                          name="description" required [(ngModel)]="o.description"
+                          [disabled]="!(o.admin.indexOf(user._id) > -1)">
                       </div>
                     </div>
 
                   </div>
                   <div class="col-sm-6 col-md-3 text-right">
-                    <button type="button" class="btn btn-outline-danger px-4 mt-3 " (click)="delete(i)">Delete
+                    <button type="button" class="btn btn-outline-danger px-4 mt-3 " (click)="delete(i)"
+                      [hidden]="!(o.admin.indexOf(user._id) > -1)">Delete
                       organization</button>
-                    <button type="button" class="btn btn-outline-primary px-4 mt-3 " (click)="save(i)">Save
+                    <button type="button" class="btn btn-outline-primary px-4 mt-3 " (click)="save(i)"
+                      [hidden]="!(o.admin.indexOf(user._id) > -1)">Save
                       changes</button>
                   </div>
                   <div [hidden]="currentOrg && o._id != currentOrg._id" class="col-sm-6 col-md-1 mt-5 text-center">
                     <p class="text-success mt-3" [innerText]="msgSaved" [hidden]="!msgSaved"></p>
                   </div>
                 </div>
-                <p class="text-muted"> Add / Remove users or change permissions</p>
+                <p class="text-muted" [hidden]="!(o.admin.indexOf(user._id) > -1)"> Add / Remove users or change
+                  permissions</p>
                 <div class="row">
                   <div class="col-sm-6 col-md-3 mb-3"> Name
                   </div>
@@ -72,9 +76,9 @@
                   </div>
                   <div class="col-sm-6 col-md-2 mb-3 text-center"> Permission
                   </div>
-                  <div class="col-sm-6 col-md-2 mb-3 text-center"> Click to change
+                  <div class="col-sm-6 col-md-2 mb-3 text-center" [hidden]="!(o.admin.indexOf(user._id) > -1)"> Click to change
                   </div>
-                  <div class="col-sm-6 col-md-2 mb-3 text-center"> Remove
+                  <div class="col-sm-6 col-md-2 mb-3 text-center" [hidden]="!(o.admin.indexOf(user._id) > -1)"> Remove
                   </div>
                 </div>
 
@@ -88,14 +92,16 @@
                     </div>
                     <div class="col-sm-6 col-md-2 mb-3 text-center">
                       <div class="btn-group" role="group" aria-label="Admin or Regular">
-                        <button type="button" class="btn btn-primary">Admin</button>
-                        <button type="button" class="btn btn-outline-primary"
-                          (click)="makeRegularUser(i, admin._id)">Regular</button>
+                        <button type="button" class="btn btn-primary"
+                          [disabled]="!(o.admin.indexOf(user._id) > -1)">Admin</button>
+                        <button type="button" class="btn btn-outline-primary" (click)="makeRegularUser(i, admin._id)"
+                          [disabled]="!(o.admin.indexOf(user._id) > -1)">Regular</button>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-2 mb-3 text-center">
                       <button type="button" class="btn  btn-outline-primary px-4"
-                        (click)="removeUser(i, admin._id, 'admin')"><i class="icon-trash"></i></button>
+                        (click)="removeUser(i, admin._id, 'admin')" [hidden]="!(o.admin.indexOf(user._id) > -1)"><i
+                          class="icon-trash"></i></button>
                     </div>
                   </div>
                 </div>
@@ -110,24 +116,24 @@
                     </div>
                     <div class="col-sm-6 col-md-2 mb-3 text-center">
                       <div class="btn-group" role="group" aria-label="Admin or Regular">
-                        <button type="button" class="btn btn-outline-primary"
-                          (click)="makeAdminUser(i, reg._id)">Admin</button>
-                        <button type="button" class="btn btn-primary">Regular</button>
+                        <button type="button" class="btn btn-outline-primary" (click)="makeAdminUser(i, reg._id)"
+                          [disabled]="!(o.admin.indexOf(user._id) > -1)">Admin</button>
+                        <button type="button" class="btn btn-primary"
+                          [disabled]="!(o.admin.indexOf(user._id) > -1)">Regular</button>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-2 mb-3 text-center">
                       <button type="button" class="btn btn-outline-primary px-4"
-                        (click)="removeUser(i, reg._id, 'regular')"><i class="icon-trash"></i></button>
+                        (click)="removeUser(i, reg._id, 'regular')" [hidden]="!(o.admin.indexOf(user._id) > -1)"><i
+                          class="icon-trash"></i></button>
                     </div>
                   </div>
                 </div>
 
                 <div class="row">
-
                   <div class="col-sm-6 col-md-9 mb-3">
-
                     <div class="input-group mb-3">
-                      <div class="input-group">
+                      <div class="input-group" [hidden]="!(o.admin.indexOf(user._id) > -1)">
                         <span class="input-group-prepend">
                           <button class="btn btn-primary" type="button">
                             <i class="icon-plus"></i>
@@ -141,7 +147,7 @@
                   </div>
                   <div class="col-sm-6 col-md-3 mb-3 text-center">
                     <button type="button" class="btn  btn-outline-primary px-4"
-                      (click)="addUserToOrg(i, emailToAdd.value)"> Add
+                      (click)="addUserToOrg(i, emailToAdd.value)" [hidden]="!(o.admin.indexOf(user._id) > -1)"> Add
                       user</button>
                   </div>
 
