@@ -4,13 +4,18 @@
       <h1 class="title">
         Your Organization(s) Details
       </h1>
-      <!--      <div class="card-group"> -->
+
+      <div class="text-center" *ngIf="orgs && orgs.length > 0">
+        <h5>You are part of {{orgs.length}} organizations. You can also create your own organization.
+        </h5>
+      </div>
+
       <div class="card card-accent-primary">
 
         <div class="card-header">
           <div class="row">
-            <div class="col-sm-3 col-md-3">
-       <!--        <button type="button" class="btn btn-block btn-outline-primary" (click)="newOrg()">
+            <div class="col-sm-1 col-md-1">
+              <!--        <button type="button" class="btn btn-block btn-outline-primary" (click)="newOrg()">
                 New Organization
               </button> -->
             </div>
@@ -31,6 +36,8 @@
                 Join
               </button>
             </div>
+            <div class="col-md-2">
+            </div>
             <div class="col-md-12 text-center">
               <p class="text-success mt-3" [innerText]="msgSavedJoin" [hidden]="!msgSavedJoin"> </p>
               <p class="text-danger mt-3" [innerText]="msgErrorJoin" [hidden]="!msgErrorJoin"> </p>
@@ -43,17 +50,12 @@
             <div *ngIf="(o.admin.indexOf(user._id) > -1  || o.regular.indexOf(user._id) > -1);">
               <form>
                 <div class="row">
-                  <div class="col-sm-6 col-md-8">
+                  <div class="col-sm-6 col-md-8 mt-3">
                     <!--  <p class="text-muted"> {{ o.name }} Details</p>-->
                     <h1> {{ o.name }} Details</h1>
 
                     <div class="input-group mb-3">
                       <div class="input-group">
-                        <span class="input-group-prepend">
-                          <button class="btn btn-primary" type="button">
-                            <i class="icon-briefcase"></i>
-                          </button>
-                        </span>
                         <input type="text" class="form-control" placeholder="Organization Name" name="name" required
                           [(ngModel)]="o.name" [disabled]="!(o.admin.indexOf(user._id) > -1)">
                       </div>
@@ -61,11 +63,6 @@
 
                     <div class="input-group mb-3">
                       <div class="input-group">
-                        <span class="input-group-prepend">
-                          <button class="btn btn-primary" type="button">
-                            <i class="icon-briefcase"></i>
-                          </button>
-                        </span>
                         <input type="text" class="form-control" placeholder="Organization Description"
                           name="description" required [(ngModel)]="o.description"
                           [disabled]="!(o.admin.indexOf(user._id) > -1)">
@@ -73,21 +70,28 @@
                     </div>
 
                   </div>
-                  <div class="col-sm-6 col-md-3 text-right">
-                    <button type="button" class="btn btn-outline-danger px-4 mt-3 " (click)="delete(i)"
-                      [hidden]="!(o.admin.indexOf(user._id) > -1)">Delete
-                      organization</button>
+                  <div class="col-sm-6 col-md-4 text-right mt-5">
                     <button type="button" class="btn btn-outline-primary px-4 mt-3 " (click)="save(i)"
                       [hidden]="!(o.admin.indexOf(user._id) > -1)">Save
                       changes</button>
+
+                    <button type="button" class="btn btn-outline-danger px-4 mt-3 " (click)="delete(i)"
+                      [hidden]="!(o.admin.indexOf(user._id) > -1)">Delete
+                      organization</button>
+
+                    <div [hidden]="currentOrg && o._id != currentOrg._id">
+                      <p class="text-success mt-3" [innerText]="msgSaved" [hidden]="!msgSaved"></p>
+                    </div>
                   </div>
-                  <div [hidden]="currentOrg && o._id != currentOrg._id" class="col-sm-6 col-md-1 mt-5 text-center">
+                  <!--    <div [hidden]="currentOrg && o._id != currentOrg._id" class="col-sm-6 col-md-1 mt-5 text-center">
                     <p class="text-success mt-3" [innerText]="msgSaved" [hidden]="!msgSaved"></p>
-                  </div>
+                  </div> -->
                 </div>
-                <p class="text-muted" [hidden]="!(o.admin.indexOf(user._id) > -1)"> Add / Remove users or change
-                  permissions</p>
-                <div class="row">
+                <div class="row" style="max-width: 80%; margin: auto;">
+                  <div class="col-sm-12 col-md-12 mb-3">
+                    <p class="text-muted" [hidden]="!(o.admin.indexOf(user._id) > -1)"> Add / Remove users or change
+                      permissions</p>
+                  </div>
                   <div class="col-sm-6 col-md-3 mb-3"> Name
                   </div>
                   <div class="col-sm-6 col-md-3 mb-3"> Email
@@ -102,14 +106,14 @@
                 </div>
                 <!-- Admin users -->
                 <div *ngIf="o.adminUser && o.adminUser.length > 0">
-                  <div *ngFor="let admin of o.adminUser" class="row">
-                    <div class="col-sm-6 col-md-3 mb-3"> {{admin.name}}
+                  <div *ngFor="let admin of o.adminUser" class="row" style="max-width: 80%; margin: auto;">
+                    <div class="col-sm-6 col-md-3 mb-1"> {{admin.name}}
                     </div>
-                    <div class="col-sm-6 col-md-3 mb-3"> {{admin.email}}
+                    <div class="col-sm-6 col-md-3 mb-1"> {{admin.email}}
                     </div>
-                    <div class="col-sm-6 col-md-2 mb-3 text-center"> Admin
+                    <div class="col-sm-6 col-md-2 mb-1 text-center"> Admin
                     </div>
-                    <div class="col-sm-6 col-md-2 mb-3 text-center">
+                    <div class="col-sm-6 col-md-2 mb-1 text-center">
                       <div class="btn-group" role="group" aria-label="Admin or Regular">
                         <button type="button" class="btn btn-primary"
                           [disabled]="!(o.admin.indexOf(user._id) > -1)">Admin</button>
@@ -117,7 +121,7 @@
                           [disabled]="!(o.admin.indexOf(user._id) > -1)">Regular</button>
                       </div>
                     </div>
-                    <div class="col-sm-6 col-md-2 mb-3 text-center">
+                    <div class="col-sm-6 col-md-2 mb-1 text-center">
                       <button type="button" class="btn  btn-outline-primary px-4"
                         (click)="removeUser(i, admin._id, 'admin')" [hidden]="!(o.admin.indexOf(user._id) > -1)"><i
                           class="icon-trash"></i></button>
@@ -126,14 +130,14 @@
                 </div>
                 <!-- Regular users -->
                 <div *ngIf="o.regularUser && o.regularUser.length > 0">
-                  <div *ngFor="let reg of o.regularUser" class="row">
-                    <div class="col-sm-6 col-md-3 mb-3"> {{reg.name}}
+                  <div *ngFor="let reg of o.regularUser" class="row" style="max-width: 80%; margin: auto;">
+                    <div class="col-sm-6 col-md-3 mb-1"> {{reg.name}}
                     </div>
-                    <div class="col-sm-6 col-md-3 mb-3"> {{reg.email}}
+                    <div class="col-sm-6 col-md-3 mb-1"> {{reg.email}}
                     </div>
-                    <div class="col-sm-6 col-md-2 mb-3 text-center"> Regular
+                    <div class="col-sm-6 col-md-2 mb-1 text-center"> Regular
                     </div>
-                    <div class="col-sm-6 col-md-2 mb-3 text-center">
+                    <div class="col-sm-6 col-md-2 mb-1 text-center">
                       <div class="btn-group" role="group" aria-label="Admin or Regular">
                         <button type="button" class="btn btn-outline-primary" (click)="makeAdminUser(i, reg._id)"
                           [disabled]="!(o.admin.indexOf(user._id) > -1)">Admin</button>
@@ -141,7 +145,7 @@
                           [disabled]="!(o.admin.indexOf(user._id) > -1)">Regular</button>
                       </div>
                     </div>
-                    <div class="col-sm-6 col-md-2 mb-3 text-center">
+                    <div class="col-sm-6 col-md-2 mb-1 text-center">
                       <button type="button" class="btn btn-outline-primary px-4"
                         (click)="removeUser(i, reg._id, 'regular')" [hidden]="!(o.admin.indexOf(user._id) > -1)"><i
                           class="icon-trash"></i></button>
@@ -150,14 +154,14 @@
                 </div>
                 <!-- Pending users -->
                 <div *ngIf="o.pendingUser && o.pendingUser.length > 0">
-                  <div *ngFor="let pen of o.pendingUser" class="row">
-                    <div class="col-sm-6 col-md-3 mb-3"> {{pen.name}}
+                  <div *ngFor="let pen of o.pendingUser" class="row" style="max-width: 80%; margin: auto;">
+                    <div class="col-sm-6 col-md-3 mb-1"> {{pen.name}}
                     </div>
-                    <div class="col-sm-6 col-md-3 mb-3"> {{pen.email}}
+                    <div class="col-sm-6 col-md-3 mb-1"> {{pen.email}}
                     </div>
-                    <div class="col-sm-6 col-md-2 mb-3 text-center"> Pending
+                    <div class="col-sm-6 col-md-2 mb-1 text-center"> Pending
                     </div>
-                    <div class="col-sm-6 col-md-2 mb-3 text-center">
+                    <div class="col-sm-6 col-md-2 mb-1 text-center">
                       <div class="btn-group" role="group" aria-label="Admin or Regular">
                         <button type="button" class="btn btn-outline-primary" (click)="makeAdminUser(i, pen._id)"
                           [disabled]="!(o.admin.indexOf(user._id) > -1)">Admin</button>
@@ -165,7 +169,7 @@
                           [disabled]="!(o.admin.indexOf(user._id) > -1)">Regular</button>
                       </div>
                     </div>
-                    <div class="col-sm-6 col-md-2 mb-3 text-center">
+                    <div class="col-sm-6 col-md-2 mb-1 text-center">
                       <button type="button" class="btn btn-outline-primary px-4"
                         (click)="removeUser(i, reg._id, 'pending')" [hidden]="!(o.admin.indexOf(user._id) > -1)"><i
                           class="icon-trash"></i></button>
@@ -173,22 +177,17 @@
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-sm-6 col-md-9 mb-3">
+                <div class="row" style="max-width: 80%; margin: auto;">
+                  <div class="col-sm-6 col-md-9 mb-3 mt-3">
                     <div class="input-group mb-3">
                       <div class="input-group" [hidden]="!(o.admin.indexOf(user._id) > -1)">
-                        <span class="input-group-prepend">
-                          <button class="btn btn-primary" type="button">
-                            <i class="icon-plus"></i>
-                          </button>
-                        </span>
                         <input #emailToAdd type="email" class="form-control" placeholder="User email to add"
                           name="email">
                       </div>
                     </div>
 
                   </div>
-                  <div class="col-sm-6 col-md-3 mb-3 text-center">
+                  <div class="col-sm-6 col-md-3 mt-3 text-center">
                     <button type="button" class="btn  btn-outline-primary px-4"
                       (click)="addUserToOrg(i, emailToAdd.value)" [hidden]="!(o.admin.indexOf(user._id) > -1)"> Add
                       user</button>
@@ -201,7 +200,7 @@
 
                 </div>
               </form>
-              <hr>
+              <!--  <hr> -->
             </div>
           </div>
           <ng-template #loading>
