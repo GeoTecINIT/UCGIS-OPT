@@ -67,6 +67,10 @@ export class OrganizationComponent implements OnInit {
       });
       this.setUsersToOrg();
     }
+    const newOrg = new Organization();
+    newOrg.name = 'Create a new one';
+    newOrg._id = 'new';
+    this.allOrgs = [newOrg].concat(this.allOrgs);
   }
 
   setUsersToOrg() {
@@ -277,16 +281,21 @@ export class OrganizationComponent implements OnInit {
   }
 
   userJoinOrg() {
-    // check if user is already in this organization
-    // tslint:disable-next-line:max-line-length
-    if (this.joinOrg.admin.indexOf(this.user._id) === -1 && this.joinOrg.regular.indexOf(this.user._id) === -1 && this.joinOrg.pending.indexOf(this.user._id) === -1) {
-      this.joinOrg.pending.push(this.user._id);
-      this.organizationService.updateOrganizationWithId(this.joinOrg._id, this.joinOrg);
-      this.msgSavedJoin = 'You requested to join, wait for approval.';
-      this.msgErrorJoin = null;
+    // first item on list is 'create a new Org'
+    if (this.joinOrg._id === 'new') {
+      this.newOrg();
     } else {
-      this.msgErrorJoin = 'You are already a member of this organization, if you requested access wait for approval.';
-      this.msgSavedJoin = null;
+      // check if user is already in this organization
+      // tslint:disable-next-line:max-line-length
+      if (this.joinOrg.admin.indexOf(this.user._id) === -1 && this.joinOrg.regular.indexOf(this.user._id) === -1 && this.joinOrg.pending.indexOf(this.user._id) === -1) {
+        this.joinOrg.pending.push(this.user._id);
+        this.organizationService.updateOrganizationWithId(this.joinOrg._id, this.joinOrg);
+        this.msgSavedJoin = 'You requested to join, wait for approval.';
+        this.msgErrorJoin = null;
+      } else {
+        this.msgErrorJoin = 'You are already a member of this organization, if you requested access wait for approval.';
+        this.msgSavedJoin = null;
+      }
     }
   }
 }
