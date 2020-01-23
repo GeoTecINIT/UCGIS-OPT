@@ -69,10 +69,14 @@ export class PopupComponent implements OnInit {
       currentLinePoint = currentLinePoint + (15 * titleLines.length);
     }
 
-    if (this.selectedProfile.field != null) {
-      doc.setFontSize(12).setTextColor('#1a80b6').setFontType('bold'); // headline
-      doc.text(30, currentLinePoint, 'EQF' + this.selectedProfile.eqf + ' - ' + this.selectedProfile.field.name);
-      currentLinePoint = currentLinePoint + 5;
+    doc.setFontSize(12).setTextColor('#1a80b6').setFontType('bold'); // headline
+    doc.text(30, currentLinePoint, 'EQF' + this.selectedProfile.eqf);
+    currentLinePoint = currentLinePoint + 5;
+    if (this.selectedProfile.fields != null && this.selectedProfile.fields.length > 1) {
+      this.selectedProfile.fields.forEach(f => {
+        doc.text(30, currentLinePoint, f.name + ' (' + f.grandparent + ')');
+        currentLinePoint = currentLinePoint + 5;
+      });
     }
 
     if (this.selectedProfile.description != null) {

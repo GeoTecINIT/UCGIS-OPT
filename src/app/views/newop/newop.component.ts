@@ -3,7 +3,7 @@ import { OcupationalProfile, Competence } from '../../ocupational-profile';
 import * as bok from '@eo4geo/bok-dataviz';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { Organization, OrganizationService } from '../../services/organization.service';
-import { FieldsService } from '../../services/fields.service';
+import { FieldsService, Field } from '../../services/fields.service';
 import { EscoCompetenceService } from '../../services/esco-competence.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -154,6 +154,15 @@ export class NewopComponent implements OnInit {
       }
     });
     this.associatedSkillsToDelete = skillsFiltered.length;
+  }
+
+  removeField(f: Field) {
+    this.model.fields.forEach((item, index) => {
+      if (item === f) {
+        //  console.log('removing concept' + name);
+        this.model.fields.splice(index, 1);
+      }
+    });
   }
 
   removeSkillsAssociated() {
