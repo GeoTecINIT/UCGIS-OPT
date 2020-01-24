@@ -20,7 +20,7 @@ export class NewopComponent implements OnInit {
   filteredCompetences = [];
   fullcompetences = [];
 
-  model = new OcupationalProfile('', '', '', '', null, 1, [], [], [], [], []);
+  model = new OcupationalProfile('', '', '', '', '', '', null, 1, [], [], [], [], []);
 
   public value: string[];
   public current: string;
@@ -77,6 +77,9 @@ export class NewopComponent implements OnInit {
   };
 
   canMakePublicProfiles = false;
+  userOrgs: Organization[] = [];
+  saveOrg: Organization;
+  currentUser: User;
 
   @ViewChild('textBoK') textBoK: ElementRef;
 
@@ -94,10 +97,12 @@ export class NewopComponent implements OnInit {
     this.afAuth.auth.onAuthStateChanged(user => {
       if (user) {
         this.userService.getUserById(user.uid).subscribe(userDB => {
-          const u = new User(userDB);
-          if (u.organizations) {
-            u.organizations.forEach(orgId => {
+          this.currentUser = new User(userDB);
+          if (this.currentUser.organizations && this.currentUser.organizations.length > 0) {
+            this.currentUser.organizations.forEach(orgId => {
               this.organizationService.getOrganizationById(orgId).subscribe(org => {
+                this.userOrgs.push(org);
+                this.saveOrg = this.userOrgs[0];
                 if (org.isPublic) { // if Any of the organizations the user belongs if public, can make public profiles
                   this.canMakePublicProfiles = true;
                 }
@@ -181,6 +186,9 @@ export class NewopComponent implements OnInit {
       this.occuprofilesService.updateOccuProfile(this._id, this.model);
     } else {
       this.model.userId = this.afAuth.auth.currentUser.uid;
+      this.model.orgId = this.saveOrg._id;
+      this.model.orgName = this.saveOrg.name;
+      this.model.isPublic = this.saveOrg.isPublic ? this.model.isPublic : false;
       this.occuprofilesService.addNewOccuProfile(this.model);
     }
   }

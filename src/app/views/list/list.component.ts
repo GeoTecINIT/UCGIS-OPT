@@ -6,7 +6,8 @@ import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { FormControl } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { User } from '../../services/user.service';
+import { User, UserService } from '../../services/user.service';
+import { OrganizationService } from '../../services/organization.service';
 
 @Component({
   selector: 'app-list',
@@ -22,27 +23,59 @@ export class ListComponent implements OnInit {
   skillFilter: Boolean = true;
   competencesFilter: Boolean = true;
   isAnonymous = null;
-  currentUser: User;
+  currentUser: User = new User();
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
 
-  constructor(private occuprofilesService: OcuprofilesService, public afAuth: AngularFireAuth) {
+  constructor(private occuprofilesService: OcuprofilesService,
+    private userService: UserService,
+    public organizationService: OrganizationService,
+    public afAuth: AngularFireAuth) {
     this.afAuth.auth.onAuthStateChanged(user => {
       if (user) {
         this.isAnonymous = user.isAnonymous;
-        this.currentUser = new User(user);
+        this.userService.getUserById(user.uid).subscribe(userDB => {
+          this.currentUser = new User(userDB);
+          this.occuprofilesService
+          .subscribeToOccupationalProfiles()
+          .subscribe(occuProfiles => {
+            this.occupationalProfiles = [];
+            occuProfiles.forEach(op => {
+              if (op.isPublic) {
+                this.occupationalProfiles.push(op);
+                console.log('Add op public: ' + op.title + ' ' + op.orgName);
+              } else if (this.currentUser && this.currentUser.organizations && this.currentUser.organizations.indexOf(op.orgId) > -1) {
+                this.occupationalProfiles.push(op);
+                console.log('Add op private org: ' + op.title + ' ' + op.orgName);
+              }
+            });
+            this.filteredOccuProfiles = this.occupationalProfiles;
+          });
+        });
       } else {
         this.isAnonymous = true;
       }
+      this.occuprofilesService
+        .subscribeToOccupationalProfiles()
+        .subscribe(occuProfiles => {
+          this.occupationalProfiles = [];
+          occuProfiles.forEach(op => {
+            if (op.isPublic) {
+              this.occupationalProfiles.push(op);
+              console.log('Add op public: ' + op.title + ' ' + op.orgName);
+            }
+          });
+          this.filteredOccuProfiles = this.occupationalProfiles;
+        });
     });
   }
 
   ngOnInit() {
-    this.occuprofilesService
-      .subscribeToOccupationalProfiles()
-      .subscribe(occuProfiles => {
-        this.occupationalProfiles = occuProfiles;
-        this.filteredOccuProfiles = occuProfiles;
-      });
+    /*  this.occuprofilesService
+       .subscribeToOccupationalProfiles()
+       .subscribe(occuProfiles => {
+         this.occupationalProfiles = occuProfiles;
+         this.filteredOccuProfiles = occuProfiles;
+       }); */
   }
 
   removeOccuProfile(id: string) {

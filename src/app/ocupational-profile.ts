@@ -13,6 +13,8 @@ export class OcupationalProfile extends Object {
   constructor(
     public _id: string,
     public userId: string,
+    public orgId: string,
+    public orgName: string,
     public title: string,
     public description: string,
     public fields: Field[],

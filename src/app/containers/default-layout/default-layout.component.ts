@@ -43,7 +43,7 @@ export class DefaultLayoutComponent implements OnDestroy {
         this.username = user.email;
         this.isAnonymous = this.afAuth.auth.currentUser.isAnonymous;
         this.userService.getUserById(user.uid).subscribe(userDB => {
-          this.hasOrgs = userDB.organizations.length > 0;
+          this.hasOrgs = userDB && userDB.organizations && userDB.organizations.length > 0;
           if (this.hasOrgs) {
             this.numPending = 0;
             userDB.organizations.forEach(orgId => {

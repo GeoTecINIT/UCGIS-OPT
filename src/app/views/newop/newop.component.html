@@ -3,18 +3,33 @@
   <div class="row">
     <div class="col-sm-12 col-md-12">
       <div class="card card-accent-primary">
+
         <div class="card-header">
           <div class="row">
-            <div class="col-sm-4 col-md-2"></div>
-            <div class="col-sm-4 offset-md-4 col-md-4"></div>
-            <div class="col-sm-4 col-md-2 text-right">
+            <div class="col-sm-4 col-md-4">
+              <p *ngIf="userOrgs.length > 0" class="text-primary text-right">Save under organization </p>
+            </div>
+            <div class="col-sm-4 col-md-4">
+              <ng-select *ngIf="userOrgs.length > 0 && userOrgs.length == currentUser.organizations.length"
+                [items]="userOrgs" name="userOrgs" bindLabel="name" [multiple]="false" [(ngModel)]="saveOrg">
+                <ng-template ng-optgroup-tmp let-item="item">
+                  {{item.name}}
+                </ng-template>
+              </ng-select>
+              <button *ngIf="userOrgs.length == 0" type="button" class="btn btn-block btn-link"
+                routerLink="/organization">
+                &nbsp;Create an organization to start
+              </button>
+
+            </div>
+            <div class="col-sm-4 offset-md-2 col-md-2 text-right">
               <button type="submit" class="btn btn-pill btn-primary" (click)="saveOccuProfile()" routerLink="/list"
                 *ngIf="model.title != '' && model.description != '' ">
                 Save
               </button>
               <button type="submit" class="btn btn-pill btn-primary"
                 *ngIf="model.title == '' || model.description == '' "
-                tooltip="Add a title and a description to save your Job Offer.">
+                tooltip="Add a title and a description to save your Job Offer." [disabled]="!saveOrg">
                 Save
               </button>
             </div>
@@ -40,7 +55,7 @@
                         name="title" required />
                     </div>
                   </div>
-                  <div *ngIf="canMakePublicProfiles" class="col-md-2" style="display: inline-flex">
+                  <div *ngIf="saveOrg && saveOrg.isPublic" class="col-md-2" style="display: inline-flex">
                     <span class="input-group-prepend">
                       <div class="pr-1"> Visibility: Private </div>
                       <label class="switch switch-label switch-pill switch-outline-primary-alt">
