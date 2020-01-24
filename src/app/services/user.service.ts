@@ -61,4 +61,5 @@ export class UserService {
     this.db.collection<User>(collection).doc(user.uid).set(usr);
   }
 
+
 }
