@@ -9,8 +9,6 @@ export class User extends Object {
   public _id: string;
   public name: string;
   public email: string;
-  public affiliation: string;
-  public consortium: Boolean;
   public organizations: string[];
 
   constructor(public user = null) {
@@ -19,8 +17,6 @@ export class User extends Object {
       this._id = user.uid != null ? user.uid : user._id != null ? user._id : '';
       this.email = user.email != null ? user.email : '';
       this.name = user.displayName != null ? user.displayName : user.name != null ? user.name : '';
-      this.affiliation = user.affiliation != null ? user.affiliation : '';
-      this.consortium = user.consortium != null ? user.consortium : false;
       this.organizations = user.organizations != null ? user.organizations : [];
       this.user = null;
     }
