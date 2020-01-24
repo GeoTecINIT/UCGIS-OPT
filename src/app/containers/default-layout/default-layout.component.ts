@@ -41,18 +41,7 @@ export class DefaultLayoutComponent implements OnDestroy {
       if (user) {
         // User is signed in.
         this.username = user.email;
-        this.isAnonymous = this.afAuth.auth.currentUser.isAnonymous;
-        this.userService.getUserById(user.uid).subscribe(userDB => {
-          this.hasOrgs = userDB && userDB.organizations && userDB.organizations.length > 0;
-          if (this.hasOrgs) {
-            this.numPending = 0;
-            userDB.organizations.forEach(orgId => {
-              this.organizationService.getOrganizationById(orgId).subscribe(org => {
-                this.numPending = org.pending ? this.numPending + org.pending.length : this.numPending;
-              });
-            });
-          }
-        });
+        this.refreshPending();
       }
     });
   }
@@ -61,7 +50,7 @@ export class DefaultLayoutComponent implements OnDestroy {
     if (this.afAuth.auth.currentUser) {
       this.isAnonymous = this.afAuth.auth.currentUser.isAnonymous;
       this.userService.getUserById(this.afAuth.auth.currentUser.uid).subscribe(userDB => {
-        this.hasOrgs = userDB.organizations.length > 0;
+        this.hasOrgs = userDB && userDB.organizations && userDB.organizations.length > 0;
         if (this.hasOrgs) {
           this.numPending = 0;
           userDB.organizations.forEach(orgId => {
