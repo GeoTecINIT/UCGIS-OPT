@@ -42,10 +42,8 @@ export class ListComponent implements OnInit {
             occuProfiles.forEach(op => {
               if (op.isPublic) {
                 this.occupationalProfiles.push(op);
-                console.log('Add op public: ' + op.title + ' ' + op.orgName);
               } else if (this.currentUser && this.currentUser.organizations && this.currentUser.organizations.indexOf(op.orgId) > -1) {
                 this.occupationalProfiles.push(op);
-                console.log('Add op private org: ' + op.title + ' ' + op.orgName);
               }
             });
             this.filteredOccuProfiles = this.occupationalProfiles;
@@ -61,7 +59,6 @@ export class ListComponent implements OnInit {
           occuProfiles.forEach(op => {
             if (op.isPublic) {
               this.occupationalProfiles.push(op);
-              console.log('Add op public: ' + op.title + ' ' + op.orgName);
             }
           });
           this.filteredOccuProfiles = this.occupationalProfiles;
