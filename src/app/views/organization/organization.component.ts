@@ -67,6 +67,10 @@ export class OrganizationComponent implements OnInit {
       });
       this.setUsersToOrg();
     }
+    const newOrg = new Organization();
+    newOrg.name = 'Create a new one';
+    newOrg._id = 'new';
+    this.allOrgs = [newOrg].concat(this.allOrgs);
   }
 
   setUsersToOrg() {
@@ -78,7 +82,7 @@ export class OrganizationComponent implements OnInit {
         org.admin.forEach(adminId => {
           const userSubAdmin = this.userService.getUserById(adminId).subscribe(adminDB => {
             if (adminDB) {
-              console.log('add user admin:' + adminDB.name + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
+              console.log('add user admin:' + adminDB.name + ' ' + adminDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.adminUser.push(adminDB);
             }
             userSubAdmin.unsubscribe();
@@ -92,7 +96,8 @@ export class OrganizationComponent implements OnInit {
         org.regular.forEach(regurlarId => {
           const userSubReg = this.userService.getUserById(regurlarId).subscribe(regularDB => {
             if (regularDB) {
-              console.log('add user regular:' + regularDB.name + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
+              // tslint:disable-next-line:max-line-length
+              console.log('add user regular:' + regularDB.name + ' ' + regularDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.regularUser.push(regularDB);
             }
             userSubReg.unsubscribe();
@@ -106,7 +111,8 @@ export class OrganizationComponent implements OnInit {
         org.pending.forEach(pendingId => {
           const userSubPen = this.userService.getUserById(pendingId).subscribe(pendingDB => {
             if (pendingDB) {
-              console.log('add user regular:' + pendingDB.name + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
+              // tslint:disable-next-line:max-line-length
+              console.log('add user regular:' + pendingDB.name + ' ' + pendingDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.pendingUser.push(pendingDB);
             }
             userSubPen.unsubscribe();
@@ -182,6 +188,16 @@ export class OrganizationComponent implements OnInit {
     if (this.currentOrg.pending && this.currentOrg.pending.indexOf(userId) > -1) {
       const indexToRemovePending = this.currentOrg.pending.indexOf(userId);
       this.currentOrg.pending.splice(indexToRemovePending, 1);
+
+      // add org index to user db
+      const userSub = this.userService.getUserById(userId).subscribe(userDB => {
+        if (userDB) {
+          const u = new User(userDB);
+          u.organizations.push(this.currentOrg._id);
+          this.userService.updateUserWithId(u._id, u);
+        }
+        userSub.unsubscribe();
+      });
     }
     this.organizationService.updateOrganizationWithId(this.orgs[orgIndex]._id, this.currentOrg);
     this.msgUsrSaved = 'User made regular!';
@@ -201,6 +217,16 @@ export class OrganizationComponent implements OnInit {
     if (this.currentOrg.pending && this.currentOrg.pending.indexOf(userId) > -1) {
       const indexToRemovePending = this.currentOrg.pending.indexOf(userId);
       this.currentOrg.pending.splice(indexToRemovePending, 1);
+
+      // add org index to user db
+      const userSub = this.userService.getUserById(userId).subscribe(userDB => {
+        if (userDB) {
+          const u = new User(userDB);
+          u.organizations.push(this.currentOrg._id);
+          this.userService.updateUserWithId(u._id, u);
+        }
+        userSub.unsubscribe();
+      });
     }
     this.organizationService.updateOrganizationWithId(this.orgs[orgIndex]._id, this.currentOrg);
     this.msgUsrSaved = 'User made admin!';
@@ -277,16 +303,21 @@ export class OrganizationComponent implements OnInit {
   }
 
   userJoinOrg() {
-    // check if user is already in this organization
-    // tslint:disable-next-line:max-line-length
-    if (this.joinOrg.admin.indexOf(this.user._id) === -1 && this.joinOrg.regular.indexOf(this.user._id) === -1 && this.joinOrg.pending.indexOf(this.user._id) === -1) {
-      this.joinOrg.pending.push(this.user._id);
-      this.organizationService.updateOrganizationWithId(this.joinOrg._id, this.joinOrg);
-      this.msgSavedJoin = 'You requested to join, wait for approval.';
-      this.msgErrorJoin = null;
+    // first item on list is 'create a new Org'
+    if (this.joinOrg._id === 'new') {
+      this.newOrg();
     } else {
-      this.msgErrorJoin = 'You are already a member of this organization, if you requested access wait for approval.';
-      this.msgSavedJoin = null;
+      // check if user is already in this organization
+      // tslint:disable-next-line:max-line-length
+      if (this.joinOrg.admin.indexOf(this.user._id) === -1 && this.joinOrg.regular.indexOf(this.user._id) === -1 && this.joinOrg.pending.indexOf(this.user._id) === -1) {
+        this.joinOrg.pending.push(this.user._id);
+        this.organizationService.updateOrganizationWithId(this.joinOrg._id, this.joinOrg);
+        this.msgSavedJoin = 'You requested to join, wait for approval.';
+        this.msgErrorJoin = null;
+      } else {
+        this.msgErrorJoin = 'You are already a member of this organization, if you requested access wait for approval.';
+        this.msgSavedJoin = null;
+      }
     }
   }
 }
