@@ -19,6 +19,7 @@ export class PopupComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   public static END_PAGE_LINE = 284;
+  restItems: any;
 
   @Input() idOP: any;
   selectedProfile: OcupationalProfile;
@@ -146,4 +147,97 @@ export class PopupComponent implements OnInit {
     return line;
   }
 
+  getCompetences ( data: any ) {
+    let resultCompetences = '';
+    data.competences.forEach( competence => {
+      resultCompetences = resultCompetences + '<rdf:li>' +
+        '<rdf:Description rdf:about="' + competence.uri  + '">' +
+        '<esco:skillType>' + competence.skillType + '</esco:skillType>' +
+        '<esco:reuseLevel>' + competence.reuseLevel + '</esco:reuseLevel>' +
+        '<esco:preferredLabel>' + competence.preferredLabel + '</esco:preferredLabel>' +
+        '<esco:description>' + competence.description + '</esco:description>' +
+        '</rdf:Description>' + ' </rdf:li>';
+    });
+    return resultCompetences;
+  }
+
+  getFields ( data: any ) {
+    let resultFields = '';
+    data.fields.forEach( field => {
+      resultFields = resultFields + '<rdf:li>' + field.greatgrandparent + ' </rdf:li>' +
+        '<rdf:li>' + field.code + ' </rdf:li>' +
+        '<rdf:li>' + field.grandparent + ' </rdf:li>' +
+        '<rdf:li>' + field.name + ' </rdf:li>' +
+        '<rdf:li>' + field.concatName + ' </rdf:li>' +
+        '<rdf:li>' + field.parent + ' </rdf:li>';
+    });
+    return resultFields;
+  }
+
+  getKnowledge ( data: any ) {
+    const occPro = 'https://eo4geo-opt.web.app/#/detail/';
+    let resultKnowledges = '';
+    data.knowledge.forEach( know => {
+      resultKnowledges = resultKnowledges + '<rdf:li>' +
+        '<rdf:Description rdf:about="' + occPro + '">' +
+        '<occPro:knowledge>' + know + '</occPro:knowledge>' +
+        '</rdf:Description>' + ' </rdf:li>';
+    });
+    return resultKnowledges;
+  }
+
+  getSkills ( data: any ) {
+    const urlSkills = 'https://eo4geo-opt.web.app/#/detail/';
+    let resultSkills = '';
+    data.skills.forEach( skill => {
+      resultSkills = resultSkills + '<rdf:li>' +
+        '<rdf:Description rdf:about="' + urlSkills + skill.split(']', 1)[0].split('[', 2)[1] + '">' +
+        '<skill:skill>' + skill + '</skill:skill>' +
+        '</rdf:Description>' + ' </rdf:li>';
+    });
+    return resultSkills;
+  }
+
+  createRDFFile(data: any) {
+    const urlBase = 'https://eo4geo-opt.web.app/#/detail/';
+    const esco = 'http://data.europa.eu/esco/skill/';
+    const occPro = 'https://eo4geo-opt.web.app/#/detail/';
+    const urlSkills = 'https://eo4geo-opt.web.app/#/detail/';
+    const competences = this.getCompetences( this.selectedProfile);
+    const fields = this.getFields( this.selectedProfile);
+    const knowledge = this.getKnowledge( this.selectedProfile );
+    const skills = this.getSkills( this.selectedProfile );
+    const description = ' <rdf:Description ' +
+      'rdf:about="' + urlBase + data._id + '">' +
+      '<op:title>' + this.selectedProfile.title + '</op:title>' +
+      '<op:description>' + this.selectedProfile.description + '</op:description>' +
+      '<op:eqf>' + this.selectedProfile.eqf + '</op:eqf>' +
+      '<op:orgName>' + this.selectedProfile.orgName + '</op:orgName>' +
+      '<op:competences> <rdf:Bag rdf:ID="competences">' + competences + '</rdf:Bag> </op:competences>' +
+      '<op:fields> <rdf:Bag rdf:ID="fields">' + fields + '</rdf:Bag> </op:fields>' +
+      '<op:knowleges> <rdf:Bag rdf:ID="knowledge">' + knowledge + '</rdf:Bag> </op:knowleges>' +
+      '<op:skills> <rdf:Bag rdf:ID="skills">' + skills + '</rdf:Bag> </op:skills>' +
+      '</rdf:Description>';
+    return '<?xml version="1.0"?>' +
+      '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"' +
+      ' xmlns:esco="' + esco + '" ' +
+      ' xmlns:occPro="' + occPro + '" ' +
+      ' xmlns:skill="' + urlSkills + '" ' +
+      ' xmlns:op="' + urlBase + '">' +
+      description +
+      '</rdf:RDF>';
+  }
+  generateRDF() {
+
+    const data = this.createRDFFile(this.selectedProfile);
+    const a = document.createElement('a');
+    const blob = new Blob([data], {type: 'text/csv' }),
+      url = window.URL.createObjectURL(blob);
+
+    a.href = url;
+    a.download = this.selectedProfile.title + '_rdf.rdf';
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
+  }
 }
