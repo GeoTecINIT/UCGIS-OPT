@@ -17,6 +17,7 @@ export class DefaultLayoutComponent implements OnDestroy {
   public element: HTMLElement;
   public username: string;
   isAnonymous = true;
+  userId = '';
   hasOrgs = true;
   numPending = 0;
 
@@ -41,6 +42,7 @@ export class DefaultLayoutComponent implements OnDestroy {
       if (user) {
         // User is signed in.
         this.username = user.email;
+        this.userId = user.uid;
         this.refreshPending();
       }
     });
@@ -54,8 +56,10 @@ export class DefaultLayoutComponent implements OnDestroy {
         if (this.hasOrgs) {
           this.numPending = 0;
           userDB.organizations.forEach(orgId => {
+            console.log('NUM PENDING ORG ID  ' + orgId);
             this.organizationService.getOrganizationById(orgId).subscribe(org => {
-              if (org) {
+              if (org && org.admin.indexOf(this.userId) > -1) {
+                console.log('NUM PENDING ' + org.name);
                 this.numPending = org.pending ? this.numPending + org.pending.length : this.numPending;
               }
             });
