@@ -174,7 +174,6 @@ export class OrganizationComponent implements OnInit {
       const indexToRemove = user.organizations.indexOf(org._id);
       user.organizations.splice(indexToRemove, 1);
       this.userService.updateUserWithId(user._id, user);
-
     } else {
       this.msgUsrSaved = null;
       this.msgUsrError = 'Can not remove the only admin! Remove organization if you prefer.';
@@ -301,11 +300,8 @@ export class OrganizationComponent implements OnInit {
       }
       userSub.unsubscribe();
     });
-    this.msgUsrSaved = 'User removed!';
+    this.msgUsrSaved = 'User removed from organization!';
     this.msgUsrError = null;
-
-
-
   }
 
   newOrg() {
