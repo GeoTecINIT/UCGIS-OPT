@@ -36,7 +36,7 @@
           </div>
         </div>
         <!-- card body -->
-        <div class="card-body">
+        <div [hidden]="userOrgs.length == 0" class="card-body">
           <form #newOPForm="ngForm">
             <!-- general info card -->
             <div class="card card-accent-secondary">
