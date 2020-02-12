@@ -8,6 +8,7 @@ import { EscoCompetenceService } from '../../services/esco-competence.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User, UserService } from '../../services/user.service';
+import { BokService } from '../../services/bok.service';
 
 @Component({
   selector: 'app-newop',
@@ -88,6 +89,7 @@ export class NewopComponent implements OnInit {
     private organizationService: OrganizationService,
     private userService: UserService,
     public fieldsService: FieldsService,
+    public bokService: BokService,
     public escoService: EscoCompetenceService,
     private route: ActivatedRoute,
     private afAuth: AngularFireAuth
@@ -115,7 +117,11 @@ export class NewopComponent implements OnInit {
   }
 
   ngOnInit() {
-    bok.visualizeBOKData('#bubbles', 'assets/saved-bok.xml', '#textBoK');
+    /*     this.bokService.bok.subscribe(bok_full => {
+          console.log(bok_full);
+          bok.visualizeBOKData('#bubbles', bok_full, '#textBoK');
+        }); */
+    bok.visualizeBOKData('#bubbles', '../../assets/json/eo4geoBOKv7.json', '#textBoK');
     this.getMode();
   }
 

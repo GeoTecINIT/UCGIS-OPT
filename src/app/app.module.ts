@@ -12,6 +12,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { AngularFirePerformanceModule } from '@angular/fire/performance';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -91,6 +92,7 @@ import { Eo4geoHeaderComponent } from './components/eo4geo-header/eo4geo-header.
     AngularFireAuthModule,
     AngularFireAnalyticsModule,
     AngularFirePerformanceModule,
+    AngularFireDatabaseModule,
     HttpClientModule,
     PopoverModule.forRoot(),
     ModalModule.forRoot()
