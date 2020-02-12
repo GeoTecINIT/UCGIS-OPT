@@ -55,7 +55,9 @@ export class DefaultLayoutComponent implements OnDestroy {
           this.numPending = 0;
           userDB.organizations.forEach(orgId => {
             this.organizationService.getOrganizationById(orgId).subscribe(org => {
-              this.numPending = org.pending ? this.numPending + org.pending.length : this.numPending;
+              if (org) {
+                this.numPending = org.pending ? this.numPending + org.pending.length : this.numPending;
+              }
             });
           });
         }
