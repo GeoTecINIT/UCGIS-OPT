@@ -82,7 +82,6 @@ export class OrganizationComponent implements OnInit {
         org.admin.forEach(adminId => {
           const userSubAdmin = this.userService.getUserById(adminId).subscribe(adminDB => {
             if (adminDB) {
-              console.log('add user admin:' + adminDB.name + ' ' + adminDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.adminUser.push(adminDB);
             }
             userSubAdmin.unsubscribe();
@@ -97,7 +96,6 @@ export class OrganizationComponent implements OnInit {
           const userSubReg = this.userService.getUserById(regurlarId).subscribe(regularDB => {
             if (regularDB) {
               // tslint:disable-next-line:max-line-length
-              console.log('add user regular:' + regularDB.name + ' ' + regularDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.regularUser.push(regularDB);
             }
             userSubReg.unsubscribe();
@@ -112,7 +110,6 @@ export class OrganizationComponent implements OnInit {
           const userSubPen = this.userService.getUserById(pendingId).subscribe(pendingDB => {
             if (pendingDB) {
               // tslint:disable-next-line:max-line-length
-              console.log('add user regular:' + pendingDB.name + ' ' + pendingDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.pendingUser.push(pendingDB);
             }
             userSubPen.unsubscribe();
@@ -170,7 +167,6 @@ export class OrganizationComponent implements OnInit {
   deleteUserFromOrg(user, org) {
 
     if (org.admin.length > 1) {
-      console.log('deleteUserFromOrg ' + user.name + ' org ' + org.name);
       const indexToRemove = user.organizations.indexOf(org._id);
       user.organizations.splice(indexToRemove, 1);
       this.userService.updateUserWithId(user._id, user);
@@ -305,7 +301,6 @@ export class OrganizationComponent implements OnInit {
   }
 
   newOrg() {
-    console.log('************* newOrg:');
     const newOrganization = new Organization();
     newOrganization.admin = [];
     newOrganization.admin.push(this.user._id);

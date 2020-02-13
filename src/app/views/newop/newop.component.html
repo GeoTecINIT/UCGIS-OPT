@@ -159,37 +159,39 @@
                   </div>
                 </div>
                 <div class="col-lg-8 col-sm-6 text-justify">
-                  <a (click)="navigateToConcept('GIST')">
-                    < Back </a> <br>
-                      <h5 [hidden]="currentConcept == '' && currentConcept != 'GIST'">Knowledge</h5>
-                      <div #textBoK id="textBoK" [hidden]="currentConcept == '' && currentConcept != 'GIST'">
-                      </div>
-                      <div class="col" *ngIf="hasResults">
-                        <h3 class="center">
-                          {{ selectedNodes.length }} result(s) for
-                          {{ searchInput.value }}
-                        </h3>
-                        <div *ngFor="let item of selectedNodes; index as i">
-                          <div *ngIf="i < limitSearch">
-                            <div class="inline">{{ item.nameShort }}</div>
-                            <div class="inline" [innerHTML]="
+                  <a (click)="navigateToConcept('GIST')" *ngIf="!(!hasResults && currentConcept != 'GIST')">
+                    < To full BoK </a>
+                      <a (click)="hasResults = !hasResults; currentConcept=''" *ngIf="!hasResults && currentConcept != 'GIST'">
+                        < Back to results </a> <br>
+                          <h5 [hidden]="currentConcept == '' && currentConcept != 'GIST'">Knowledge</h5>
+                          <div #textBoK id="textBoK" [hidden]="currentConcept == '' && currentConcept != 'GIST'">
+                          </div>
+                          <div class="col" *ngIf="hasResults">
+                            <h3 class="center">
+                              {{ selectedNodes.length }} result(s) for
+                              {{ searchInput.value }}
+                            </h3>
+                            <div *ngFor="let item of selectedNodes; index as i">
+                              <div *ngIf="i < limitSearch">
+                                <div class="inline">{{ item.nameShort }}</div>
+                                <div class="inline" [innerHTML]="
                             item.name | truncate: 100:searchInput.value
                           "></div>
-                            <a class="inline" (click)="navigateToConcept(item.nameShort)">
-                              Details
-                            </a>
-                            <div class="small" [innerHTML]="
+                                <a class="inline" (click)="navigateToConcept(item.nameShort)">
+                                  Details
+                                </a>
+                                <div class="small" [innerHTML]="
                             item.description | truncate: 100:searchInput.value
                           "></div>
+                              </div>
+                            </div>
+                            <div>
+                              <br />
+                              <a *ngIf="limitSearch < selectedNodes.length" (click)="incrementLimit()">
+                                Show more ...
+                              </a>
+                            </div>
                           </div>
-                        </div>
-                        <div>
-                          <br />
-                          <a *ngIf="limitSearch < selectedNodes.length" (click)="incrementLimit()">
-                            Show more ...
-                          </a>
-                        </div>
-                      </div>
                 </div>
               </div>
             </div>
