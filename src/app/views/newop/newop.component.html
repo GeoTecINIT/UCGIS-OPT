@@ -247,7 +247,7 @@
                     </div>
                     <div class="col-md-6">
                       <input #skillExtra type="text" class="form-control" id="skillExtra" placeholder="Custom skill"
-                        name="skillExtra" />
+                        name="skillExtra" (keydown.enter)="addExtraSkill(skillExtra.value); skillExtra.value= ''" />
                     </div>
                     <div class="col-md-2">
                       <button type="submit" class="btn btn-primary" tooltip="Add your custom skill."
@@ -260,7 +260,6 @@
               </div>
             </div>
           </div>
-
 
           <!-- Knowledge added card 
           <div class="card card-accent-secondary">
@@ -308,7 +307,7 @@
                 </div>
                 <div class="col-md-6">
                   <input #skillExtra type="text" class="form-control" id="skillExtra" placeholder="Custom skill"
-                    name="skillExtra" />
+                    name="skillExtra" (keydown.enter)="addExtraSkill(skillExtra.value); skillExtra.value= ''"/>
                 </div>
                 <div class="col-md-2">
                   <button type="submit" class="btn btn-primary" tooltip="Add your custom skill."
@@ -382,7 +381,8 @@
                 <div class="col-md-6">
                   <input #competenceExtra type="text" class="form-control" id="competenceExtra"
                     placeholder="Custom transversal skill" name="competenceExtra"
-                    (keyup)="competenceExtraAdd.disabled = false" />
+                    (keyup)="competenceExtraAdd.disabled = false"
+                    (keydown.enter)="addExtraCompetence(competenceExtra.value); competenceExtra.value= ''; competenceExtraAdd.disabled = true" />
                 </div>
                 <div class="col-md-2">
                   <button #competenceExtraAdd type="submit" class="btn btn-primary"
@@ -393,7 +393,20 @@
                   </button>
                 </div>
               </div>
+
             </div>
+
+
+          </div>
+          <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-pill btn-primary" (click)="saveOccuProfile()" routerLink="/list"
+              *ngIf="model.title != '' && model.description != '' ">
+              Save
+            </button>
+            <button type="submit" class="btn btn-pill btn-primary" *ngIf="model.title == '' || model.description == '' "
+              tooltip="Add a title and a description to save your Job Offer." [disabled]="!saveOrg">
+              Save
+            </button>
           </div>
         </div>
       </div>
