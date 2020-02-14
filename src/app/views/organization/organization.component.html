@@ -45,7 +45,7 @@
           </div>
         </div>
 
-        <div class="card-body" *ngIf="orgs; else loading">
+        <div class="card-body" *ngIf="orgs && orgs.length>0; else loading">
           <div *ngFor="let o of orgs; index as i;">
             <div *ngIf="(o.admin.indexOf(user._id) > -1  || o.regular.indexOf(user._id) > -1);">
               <form>
@@ -164,7 +164,8 @@
                     </div>
                     <div class="col-sm-6 col-md-3 mb-1"> {{pen.email}}
                     </div>
-                    <div class="col-sm-6 col-md-2 mb-1 text-center"> Pending
+                    <div class="col-sm-6 col-md-2 mb-1 text-center"> Pending <span
+                        class="badge badge-pill badge-success">1</span>
                     </div>
                     <div class="col-sm-6 col-md-2 mb-1 text-center">
                       <div class="btn-group" role="group" aria-label="Admin or Regular">
@@ -176,7 +177,7 @@
                     </div>
                     <div class="col-sm-6 col-md-2 mb-1 text-center">
                       <button type="button" class="btn btn-outline-primary px-4"
-                        (click)="removeUser(i, reg._id, 'pending')" [hidden]="!(o.admin.indexOf(user._id) > -1)"><i
+                        (click)="removeUser(i, pen._id, 'pending')" [hidden]="!(o.admin.indexOf(user._id) > -1)"><i
                           class="icon-trash"></i></button>
                     </div>
                   </div>
@@ -212,7 +213,8 @@
             <app-loading-indicator></app-loading-indicator>
           </ng-template>
         </div>
-        <p class="text-primary text-center" [hidden]="!orgs || orgs.length> 0">You are not a member of any organization.
+        <p class="text-primary text-center" [hidden]="!orgs || orgs.length> 0">
+          <span class="badge badge-pill badge-success">N</span> You are not a member of any organization.
           Create
           one to start!</p>
       </div>

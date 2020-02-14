@@ -165,11 +165,12 @@ export class OrganizationComponent implements OnInit {
   }
 
   deleteUserFromOrg(user, org) {
-
-    if (org.admin.length > 1) {
+    if (org.admin.length > 1 && user) {
       const indexToRemove = user.organizations.indexOf(org._id);
-      user.organizations.splice(indexToRemove, 1);
-      this.userService.updateUserWithId(user._id, user);
+      if (indexToRemove !== -1) {
+        user.organizations.splice(indexToRemove, 1);
+        this.userService.updateUserWithId(user._id, user);
+      }
     } else {
       this.msgUsrSaved = null;
       this.msgUsrError = 'Can not remove the only admin! Remove organization if you prefer.';
@@ -280,6 +281,9 @@ export class OrganizationComponent implements OnInit {
     if (type === 'regular') {
       const indexToRemove = this.currentOrg.regular.indexOf(userId);
       this.currentOrg.regular.splice(indexToRemove, 1);
+    } else if (type === 'pending') {
+      const indexToRemove = this.currentOrg.pending.indexOf(userId);
+      this.currentOrg.pending.splice(indexToRemove, 1);
     } else if (type === 'admin') {
       if (this.currentOrg.admin.length > 1) {
         const indexToRemove = this.currentOrg.admin.indexOf(userId);

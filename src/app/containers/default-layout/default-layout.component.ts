@@ -56,10 +56,11 @@ export class DefaultLayoutComponent implements OnDestroy {
         if (this.hasOrgs) {
           this.numPending = 0;
           userDB.organizations.forEach(orgId => {
-            this.organizationService.getOrganizationById(orgId).subscribe(org => {
+            const orgSubs = this.organizationService.getOrganizationById(orgId).subscribe(org => {
               if (org && org.admin.indexOf(this.userId) > -1) {
                 this.numPending = org.pending ? this.numPending + org.pending.length : this.numPending;
               }
+              orgSubs.unsubscribe();
             });
           });
         }
