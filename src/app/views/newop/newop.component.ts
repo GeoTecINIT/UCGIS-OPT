@@ -103,7 +103,6 @@ export class NewopComponent implements OnInit {
               this.organizationService.getOrganizationById(orgId).subscribe(org => {
                 if (org) {
                   this.userOrgs.push(org);
-                  console.log('userOrgs push');
                   this.saveOrg = this.userOrgs[0];
                   if (org.isPublic) { // if Any of the organizations the user belongs if public, can make public profiles
                     this.canMakePublicProfiles = true;
