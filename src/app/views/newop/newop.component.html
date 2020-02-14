@@ -148,7 +148,7 @@
                       </div>
                     </div>
                     <div class="col-md-3">
-                      <button type="submit" class="btn btn-primary"
+                      <button type="submit" class="btn btn-primary" [disabled]="hasResults"
                         tooltip="Search or navigate in the graph to add knowledge." (click)="addBokKnowledge();">
                         Add
                       </button>
@@ -161,7 +161,8 @@
                 <div class="col-lg-8 col-sm-6 text-justify">
                   <a (click)="navigateToConcept('GIST')" *ngIf="!(!hasResults && currentConcept != 'GIST')">
                     < To full BoK </a>
-                      <a (click)="hasResults = !hasResults; currentConcept=''" *ngIf="!hasResults && currentConcept != 'GIST'">
+                      <a (click)="hasResults = !hasResults; currentConcept=''"
+                        *ngIf="!hasResults && currentConcept != 'GIST'">
                         < Back to results </a> <br>
                           <h5 [hidden]="currentConcept == '' && currentConcept != 'GIST'">Knowledge</h5>
                           <div #textBoK id="textBoK" [hidden]="currentConcept == '' && currentConcept != 'GIST'">
