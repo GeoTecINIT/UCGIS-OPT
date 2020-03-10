@@ -117,7 +117,7 @@ export class NewopComponent implements OnInit {
   }
 
   ngOnInit() {
-    bok.visualizeBOKData('#bubbles', 'assets/saved-bok.xml', '#textBoK');
+    bok.visualizeBOKData('#bubbles', '../../assets/json/eo4geoBOKv7.json', '#textBoK');
     this.getMode();
   }
 
