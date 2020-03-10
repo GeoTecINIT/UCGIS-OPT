@@ -76,13 +76,14 @@ export class OrganizationService {
   }
 
   updateOrganizationWithId(organizationId: string, updatedOrganization: Organization) {
-    updatedOrganization.adminUser = null;
-    updatedOrganization.regularUser = null;
-    updatedOrganization.pendingUser = null;
+    const orgToSave = { ...updatedOrganization }; // clone object or users dissappear
+    orgToSave.adminUser = null;
+    orgToSave.regularUser = null;
+    orgToSave.pendingUser = null;
     this.db
       .collection(collection)
       .doc<Organization>(organizationId)
-      .update(updatedOrganization);
+      .update(orgToSave);
   }
 
   removeOrganization(org: Organization) {

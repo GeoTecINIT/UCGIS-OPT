@@ -82,7 +82,6 @@ export class OrganizationComponent implements OnInit {
         org.admin.forEach(adminId => {
           const userSubAdmin = this.userService.getUserById(adminId).subscribe(adminDB => {
             if (adminDB) {
-              console.log('add user admin:' + adminDB.name + ' ' + adminDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.adminUser.push(adminDB);
             }
             userSubAdmin.unsubscribe();
@@ -97,7 +96,6 @@ export class OrganizationComponent implements OnInit {
           const userSubReg = this.userService.getUserById(regurlarId).subscribe(regularDB => {
             if (regularDB) {
               // tslint:disable-next-line:max-line-length
-              console.log('add user regular:' + regularDB.name + ' ' + regularDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.regularUser.push(regularDB);
             }
             userSubReg.unsubscribe();
@@ -112,7 +110,6 @@ export class OrganizationComponent implements OnInit {
           const userSubPen = this.userService.getUserById(pendingId).subscribe(pendingDB => {
             if (pendingDB) {
               // tslint:disable-next-line:max-line-length
-              console.log('add user regular:' + pendingDB.name + ' ' + pendingDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.pendingUser.push(pendingDB);
             }
             userSubPen.unsubscribe();
@@ -168,11 +165,16 @@ export class OrganizationComponent implements OnInit {
   }
 
   deleteUserFromOrg(user, org) {
-    console.log('deleteUserFromOrg ' + user.name + ' org ' + org.name);
-    const indexToRemove = user.organizations.indexOf(org._id);
-    user.organizations.splice(indexToRemove, 1);
-    this.userService.updateUserWithId(user._id, user);
-
+    if (org.admin.length > 1 && user) {
+      const indexToRemove = user.organizations.indexOf(org._id);
+      if (indexToRemove !== -1) {
+        user.organizations.splice(indexToRemove, 1);
+        this.userService.updateUserWithId(user._id, user);
+      }
+    } else {
+      this.msgUsrSaved = null;
+      this.msgUsrError = 'Can not remove the only admin! Remove organization if you prefer.';
+    }
   }
 
   makeRegularUser(orgIndex, userId) {
@@ -241,8 +243,6 @@ export class OrganizationComponent implements OnInit {
   }
 
   addUserToOrg(orgIndex, userEmail) {
-    console.log('************* addUserToOrg:');
-
     this.currentOrg = this.orgs[orgIndex];
 
     const userSub = this.userService.getUserByEmail(userEmail).subscribe(users => {
@@ -281,9 +281,17 @@ export class OrganizationComponent implements OnInit {
     if (type === 'regular') {
       const indexToRemove = this.currentOrg.regular.indexOf(userId);
       this.currentOrg.regular.splice(indexToRemove, 1);
+    } else if (type === 'pending') {
+      const indexToRemove = this.currentOrg.pending.indexOf(userId);
+      this.currentOrg.pending.splice(indexToRemove, 1);
     } else if (type === 'admin') {
-      const indexToRemove = this.currentOrg.admin.indexOf(userId);
-      this.currentOrg.admin.splice(indexToRemove, 1);
+      if (this.currentOrg.admin.length > 1) {
+        const indexToRemove = this.currentOrg.admin.indexOf(userId);
+        this.currentOrg.admin.splice(indexToRemove, 1);
+      } else {
+        this.msgUsrSaved = null;
+        this.msgUsrError = 'Can not remove the only admin! Remove organization if you prefer.';
+      }
     }
     this.organizationService.updateOrganizationWithId(this.orgs[orgIndex]._id, this.orgs[orgIndex]);
     const userSub = this.userService.getUserById(userId).subscribe(userDB => {
@@ -292,12 +300,11 @@ export class OrganizationComponent implements OnInit {
       }
       userSub.unsubscribe();
     });
-    this.msgUsrSaved = 'User removed!';
+    this.msgUsrSaved = 'User removed from organization!';
     this.msgUsrError = null;
   }
 
   newOrg() {
-    console.log('************* newOrg:');
     const newOrganization = new Organization();
     newOrganization.admin = [];
     newOrganization.admin.push(this.user._id);
