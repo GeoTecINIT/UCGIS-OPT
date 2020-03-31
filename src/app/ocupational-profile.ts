@@ -24,6 +24,7 @@ export class OcupationalProfile extends Object {
     public customSkills: string[],
     public customCompetences: string[],
     public competences: Competence[],
+    public lastModified: string,
     public isPublic: boolean = false
   ) {
     super();
