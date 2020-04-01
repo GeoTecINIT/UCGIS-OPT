@@ -20,7 +20,7 @@ export class NewopComponent implements OnInit {
   filteredCompetences = [];
   fullcompetences = [];
 
-  model = new OcupationalProfile('', '', '', '', '', '', null, 1, [], [], [], [], []);
+  model = new OcupationalProfile('', '', '', '', '', '', null, 1, [], [], [], [], [], new Date().toDateString());
 
   public value: string[];
   public current: string;
@@ -185,12 +185,14 @@ export class NewopComponent implements OnInit {
 
   saveOccuProfile() {
     if (this.mode === 'copy') {
+      this.model.lastModified = new Date().toDateString();
       this.occuprofilesService.updateOccuProfile(this._id, this.model);
     } else {
       this.model.userId = this.afAuth.auth.currentUser.uid;
       this.model.orgId = this.saveOrg._id;
       this.model.orgName = this.saveOrg.name;
       this.model.isPublic = this.saveOrg.isPublic ? this.model.isPublic : false;
+      this.model.lastModified = new Date().toDateString();
       this.occuprofilesService.addNewOccuProfile(this.model);
     }
   }
