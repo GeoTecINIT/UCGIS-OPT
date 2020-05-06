@@ -54,10 +54,40 @@ export class PopupComponent implements OnInit {
     document.body.removeChild(selBox);
   }
 
+  getSubjectMetadata() {
+    // <#> dc:hasPart [ dc:extent "2" ; dc:relation eo4geo:someBoKConcept  ] ;
+    // @prefix dc: <http://purl.org/dc/terms/> .
+    // @prefix eo4geo: <http://bok.eo4geo.eu/> .
+    // <> dc:hasPart [ dc:type "Module";
+    // dc:title "Mathematics";
+    // dc:relation eo4geo:AM;
+    // dc:relation eo4geo:GC] .
+    let subject = '@prefix dc: <http://purl.org/dc/terms/> . @prefix eo4geo: <http://bok.eo4geo.eu/> . ';
+    if (this.selectedProfile.knowledge && this.selectedProfile.knowledge.length > 0) {
+      subject = subject + '<> dc:hasPart [ dc:type "Occupational Profile"; dc:title "' + this.selectedProfile.title + '"';
+      this.selectedProfile.knowledge.forEach(know => {
+        // const bokCode = concept.split('] ')[1];
+        const bokCode = know.split(']', 1)[0].split('[', 2)[1];
+        if (bokCode) {
+          subject = subject + '; dc:relation eo4geo:' + bokCode;
+        }
+      });
+      subject = subject + '  ] .';
+    }
+    return subject;
+  }
+
   generatePDF() {
     let currentLinePoint = 45;
     // cabecera , imágenes
     const doc = new jsPDF();
+    doc.setProperties({
+      title: this.selectedProfile.title,
+      subject: this.getSubjectMetadata(),
+      author: 'EO4GEO',
+      keywords: 'eo4geo, occupational profile tool',
+      creator: 'Occupational Profile Tool'
+    });
     doc.addImage(this.base64img.logo, 'PNG', 10, 7, 37, 25);
     doc.addImage(this.base64img.back, 'PNG', 0, 100, 210, 198);
     doc.link(15, 15, 600, 33, { url: 'http://www.eo4geo.eu' });
@@ -133,7 +163,7 @@ export class PopupComponent implements OnInit {
     }
 
     // doc.textWithLink('asdfasdf', 20, 260, { url: 'https://' });
-    doc.save('OccupationalProfile.pdf');
+    doc.save(this.selectedProfile.title + '.pdf');
   }
 
 
