@@ -36,18 +36,18 @@ export class ListComponent implements OnInit {
         this.userService.getUserById(user.uid).subscribe(userDB => {
           this.currentUser = new User(userDB);
           this.occuprofilesService
-          .subscribeToOccupationalProfiles()
-          .subscribe(occuProfiles => {
-            this.occupationalProfiles = [];
-            occuProfiles.forEach(op => {
-              if (op.isPublic) {
-                this.occupationalProfiles.push(op);
-              } else if (this.currentUser && this.currentUser.organizations && this.currentUser.organizations.indexOf(op.orgId) > -1) {
-                this.occupationalProfiles.push(op);
-              }
+            .subscribeToOccupationalProfiles()
+            .subscribe(occuProfiles => {
+              this.occupationalProfiles = [];
+              occuProfiles.forEach(op => {
+                if (op.isPublic) {
+                  this.occupationalProfiles.push(op);
+                } else if (this.currentUser && this.currentUser.organizations && this.currentUser.organizations.indexOf(op.orgId) > -1) {
+                  this.occupationalProfiles.push(op);
+                }
+              });
+              this.filteredOccuProfiles = this.occupationalProfiles;
             });
-            this.filteredOccuProfiles = this.occupationalProfiles;
-          });
         });
       } else {
         this.isAnonymous = true;
@@ -64,6 +64,8 @@ export class ListComponent implements OnInit {
           this.filteredOccuProfiles = this.occupationalProfiles;
         });
     });
+
+
   }
 
   ngOnInit() {
