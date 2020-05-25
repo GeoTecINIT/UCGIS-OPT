@@ -83,6 +83,7 @@
                 <button type="button" class="btn text-justify" routerLink="/detail/{{ o._id }}">
                   <span>
                     <h1 style="display: inline;">{{ o.title }}</h1>
+                    <h6 *ngIf="!o.isPublic" style="display: inline;" class="text-level">Private</h6>
                     <h6 *ngIf="o.isPublic" style="display: inline;" class="text-level">EO4GEO</h6>
                     <h6 *ngIf="!o.isPublic" style="display: inline;" class="text-level text-secondary">{{ o.orgName }}</h6>
                     <br>
