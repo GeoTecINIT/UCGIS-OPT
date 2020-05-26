@@ -104,9 +104,6 @@ export class NewopComponent implements OnInit {
                 if (org) {
                   this.userOrgs.push(org);
                   this.saveOrg = this.userOrgs[0];
-                  if (org.isPublic) { // if Any of the organizations the user belongs if public, can make public profiles
-                    this.canMakePublicProfiles = true;
-                  }
                 }
               });
             });
@@ -184,11 +181,11 @@ export class NewopComponent implements OnInit {
   }
 
   saveOccuProfile() {
-      this.model.userId = this.afAuth.auth.currentUser.uid;
-      this.model.orgId = this.saveOrg._id;
-      this.model.orgName = this.saveOrg.name;
-      this.model.isPublic = this.saveOrg.isPublic ? this.model.isPublic : false;
-      this.model.lastModified = new Date().toDateString();
+    this.model.userId = this.afAuth.auth.currentUser.uid;
+    this.model.orgId = this.saveOrg._id;
+    this.model.orgName = this.saveOrg.name;
+    this.model.isPublic = this.model.isPublic;
+    this.model.lastModified = new Date().toDateString();
     if (this.mode === 'copy') {
       this.occuprofilesService.updateOccuProfile(this._id, this.model);
     } else {

@@ -57,6 +57,7 @@ export class ListComponent implements OnInit {
                 }
               });
               this.filteredOccuProfiles = this.occupationalProfiles;
+              this.sortBy('lastUpdated');
             });
         });
       } else {
@@ -72,6 +73,7 @@ export class ListComponent implements OnInit {
             }
           });
           this.filteredOccuProfiles = this.occupationalProfiles;
+          this.sortBy('lastUpdated');
         });
     });
 
@@ -145,20 +147,17 @@ export class ListComponent implements OnInit {
     this.currentPage = 0;
     switch (attr) {
       case 'name':
-        console.log('Sort by: ' + attr + ' asc: ' + this.sortNameAsc);
         this.sortNameAsc = !this.sortNameAsc;
         this.sortedBy = 'name';
         // tslint:disable-next-line:max-line-length
         this.filteredOccuProfiles.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase()) ? this.sortNameAsc ? 1 : -1 : this.sortNameAsc ? -1 : 1);
         break;
       case 'lastUpdated':
-        console.log('Sort by: ' + attr + ' asc: ' + this.sortUpdAsc);
         this.sortUpdAsc = !this.sortUpdAsc;
         this.sortedBy = 'lastUpdated';
         this.filteredOccuProfiles.sort((a, b) => (a.updatedAt > b.updatedAt) ? this.sortUpdAsc ? 1 : -1 : this.sortUpdAsc ? -1 : 1);
         break;
       case 'organization':
-        console.log('Sort by: ' + attr + ' asc: ' + this.sortOrgAsc);
         this.sortOrgAsc = !this.sortOrgAsc;
         this.sortedBy = 'organization';
         // tslint:disable-next-line:max-line-length
