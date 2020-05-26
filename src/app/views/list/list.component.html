@@ -77,15 +77,53 @@
           </div>
         </div>
         <div class="card-body">
+          <div class="row">
+            <div class="col-sm-0 col-md-2"></div>
+            <div class="col-sm-3 col-md-2 text-center">
+              Sort by:
+            </div>
+            <!-- sortedBy -->
+            <div class="col-sm-3 col-md-2 text-center">
+              <button type="button" class="btn btn-block btn-link" (click)="sortBy('lastUpdated');">
+                <i [ngClass]="sortUpdAsc? 'fa fa-arrow-down' : 'fa fa-arrow-up'"></i>
+                <span [ngClass]="sortedBy == 'lastUpdated'? 'bolder' : ''">Last updated</span>
+              </button>
+            </div>
+            <div class="col-sm-3 col-md-2 text-center">
+              <button type="button" class="btn btn-block btn-link" (click)="sortBy('name');">
+                <i [ngClass]="sortNameAsc? 'fa fa-arrow-down' : 'fa fa-arrow-up'"></i>
+                <span [ngClass]="sortedBy == 'name'? 'bolder' : ''"> Name</span>
+              </button>
+            </div>
+            <div class="col-sm-3 col-md-2 text-center">
+              <button type="button" class="btn btn-block btn-link" (click)="sortBy('organization');">
+                <i [ngClass]="sortOrgAsc? 'fa fa-arrow-down' : 'fa fa-arrow-up'"></i>
+                <span [ngClass]="sortedBy == 'organization'? 'bolder' : ''">Organization</span>
+              </button>
+            </div>
+            <div class="col-sm-0 col-md-2"></div>
+          </div>
+
+          <div *ngIf="filteredOccuProfiles && filteredOccuProfiles.length == 0">
+            <div class="text-center">
+              <h5> Your search did not return any result. Try with advanced search to search in more attributes.</h5>
+            </div>
+          </div>
+          <div *ngIf="filteredOccuProfiles && filteredOccuProfiles.length > 0 && searchText!='' && searchText!= null">
+            <div class="text-left">
+              <h5> Results: {{filteredOccuProfiles.length}}</h5>
+            </div>
+          </div>
+
           <div *ngFor="let o of filteredOccuProfiles">
-            <div class="row">  <!--  *ngIf="o.isPublic || (currentUser?.organizations?.indexOf(o.orgId) > -1)"  -->
+            <div class="row">
+              <!--  *ngIf="o.isPublic || (currentUser?.organizations?.indexOf(o.orgId) > -1)"  -->
               <div class="col-md-10">
                 <button type="button" class="btn text-justify" routerLink="/detail/{{ o._id }}">
                   <span>
                     <h1 style="display: inline;">{{ o.title }}</h1>
                     <h6 *ngIf="!o.isPublic" style="display: inline;" class="text-level">Private</h6>
-                    <h6 *ngIf="o.isPublic" style="display: inline;" class="text-level">EO4GEO</h6>
-                    <h6 *ngIf="!o.isPublic" style="display: inline;" class="text-level text-secondary">{{ o.orgName }}</h6>
+                    <h6 style="display: inline;" class="text-level text-secondary">{{ o.orgName }}</h6>
                     <br>
                     {{ o.knowledge.length }} Knowledge |
                     {{ o.skills.length }} Skills |
@@ -95,7 +133,7 @@
                     {{o.updatedAt.toDate() | date:'dd-MMM-yyyy'}}
                   </span>
                   <p>{{ o.description }}</p>
-                
+
 
                   <!-- <span
                   *ngFor="let mk of o.knowledge"
@@ -132,7 +170,8 @@
                   <div class="col-3 col-sm-3 col-md-3 no-padding"
                     tooltip="{{isAnonymous? 'Login to be able to remove' : o.userId==afAuth.auth.currentUser?.uid?  'Remove' : 'You can remove only your own profiles'}}">
                     <button type="button" class="btn btn-block btn-link" data-toggle="modal"
-                      (click)="dangerModal.show()" [disabled]="isAnonymous || (currentUser?.organizations?.indexOf(o.orgId) == -1)">
+                      (click)="dangerModal.show()"
+                      [disabled]="isAnonymous || (currentUser?.organizations?.indexOf(o.orgId) == -1)">
                       <i class="fa fa-trash-o fa-lg mt-4"></i>
                     </button>
                   </div>
