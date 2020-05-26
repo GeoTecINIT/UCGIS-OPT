@@ -49,7 +49,6 @@ export class OcuprofilesService {
   updateOccuProfile(occuProfileId: string, updatedProfile: OcupationalProfile) {
     const timestamp = firebase.firestore.FieldValue.serverTimestamp();
     updatedProfile.updatedAt = timestamp;
-    updatedProfile.createdAt = timestamp;
     this.db
       .collection(collection)
       .doc<OcupationalProfile>(occuProfileId)
