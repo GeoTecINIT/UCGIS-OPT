@@ -115,7 +115,7 @@
             </div>
           </div>
 
-          <div *ngFor="let o of filteredOccuProfiles">
+          <div *ngFor="let o of filteredOccuProfiles| slice:paginationLimitFrom:paginationLimitTo; let i=index">
             <div class="row">
               <!--  *ngIf="o.isPublic || (currentUser?.organizations?.indexOf(o.orgId) > -1)"  -->
               <div class="col-md-10">
@@ -203,6 +203,29 @@
               </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
           </div>
+
+          <div *ngIf="this.filteredOccuProfiles" class="row">
+            <div class="col-md-6 ml-auto mr-auto">
+              <nav aria-label="pagination">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:;" (click)="previousPage()">Previous</a>
+                  </li>
+                  <li *ngFor="let page of range(this.filteredOccuProfiles.length/LIMIT_PER_PAGE, 0)" class="page-item"
+                    [ngClass]="currentPage == page? 'active': ''">
+                    <a class="page-link" href="javascript:;"
+                      (click)="currentPage=page; paginationLimitFrom=page*LIMIT_PER_PAGE; paginationLimitTo=page*LIMIT_PER_PAGE+LIMIT_PER_PAGE ">{{page+1}}
+                      <span *ngIf="currentPage == page" class="sr-only">(current)</span>
+                    </a></li>
+
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:;" (click)="nextPage()">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

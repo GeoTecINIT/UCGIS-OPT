@@ -28,6 +28,10 @@ export class ListComponent implements OnInit {
   sortOrgAsc = true;
   sortUpdAsc = true;
   sortedBy = 'lastUpdated';
+  public paginationLimitFrom = 0;
+  public paginationLimitTo = 6;
+  public LIMIT_PER_PAGE = 6;
+  public currentPage = 0;
 
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
 
@@ -87,6 +91,9 @@ export class ListComponent implements OnInit {
   }
 
   filter() {
+    this.paginationLimitFrom = 0;
+    this.paginationLimitTo = this.LIMIT_PER_PAGE;
+    this.currentPage = 0;
     const search = this.searchText.toLowerCase();
     this.filteredOccuProfiles = [];
     this.filteredOccuProfiles = this.occupationalProfiles.filter(
@@ -131,9 +138,9 @@ export class ListComponent implements OnInit {
     });
   }
   sortBy(attr) {
-  //  this.paginationLimitFrom = 0;
- //   this.paginationLimitTo = 6;
-  //  this.currentPage = 0;
+    this.paginationLimitFrom = 0;
+    this.paginationLimitTo = this.LIMIT_PER_PAGE;
+    this.currentPage = 0;
     switch (attr) {
       case 'name':
         console.log('Sort by: ' + attr + ' asc: ' + this.sortNameAsc);
@@ -156,5 +163,30 @@ export class ListComponent implements OnInit {
         this.filteredOccuProfiles.sort((a, b) => (a.orgName.toLowerCase() > b.orgName.toLowerCase()) ? this.sortOrgAsc ? 1 : -1 : this.sortOrgAsc ? -1 : 1);
         break;
     }
+  }
+  range(size, startAt = 0) {
+    size = Math.ceil(size);
+    if (size === 0) {
+      size = 1;
+    }
+    return [...Array(size).keys()].map(i => i + startAt);
+  }
+
+  nextPage() {
+    if (this.currentPage + 1 < this.filteredOccuProfiles.length / this.LIMIT_PER_PAGE) {
+      this.paginationLimitFrom = this.paginationLimitFrom + this.LIMIT_PER_PAGE;
+      this.paginationLimitTo = this.paginationLimitTo + this.LIMIT_PER_PAGE;
+      this.currentPage++;
+    }
+    console.log('Next Page: ' + this.paginationLimitFrom + ' to ' + this.paginationLimitTo + ' Current Page : ' + this.currentPage);
+  }
+
+  previousPage() {
+    if (this.currentPage > 0) {
+      this.paginationLimitFrom = this.paginationLimitFrom - this.LIMIT_PER_PAGE;
+      this.paginationLimitTo = this.paginationLimitTo - this.LIMIT_PER_PAGE;
+      this.currentPage--;
+    }
+    console.log('Previous Page: ' + this.paginationLimitFrom + ' to ' + this.paginationLimitTo + ' Current Page : ' + this.currentPage);
   }
 }
