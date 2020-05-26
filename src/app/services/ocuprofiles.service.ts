@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { OcupationalProfile } from '../ocupational-profile';
+import * as firebase from 'firebase';
+
 
 const collection = 'OcuProfiles';
 
@@ -28,6 +30,9 @@ export class OcuprofilesService {
   addNewOccuProfile(newProfile: OcupationalProfile) {
     const id = this.db.createId();
     newProfile._id = id;
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+    newProfile.updatedAt = timestamp;
+    newProfile.createdAt = timestamp;
     this.db
       .collection(collection)
       .doc(id)
@@ -42,6 +47,9 @@ export class OcuprofilesService {
   }
 
   updateOccuProfile(occuProfileId: string, updatedProfile: OcupationalProfile) {
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+    updatedProfile.updatedAt = timestamp;
+    updatedProfile.createdAt = timestamp;
     this.db
       .collection(collection)
       .doc<OcupationalProfile>(occuProfileId)
