@@ -77,22 +77,67 @@
           </div>
         </div>
         <div class="card-body">
-          <div *ngFor="let o of filteredOccuProfiles">
-            <div class="row">  <!--  *ngIf="o.isPublic || (currentUser?.organizations?.indexOf(o.orgId) > -1)"  -->
+          <div class="row">
+            <div class="col-sm-12 col-md-6 text-center">
+              Sort by:
+           <!--  </div> -->
+            <!-- sortedBy -->
+             <button type="button" class="btn btn-link" (click)="sortBy('lastUpdated');">
+                <i [ngClass]="sortUpdAsc? 'fa fa-arrow-down' : 'fa fa-arrow-up'"></i>
+                <span [ngClass]="sortedBy == 'lastUpdated'? 'bolder' : ''">Last updated</span>
+              </button>
+              <button type="button" class="btn btn-link" (click)="sortBy('name');">
+                <i [ngClass]="sortNameAsc? 'fa fa-arrow-down' : 'fa fa-arrow-up'"></i>
+                <span [ngClass]="sortedBy == 'name'? 'bolder' : ''"> Name</span>
+              </button>
+              <button type="button" class="btn btn-link" (click)="sortBy('organization');">
+                <i [ngClass]="sortOrgAsc? 'fa fa-arrow-down' : 'fa fa-arrow-up'"></i>
+                <span [ngClass]="sortedBy == 'organization'? 'bolder' : ''">Organization</span>
+              </button>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="text-center">
+                <button class="btn btn-pill btn-outline-primary" [ngClass]="{'active': showOnlyAuthor==-1}"
+                  (click)="showOnlyAuthor=-1; filterByAuthor(-1)" [disabled]="isAnonymous">All</button>
+                <button class="btn btn-pill btn-outline-primary" [ngClass]="{'active': showOnlyAuthor==0}"
+                  (click)="showOnlyAuthor=0; filterByAuthor(0)" [disabled]="isAnonymous">My content</button>
+                <button class="btn btn-pill btn-outline-primary" [ngClass]="{'active': showOnlyAuthor==1}"
+                  (click)="showOnlyAuthor=1; filterByAuthor(1)" [disabled]="isAnonymous">My organization's
+                  content</button>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="filteredOccuProfiles && filteredOccuProfiles.length == 0">
+            <div class="text-center">
+              <h5> Your search did not return any result. Try with advanced search to search in more attributes.</h5>
+            </div>
+          </div>
+          <div *ngIf="filteredOccuProfiles && filteredOccuProfiles.length > 0 && searchText!='' && searchText!= null">
+            <div class="text-left">
+              <h5> Results: {{filteredOccuProfiles.length}}</h5>
+            </div>
+          </div>
+
+          <div *ngFor="let o of filteredOccuProfiles| slice:paginationLimitFrom:paginationLimitTo; let i=index">
+            <div class="row">
+              <!--  *ngIf="o.isPublic || (currentUser?.organizations?.indexOf(o.orgId) > -1)"  -->
               <div class="col-md-10">
                 <button type="button" class="btn text-justify" routerLink="/detail/{{ o._id }}">
                   <span>
                     <h1 style="display: inline;">{{ o.title }}</h1>
                     <h6 *ngIf="!o.isPublic" style="display: inline;" class="text-level">Private</h6>
-                    <h6 *ngIf="o.isPublic" style="display: inline;" class="text-level">EO4GEO</h6>
-                    <h6 *ngIf="!o.isPublic" style="display: inline;" class="text-level text-secondary">{{ o.orgName }}</h6>
+                    <h6 style="display: inline;" class="text-level text-secondary">{{ o.orgName }}</h6>
                     <br>
                     {{ o.knowledge.length }} Knowledge |
                     {{ o.skills.length }} Skills |
                     {{ o.competences.length }} Transversal skills
                   </span>
-
+                  <span *ngIf="o.updatedAt" class="text-lastupdated ">| Last updated:
+                    {{o.updatedAt.toDate() | date:'dd-MMM-yyyy'}}
+                  </span>
                   <p>{{ o.description }}</p>
+
 
                   <!-- <span
                   *ngFor="let mk of o.knowledge"
@@ -129,7 +174,8 @@
                   <div class="col-3 col-sm-3 col-md-3 no-padding"
                     tooltip="{{isAnonymous? 'Login to be able to remove' : o.userId==afAuth.auth.currentUser?.uid?  'Remove' : 'You can remove only your own profiles'}}">
                     <button type="button" class="btn btn-block btn-link" data-toggle="modal"
-                      (click)="dangerModal.show()" [disabled]="isAnonymous || (currentUser?.organizations?.indexOf(o.orgId) == -1)">
+                      (click)="dangerModal.show()"
+                      [disabled]="isAnonymous || (currentUser?.organizations?.indexOf(o.orgId) == -1)">
                       <i class="fa fa-trash-o fa-lg mt-4"></i>
                     </button>
                   </div>
@@ -161,6 +207,29 @@
               </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
           </div>
+
+          <div *ngIf="this.filteredOccuProfiles" class="row">
+            <div class="col-md-6 ml-auto mr-auto">
+              <nav aria-label="pagination">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:;" (click)="previousPage()">Previous</a>
+                  </li>
+                  <li *ngFor="let page of range(this.filteredOccuProfiles.length/LIMIT_PER_PAGE, 0)" class="page-item"
+                    [ngClass]="currentPage == page? 'active': ''">
+                    <a class="page-link" href="javascript:;"
+                      (click)="currentPage=page; paginationLimitFrom=page*LIMIT_PER_PAGE; paginationLimitTo=page*LIMIT_PER_PAGE+LIMIT_PER_PAGE ">{{page+1}}
+                      <span *ngIf="currentPage == page" class="sr-only">(current)</span>
+                    </a></li>
+
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:;" (click)="nextPage()">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
