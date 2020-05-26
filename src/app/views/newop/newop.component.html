@@ -29,6 +29,7 @@
               </button>
               <button type="submit" class="btn btn-pill btn-primary"
                 *ngIf="model.title == '' || model.description == '' "
+                [hidden]="userOrgs.length == 0"
                 tooltip="Add a title and a description to save your Occupational Profile." [disabled]="!saveOrg">
                 Save
               </button>
