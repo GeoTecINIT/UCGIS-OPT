@@ -155,7 +155,7 @@
                     </div>
 
                   </div>
-                  <div id="bubbles" (click)="cleanTip()">
+                  <div id="bubbles" (click)="cleanTip(); hasResults = false;">
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 text-justify">
@@ -163,9 +163,13 @@
                     < To full BoK </a>
                       <a (click)="hasResults = !hasResults; currentConcept=''"
                         *ngIf="!hasResults && currentConcept != 'GIST'">
-                        < Back to results </a> <br>
+                        < Back to results </a>
+                        <a (click)="hasResults = false"
+                        *ngIf="hasResults">
+                        &nbsp; < Show current concept </a>
+                          <br>
                           <h5 [hidden]="currentConcept == '' && currentConcept != 'GIST'">Knowledge</h5>
-                          <div #textBoK id="textBoK" [hidden]="currentConcept == '' && currentConcept != 'GIST'">
+                          <div #textBoK id="textBoK" [hidden]="hasResults" >  <!--  [hidden]="currentConcept == '' && currentConcept != 'GIST'" -->
                           </div>
                           <div class="col" *ngIf="hasResults">
                             <h3 class="center">

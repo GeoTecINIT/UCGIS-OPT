@@ -224,7 +224,7 @@ export class NewopComponent implements OnInit {
 
   searchInBok(text: string) {
     this.selectedNodes = bok.searchInBoK(text);
-    this.hasResults = this.selectedNodes.length > 0 ? true : false;
+    this.hasResults = true;
     this.currentConcept = '';
     this.cleanTip();
   }
@@ -238,8 +238,6 @@ export class NewopComponent implements OnInit {
 
   cleanTip() {
     this.isShowingSkillsTip = false;
-   // this.currentConcept = bok.getCurrentConcept();
-   // bok.browseToConcept(conceptName);
   }
 
   incrementLimit() {
