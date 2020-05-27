@@ -238,6 +238,8 @@ export class NewopComponent implements OnInit {
 
   cleanTip() {
     this.isShowingSkillsTip = false;
+   // this.currentConcept = bok.getCurrentConcept();
+   // bok.browseToConcept(conceptName);
   }
 
   incrementLimit() {

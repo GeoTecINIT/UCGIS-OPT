@@ -79,8 +79,6 @@ export class ListComponent implements OnInit {
           this.sortBy('lastUpdated');
         });
     });
-
-
   }
 
   ngOnInit() {
