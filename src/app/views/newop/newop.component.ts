@@ -81,6 +81,8 @@ export class NewopComponent implements OnInit {
   saveOrg: Organization;
   currentUser: User;
 
+  selectedCompetencesPrefLabel: string[];
+
   @ViewChild('textBoK') textBoK: ElementRef;
 
   constructor(
@@ -140,24 +142,44 @@ export class NewopComponent implements OnInit {
     this.isShowingSkillsTip = true;
   }
 
-  removeCompetence(name: string, array: string[]) {
-    this.nameCodeToDelete = '';
-    array.forEach((item, index) => {
-      if (item === name) {
-        //  console.log('removing concept' + name);
-        array.splice(index, 1);
-        this.nameCodeToDelete = name.split(']')[0];
-      }
-    });
+  removeCompetence(name: any, array: any[]) {
+    if (typeof(name) === 'string') { // for skills
+      this.nameCodeToDelete = '';
+      array.forEach((item, index) => {
+        if (item === name) {
+          console.log('removing concept' + name);
+          array.splice(index, 1);
+          array = [...array];
+          console.log('array after: ');
+          console.log(array);
+          this.nameCodeToDelete = name.split(']')[0];
+        }
+      });
+      const skillsFiltered = [];
+      this.model.skills.forEach((sk, i) => {
+        //  console.log('code skill' + sk.split(']')[0] + '=' + this.nameCodeToDelete);
+        if (sk.split(']')[0] === this.nameCodeToDelete) { // There is a knowledge that starts with same code, don't include it
+          skillsFiltered.push(sk);
+        }
+      });
+      this.associatedSkillsToDelete = skillsFiltered.length;
+    } else { // for transversal skills
+      array.forEach((item, index) => {
+        if (item.preferredLabel === name.preferredLabel) {
+          console.log('removing concept trans' + name);
+          array.splice(index, 1);
+          array = [...array];
+          console.log('array after trans: ');
+          console.log(array);
+          this.competences = [...this.competences];
+          this.model.competences = [...this.model.competences];
+        }
+      });
+    }
+  }
 
-    const skillsFiltered = [];
-    this.model.skills.forEach((sk, i) => {
-      //  console.log('code skill' + sk.split(']')[0] + '=' + this.nameCodeToDelete);
-      if (sk.split(']')[0] === this.nameCodeToDelete) { // There is a knowledge that starts with same code, don't include it
-        skillsFiltered.push(sk);
-      }
-    });
-    this.associatedSkillsToDelete = skillsFiltered.length;
+  compareFn(a, b) {
+    return a.preferredLabel === b.preferredLabel;
   }
 
   removeField(f: Field) {
@@ -167,6 +189,7 @@ export class NewopComponent implements OnInit {
         this.model.fields.splice(index, 1);
       }
     });
+    this.model.fields = [...this.model.fields];
   }
 
   removeSkillsAssociated() {
