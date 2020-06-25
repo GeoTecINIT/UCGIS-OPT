@@ -187,7 +187,7 @@
                       {{ searchInput.value }}
                     </h3>
                     <div *ngFor="let item of selectedNodes; index as i">
-                      <div *ngIf="i < limitSearchTo && i > limitSearchFrom">
+                      <div *ngIf="i < limitSearchTo && i >= limitSearchFrom">
                         <div class="inline">{{ item.nameShort }}</div>
                         <div class="inline" [innerHTML]="
                             item.name | truncate: 100:searchInput.value
