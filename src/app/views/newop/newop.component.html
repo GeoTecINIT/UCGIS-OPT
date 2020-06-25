@@ -143,7 +143,7 @@
                           </button>
                         </div>
                         <input #searchInput type="text" id="input-competence-filter" name="input-competence-filter"
-                          class="form-control" (keyup)="searchInBok(searchInput.value)"
+                          class="form-control" [(ngModel)]="searchInputField" (keyup)="searchInBok(searchInput.value)"
                           placeholder="Search Knowledge" />
                       </div>
                     </div>
@@ -159,44 +159,62 @@
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 text-justify">
-                  <a (click)="navigateToConcept('GIST')" [hidden]="!hasResults || currentConcept == 'GIST'">
-                    < To full BoK </a>
+
+                  <div class="row text-left">
+                    <div class="col-md-4">
+                      <a (click)="navigateToConcept('GIST')" [hidden]="!hasResults || currentConcept == 'GIST'">
+                        < To full BoK </a>
+                    </div>
+                    <div class="col-md-4">
                       <a (click)="hasResults = !hasResults; currentConcept=''"
                         *ngIf="!hasResults && currentConcept != 'GIST'">
-                        < Back to results </a>
-                        <a (click)="hasResults = false"
-                        *ngIf="hasResults">
-                        &nbsp; < Show current concept </a>
-                          <br>
-                          <h5 [hidden]="currentConcept == '' && currentConcept != 'GIST'">Knowledge</h5>
-                          <div #textBoK id="textBoK" [hidden]="hasResults" >  <!--  [hidden]="currentConcept == '' && currentConcept != 'GIST'" -->
-                          </div>
-                          <div class="col" *ngIf="hasResults">
-                            <h3 class="center">
-                              {{ selectedNodes.length }} result(s) for
-                              {{ searchInput.value }}
-                            </h3>
-                            <div *ngFor="let item of selectedNodes; index as i">
-                              <div *ngIf="i < limitSearch">
-                                <div class="inline">{{ item.nameShort }}</div>
-                                <div class="inline" [innerHTML]="
+                        < Back to search results </a>
+                    </div>
+                    <div class="col-md-4">
+                      <a (click)="hasResults = false; cleanResults()" *ngIf="hasResults">
+                        &nbsp; X Clear search results </a>
+                    </div>
+                  </div>
+
+                  <br>
+                  <h5 [hidden]="currentConcept == '' && currentConcept != 'GIST'">Knowledge</h5>
+                  <div #textBoK id="textBoK" [hidden]="hasResults">
+                    <!--  [hidden]="currentConcept == '' && currentConcept != 'GIST'" -->
+                  </div>
+                  <div class="col" *ngIf="hasResults">
+                    <h3 class="center">
+                      {{ selectedNodes.length }} result(s) for
+                      {{ searchInput.value }}
+                    </h3>
+                    <div *ngFor="let item of selectedNodes; index as i">
+                      <div *ngIf="i < limitSearchTo && i > limitSearchFrom">
+                        <div class="inline">{{ item.nameShort }}</div>
+                        <div class="inline" [innerHTML]="
                             item.name | truncate: 100:searchInput.value
                           "></div>
-                                <a class="inline" (click)="navigateToConcept(item.nameShort)">
-                                  Details
-                                </a>
-                                <div class="small" [innerHTML]="
+                        <a class="inline" (click)="navigateToConcept(item.nameShort)">
+                          Details
+                        </a>
+                        <div class="small" [innerHTML]="
                             item.description | truncate: 100:searchInput.value
                           "></div>
-                              </div>
-                            </div>
-                            <div>
-                              <br />
-                              <a *ngIf="limitSearch < selectedNodes.length" (click)="incrementLimit()">
-                                Show more ...
-                              </a>
-                            </div>
-                          </div>
+                      </div>
+                    </div>
+                    <div>
+                      <br />
+
+                      <div class="row">
+                        <div class="col-md-6 text-right">
+                          <a *ngIf="limitSearchFrom > 0" (click)="decrementLimit()">
+                            << Previous </a>
+                        </div>
+                        <div class="col-md-6 text-left"> <a *ngIf="limitSearchTo < selectedNodes.length"
+                            (click)="incrementLimit()">
+                            Next >>
+                          </a></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -337,14 +355,14 @@
                     <ng-select *ngIf="isfullESCOcompetences" [items]="escoService.allcompetences" name="competences"
                       bindLabel="preferredLabel" groupBy="reuseLevel" [multiple]="true" [searchFn]="customSearchFn"
                       placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences"
-                      [clearable]="true" >
+                      [clearable]="true">
                       <ng-template ng-optgroup-tmp let-item="item">
                         {{item.reuseLevel || 'Unnamed group'}}
                       </ng-template>
                     </ng-select>
                     <ng-select *ngIf="!isfullESCOcompetences" [items]="competences" name="competences"
                       bindLabel="preferredLabel" groupBy="reuseLevel" [multiple]="true" [searchFn]="customSearchFn"
-                      placeholder="Search..." [clearSearchOnAdd]="true"  [(ngModel)]="model.competences"
+                      placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences"
                       [clearable]="true">
                       <ng-template ng-optgroup-tmp let-item="item">
                         {{item.reuseLevel || 'Unnamed group'}}

@@ -32,7 +32,8 @@ export class NewopComponent implements OnInit {
 
   selectedNodes = [];
   hasResults = false;
-  limitSearch = 5;
+  limitSearchFrom = 0;
+  limitSearchTo = 10;
   currentConcept = 'GIST';
 
   isfullESCOcompetences = false;
@@ -85,6 +86,11 @@ export class NewopComponent implements OnInit {
 
   @ViewChild('textBoK') textBoK: ElementRef;
 
+  observer: MutationObserver;
+  lastBoKTitle = 'GIST';
+
+  searchInputField = '';
+
   constructor(
     private occuprofilesService: OcuprofilesService,
     private organizationService: OrganizationService,
@@ -119,6 +125,19 @@ export class NewopComponent implements OnInit {
   ngOnInit() {
     bok.visualizeBOKData('#bubbles', '#textBoK');
     this.getMode();
+
+    this.observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if ((<any>mutation.target).children[1].innerText !== this.lastBoKTitle) {
+          this.lastBoKTitle = (<any>mutation.target).children[1].innerText;
+          this.hasResults = false;
+        }
+      });
+    });
+    const config = { attributes: true, childList: true, characterData: true };
+
+    this.observer.observe(this.textBoK.nativeElement, config);
+
   }
 
   addBokKnowledge() {
@@ -144,7 +163,7 @@ export class NewopComponent implements OnInit {
   }
 
   removeCompetence(name: any, array: any[]) {
-    if (typeof(name) === 'string') { // for skills
+    if (typeof (name) === 'string') { // for skills
       this.nameCodeToDelete = '';
       array.forEach((item, index) => {
         if (item === name) {
@@ -264,6 +283,12 @@ export class NewopComponent implements OnInit {
     this.cleanTip();
   }
 
+  cleanResults() {
+    this.searchInputField = '';
+    bok.searchInBoK('');
+    this.navigateToConcept('GIST');
+  }
+
   navigateToConcept(conceptName) {
     bok.browseToConcept(conceptName);
     this.currentConcept = conceptName;
@@ -276,7 +301,13 @@ export class NewopComponent implements OnInit {
   }
 
   incrementLimit() {
-    this.limitSearch = this.limitSearch + 5;
+    this.limitSearchTo = this.limitSearchTo + 10;
+    this.limitSearchFrom = this.limitSearchFrom + 10;
+  }
+
+  decrementLimit() {
+    this.limitSearchTo = this.limitSearchTo - 10;
+    this.limitSearchFrom = this.limitSearchFrom - 10;
   }
 
   addExtraSkill(skill) {
