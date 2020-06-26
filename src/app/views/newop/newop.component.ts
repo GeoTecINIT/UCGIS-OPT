@@ -321,10 +321,11 @@ export class NewopComponent implements OnInit {
 
   // Add custom competence to model to force updating component, and to competences lists to find it again if removed
   addExtraCompetence(comp) {
-    this.model.competences = [...this.model.competences, { preferredLabel: comp }];
+    this.model.competences = [...this.model.competences, { preferredLabel: comp, reuseLevel: 'custom'  }];
+    this.competences = [...this.competences, { preferredLabel: comp, reuseLevel: 'custom' }];
     this.model.customCompetences.push(comp);
-    this.escoService.allcompetences = [...this.escoService.allcompetences, { preferredLabel: comp }];
-    this.escoService.basicCompetences = [...this.escoService.basicCompetences, { preferredLabel: comp }];
+    this.escoService.allcompetences = [...this.escoService.allcompetences, { preferredLabel: comp, reuseLevel: 'custom'  }];
+    this.escoService.basicCompetences = [...this.escoService.basicCompetences, { preferredLabel: comp, reuseLevel: 'custom', uri: null }];
     // console.log('add compr:' + comp);
   }
 
