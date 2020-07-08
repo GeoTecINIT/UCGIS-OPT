@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, TemplateRef } from '@angular/core';
 import { OcupationalProfile, Competence } from '../../ocupational-profile';
 import * as bok from '@eo4geo/bok-dataviz';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
@@ -8,6 +8,8 @@ import { EscoCompetenceService } from '../../services/esco-competence.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User, UserService } from '../../services/user.service';
+import { BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+
 
 @Component({
   selector: 'app-newop',
@@ -29,6 +31,8 @@ export class NewopComponent implements OnInit {
   _id: string;
   mode: string;
   title: string;
+
+  closeResult = '';
 
   selectedNodes = [];
   hasResults = false;
@@ -77,6 +81,52 @@ export class NewopComponent implements OnInit {
     searchOnKey: 'preferredLabel' // key on which search should be performed. if undefined this will be extensive search on all keys
   };
 
+
+  taxonomy = [
+    {
+      name: 'Remember',
+      content: ['choose', 'define', 'find', 'identify', 'list', 'locate', 'name', 'recognize', 'relate', 'remember', 'select', 'state', 'write']
+    },
+    {
+      name :  'Understand',
+      content : [
+        'cite', 'classify', 'compare', 'contrast', 'deliver', 'demonstrate', 'discuss', 'estimate', 'explain', 'illustrate', 'indicate',
+        'interpret', 'outline', 'relate', 'report', 'review', 'understand'
+      ]
+    },
+    {
+      name :  'Apply',
+      content : [
+        'apply', 'build', 'calculate', 'choose', 'classify', 'construct', 'correlate', 'demonstrate', 'develop', 'identify', 'illustrate', 'implement', 'interpret',
+        'model', 'organise', 'perform', 'plan', 'relate', 'represent', 'select', 'solve', 'teach', 'use'
+      ]
+    },
+    {
+      name :  'Analyze',
+      content : [
+        'analyse', 'arrange', 'choose', 'classify', 'compare', 'differentiate', 'distinguish', 'examine', 'find', 'install', 'list',
+        'order', 'prioritize', 'query', 'research', 'select'
+      ]
+    },
+    {
+      name :  'Evaluate',
+      content : [
+        'assess', 'check', 'choose', 'compare', 'decide', 'defend', 'determine', 'estimate', 'evaluate', 'explain', 'interpret', 'judge', 'justify',
+        'measure', 'prioritize', 'recommend', 'select', 'test', 'validate'
+      ]
+    },
+    {
+      name :  'Create',
+      content : [
+        'add to', 'build', 'change', 'choose', 'compile', 'construct', 'convert', 'create', 'design', 'develop', 'devise', 'discuss', 'estimate',
+        'manage', 'model', 'modify', 'plan', 'process', 'produce', 'propose', 'revise', 'solve', 'test', 'transform'
+      ]
+    },
+  ];
+
+  modalRef: BsModalRef;
+
+
   canMakePublicProfiles = false;
   userOrgs: Organization[] = [];
   saveOrg: Organization;
@@ -98,7 +148,8 @@ export class NewopComponent implements OnInit {
     public fieldsService: FieldsService,
     public escoService: EscoCompetenceService,
     private route: ActivatedRoute,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private modalService: BsModalService
   ) {
     this.competences = this.escoService.basicCompetences;
     this.filteredCompetences = this.competences;
@@ -355,4 +406,10 @@ export class NewopComponent implements OnInit {
     }
     return found;
   }
+
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+  }
+
 }
