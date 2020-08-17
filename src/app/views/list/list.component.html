@@ -83,9 +83,9 @@
           <div class="row">
             <div class="col-sm-12 col-md-6 text-center">
               Sort by:
-           <!--  </div> -->
-            <!-- sortedBy -->
-             <button type="button" class="btn btn-link" (click)="sortBy('lastUpdated');">
+              <!--  </div> -->
+              <!-- sortedBy -->
+              <button type="button" class="btn btn-link" (click)="sortBy('lastUpdated');">
                 <i [ngClass]="sortUpdAsc? 'fa fa-arrow-down' : 'fa fa-arrow-up'"></i>
                 <span [ngClass]="sortedBy == 'lastUpdated'? 'bolder' : ''">Last updated</span>
               </button>
@@ -126,8 +126,8 @@
             <div class="row">
               <!--  *ngIf="o.isPublic || (currentUser?.organizations?.indexOf(o.orgId) > -1)"  -->
               <div class="col-md-10">
-                <button type="button" class="btn text-justify" routerLink="/detail/{{ o._id }}">
-                  <span>
+                <a href="#" class="no-decoration" style="margin-bottom: 0.75em;" routerLink="/detail/{{ o._id }}">
+                  <span class="text-normal">
                     <h1 style="display: inline;">{{ o.title }}</h1>
                     <h6 *ngIf="!o.isPublic" style="display: inline;" class="text-level">Private</h6>
                     <h6 style="display: inline;" class="text-level text-secondary">{{ o.orgName }}</h6>
@@ -149,7 +149,7 @@
                 >
                   {{ mk }}
                 </span> -->
-                </button>
+                </a>
               </div>
 
               <div class="col-md-2">
@@ -168,14 +168,14 @@
                     </button>
                   </div>
                   <div class="col-3 col-sm-3 col-md-3 no-padding"
-                    tooltip="{{isAnonymous? 'Login to be able to edit' : o.userId==afAuth.auth.currentUser?.uid?  'Edit' : 'You can edit only your own profiles'}}">
+                    tooltip="{{isAnonymous? 'Login to be able to edit' : (currentUser?.organizations?.indexOf(o.orgId) > -1)?  'Edit' : 'You can edit only your own or your organization profiles'}}">
                     <button type="button" class="btn btn-block btn-link" routerLink="/newop/copy/{{ o._id }}"
                       [disabled]="isAnonymous || (currentUser?.organizations?.indexOf(o.orgId) == -1)">
                       <i class="fa fa-edit fa-lg mt-4"></i>
                     </button>
                   </div>
                   <div class="col-3 col-sm-3 col-md-3 no-padding"
-                    tooltip="{{isAnonymous? 'Login to be able to remove' : o.userId==afAuth.auth.currentUser?.uid?  'Remove' : 'You can remove only your own profiles'}}">
+                    tooltip="{{isAnonymous? 'Login to be able to remove' : (currentUser?.organizations?.indexOf(o.orgId) > -1)?  'Remove' : 'You can remove only your own or your organization profiles'}}">
                     <button type="button" class="btn btn-block btn-link" data-toggle="modal"
                       (click)="dangerModal.show()"
                       [disabled]="isAnonymous || (currentUser?.organizations?.indexOf(o.orgId) == -1)">

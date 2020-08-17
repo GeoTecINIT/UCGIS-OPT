@@ -24,7 +24,7 @@
                   </button>
                 </div>
                 <div class="cols-xs-2 col-md-3 no-padding"
-                  tooltip="{{isAnonymous? 'Login to be able to edit' : selectedProfile.userId==afAuth.auth.currentUser?.uid?  'Edit' : 'You can edit only your own profiles'}}">
+                  tooltip="{{isAnonymous? 'Login to be able to edit' : (currentUser?.organizations?.indexOf(selectedProfile.orgId) > -1)?  'Edit' : 'You can edit only your own or your organization profiles'}}">
                   <button type="button" class="btn btn-block btn-link"
                     routerLink="/newop/copy/{{ selectedProfile._id }}"
                     [disabled]="isAnonymous || (currentUser?.organizations?.indexOf(selectedProfile.orgId) == -1)">
@@ -32,7 +32,7 @@
                   </button>
                 </div>
                 <div class="cols-xs-2 col-md-3 no-padding"
-                  tooltip="{{isAnonymous? 'Login to be able to remove' : selectedProfile.userId==afAuth.auth.currentUser?.uid?  'Remove' : 'You can remove only your own profiles'}}">
+                  tooltip="{{isAnonymous? 'Login to be able to remove' : (currentUser?.organizations?.indexOf(selectedProfile.orgId) > -1)?  'Remove' : 'You can remove only your own or your organization profiles'}}">
                   <button type="button" class="btn btn-block btn-link" data-toggle="modal" (click)="dangerModal.show()"
                     [disabled]="isAnonymous || (currentUser?.organizations?.indexOf(selectedProfile.orgId) == -1)">
                     <i class="fa fa-trash-o fa-lg"></i>
