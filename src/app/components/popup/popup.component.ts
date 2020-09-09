@@ -64,7 +64,7 @@ export class PopupComponent implements OnInit {
     // dc:relation eo4geo:GC] .
     let subject = '@prefix dc: <http://purl.org/dc/terms/> . @prefix eo4geo: <http://bok.eo4geo.eu/> . ';
     if (this.selectedProfile.knowledge && this.selectedProfile.knowledge.length > 0) {
-      subject = subject + '<> dc:hasPart [ dc:type "Occupational Profile"; dc:title "' + this.selectedProfile.title + '"';
+      subject = subject + '<> dc:type "Occupational Profile"; <> dc:title "' + this.selectedProfile.title + '"';
       this.selectedProfile.knowledge.forEach(know => {
         // const bokCode = concept.split('] ')[1];
         const bokCode = know.split(']', 1)[0].split('[', 2)[1];
@@ -72,7 +72,7 @@ export class PopupComponent implements OnInit {
           subject = subject + '; dc:relation eo4geo:' + bokCode;
         }
       });
-      subject = subject + '  ] .';
+      subject = subject + '  .';
     }
     return subject;
   }
