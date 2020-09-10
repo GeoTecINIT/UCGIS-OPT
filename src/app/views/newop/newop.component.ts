@@ -22,7 +22,7 @@ export class NewopComponent implements OnInit {
   filteredCompetences = [];
   fullcompetences = [];
 
-  model = new OcupationalProfile('', '', '', '', '', '', null, 1, [], [], [], [], [], new Date().toDateString(), false, null, null);
+  model = new OcupationalProfile('', '', '', '', '', '', '', null, 1, [], [], [], [], [], new Date().toDateString(), false, null, null);
 
   public value: string[];
   public current: string;
@@ -141,6 +141,9 @@ export class NewopComponent implements OnInit {
 
   searchInputField = '';
 
+  userDivisions: string[] = [];
+  saveDiv = '';
+
   constructor(
     private occuprofilesService: OcuprofilesService,
     private organizationService: OrganizationService,
@@ -164,6 +167,7 @@ export class NewopComponent implements OnInit {
                   this.userOrgs.push(org);
                   this.saveOrg = this.userOrgs[0];
                   this.setOrganization();
+                  this.loadDivisions();
                 }
               });
             });
@@ -279,6 +283,7 @@ export class NewopComponent implements OnInit {
     this.model.orgId = this.saveOrg._id;
     this.model.orgName = this.saveOrg.name;
     this.model.isPublic = this.model.isPublic;
+    this.model.division = this.saveDiv;
     this.model.lastModified = new Date().toDateString();
     if (this.mode === 'copy') {
       this.occuprofilesService.updateOccuProfile(this._id, this.model);
@@ -322,6 +327,7 @@ export class NewopComponent implements OnInit {
       this.userOrgs.forEach(o => {
         if (o._id === this.model.orgId) {
           this.saveOrg = o;
+          this.loadDivisions();
         }
       });
     }
@@ -407,9 +413,12 @@ export class NewopComponent implements OnInit {
     return found;
   }
 
-
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
   }
 
+  loadDivisions() {
+    this.userDivisions = this.saveOrg.divisions ? this.saveOrg.divisions : [];
+    this.saveDiv = this.model ? this.model.division ? this.model.division : '' : '';
+  }
 }
