@@ -131,7 +131,7 @@
                   <span class="text-normal">
                     <h1 style="display: inline;">{{ o.title }}</h1>
                     <h6 *ngIf="!o.isPublic" style="display: inline;" class="text-level">Private</h6>
-                    <h6 style="display: inline;" class="text-level text-secondary">{{ o.orgName }}</h6>
+                    <h6 style="display: inline;" class="text-level text-secondary">{{ o.orgName }}<span *ngIf="o.division"> - {{ o.division }} </span></h6>
                     <br>
                     {{ o.knowledge.length }} Knowledge |
                     {{ o.skills.length }} Skills |
