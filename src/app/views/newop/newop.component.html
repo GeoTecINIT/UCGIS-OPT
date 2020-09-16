@@ -414,12 +414,12 @@
                     <ng-select *ngIf="isfullESCOcompetences" [items]="escoService.allcompetences" name="competences"
                       bindLabel="preferredLabel" groupBy="reuseLevel" [multiple]="true" [searchFn]="customSearchFn"
                       placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences"
-                      [clearable]="true">
+                      [clearable]="false">
                     </ng-select>
                     <ng-select *ngIf="!isfullESCOcompetences" [items]="competences" name="competences"
                       bindLabel="preferredLabel" groupBy="reuseLevel" [multiple]="true" [searchFn]="customSearchFn"
                       placeholder="Search..." [clearSearchOnAdd]="true" [(ngModel)]="model.competences"
-                      [clearable]="true">
+                      [clearable]="false">
                     </ng-select>
                   </div>
                 </div>
