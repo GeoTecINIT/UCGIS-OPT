@@ -21,7 +21,7 @@ export class ListComponent implements OnInit {
   occupationalProfiles: OcupationalProfile[];
   advancedSearch = false;
   filteredOccuProfiles: any[];
-  searchText: string;
+  searchText: string = '';
   knowledgeFilter: Boolean = true;
   skillFilter: Boolean = true;
   competencesFilter: Boolean = true;
@@ -51,7 +51,7 @@ export class ListComponent implements OnInit {
   public paginationLimitTo = 6;
   public LIMIT_PER_PAGE = 6;
   public currentPage = 0;
-  showOnlyAuthor = -1;
+  showOnlyAuthor = -2;
 
   public BOK_PERMALINK_PREFIX = 'https://bok.eo4geo.eu/';
 
@@ -83,6 +83,8 @@ export class ListComponent implements OnInit {
                 }
               });
               this.filteredOccuProfiles = this.occupationalProfiles;
+              this.filter();
+              this.filterByAuthor(this.showOnlyAuthor);
               this.sortBy('lastUpdated');
             });
         });
@@ -153,7 +155,9 @@ export class ListComponent implements OnInit {
     if (this.advancedSearch) {
       this.applyFilters();
     }
-    this.showOnlyAuthor = -1;
+    if (this.showOnlyAuthor == -2) {
+      this.showOnlyAuthor = -1;
+    }
     if ( search.length > 0 ) {
       this.isFiltered = true;
     } else {
