@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, TemplateRef } from '@angular/core';
 import { OcupationalProfile, Competence } from '../../ocupational-profile';
-import * as bok from '@eo4geo/bok-dataviz';
+import * as bok from '@ucgis/find-in-bok-dataviz-tools';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { Organization, OrganizationService } from '../../services/organization.service';
 import { FieldsService, Field } from '../../services/fields.service';
@@ -8,7 +8,7 @@ import { EscoCompetenceService } from '../../services/esco-competence.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User, UserService } from '../../services/user.service';
-import { BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -38,7 +38,7 @@ export class NewopComponent implements OnInit {
   hasResults = false;
   limitSearchFrom = 0;
   limitSearchTo = 10;
-  currentConcept = 'GIST';
+  currentConcept = 'UCGIS';
 
   isfullESCOcompetences = false;
   isShowingSkillsTip = false;
@@ -88,36 +88,36 @@ export class NewopComponent implements OnInit {
       content: ['choose', 'define', 'find', 'identify', 'list', 'locate', 'name', 'recognize', 'relate', 'remember', 'select', 'state', 'write']
     },
     {
-      name :  'Understand',
-      content : [
+      name: 'Understand',
+      content: [
         'cite', 'classify', 'compare', 'contrast', 'deliver', 'demonstrate', 'discuss', 'estimate', 'explain', 'illustrate', 'indicate',
         'interpret', 'outline', 'relate', 'report', 'review', 'understand'
       ]
     },
     {
-      name :  'Apply',
-      content : [
+      name: 'Apply',
+      content: [
         'apply', 'build', 'calculate', 'choose', 'classify', 'construct', 'correlate', 'demonstrate', 'develop', 'identify', 'illustrate', 'implement', 'interpret',
         'model', 'organise', 'perform', 'plan', 'relate', 'represent', 'select', 'solve', 'teach', 'use'
       ]
     },
     {
-      name :  'Analyze',
-      content : [
+      name: 'Analyze',
+      content: [
         'analyse', 'arrange', 'choose', 'classify', 'compare', 'differentiate', 'distinguish', 'examine', 'find', 'install', 'list',
         'order', 'prioritize', 'query', 'research', 'select'
       ]
     },
     {
-      name :  'Evaluate',
-      content : [
+      name: 'Evaluate',
+      content: [
         'assess', 'check', 'choose', 'compare', 'decide', 'defend', 'determine', 'estimate', 'evaluate', 'explain', 'interpret', 'judge', 'justify',
         'measure', 'prioritize', 'recommend', 'select', 'test', 'validate'
       ]
     },
     {
-      name :  'Create',
-      content : [
+      name: 'Create',
+      content: [
         'add to', 'build', 'change', 'choose', 'compile', 'construct', 'convert', 'create', 'design', 'develop', 'devise', 'discuss', 'estimate',
         'manage', 'model', 'modify', 'plan', 'process', 'produce', 'propose', 'revise', 'solve', 'test', 'transform'
       ]
@@ -134,10 +134,10 @@ export class NewopComponent implements OnInit {
 
   selectedCompetencesPrefLabel: string[];
 
-  @ViewChild('textBoK') textBoK: ElementRef;
+  @ViewChild('textInfo') textInfo: ElementRef;
 
-  observer: MutationObserver;
-  lastBoKTitle = 'GIST';
+  /*   observer: MutationObserver; */
+  lastBoKTitle = 'UCGIS';
 
   searchInputField = '';
 
@@ -178,28 +178,28 @@ export class NewopComponent implements OnInit {
   }
 
   ngOnInit() {
-    bok.visualizeBOKData('#bubbles', '#textBoK');
+    bok.visualizeBOKData('https://ucgis-bok-default-rtdb.firebaseio.com/', 'current');
     this.getMode();
 
-    this.observer = new MutationObserver(mutations => {
-      mutations.forEach(mutation => {
-        if ((<any>mutation.target).children[1].innerText !== this.lastBoKTitle) {
-          this.lastBoKTitle = (<any>mutation.target).children[1].innerText;
-          this.hasResults = false;
-        }
-      });
-    });
-    const config = { attributes: true, childList: true, characterData: true };
-
-    this.observer.observe(this.textBoK.nativeElement, config);
-
+    /*     this.observer = new MutationObserver(mutations => {
+          mutations.forEach(mutation => {
+            if (mutation.target && (<any>mutation.target).children[1].innerText !== this.lastBoKTitle) {
+              this.lastBoKTitle = (<any>mutation.target).children[1].innerText;
+              this.hasResults = false;
+            }
+          });
+        }); 
+        const config = { attributes: true, childList: true, characterData: true };
+    
+        this.observer.observe(this.textInfo.nativeElement, config);
+    */
   }
 
   addBokKnowledge() {
     this.associatedSkillsToDelete = 0;
-    const divs = this.textBoK.nativeElement.getElementsByTagName('div');
+    const divs = this.textInfo.nativeElement.getElementsByTagName('div');
     if (divs['bokskills'] != null) {
-      const shortCode = this.textBoK.nativeElement.getElementsByTagName('h4')[0].innerText.split(' ')[0];
+      const shortCode = this.textInfo.nativeElement.getElementsByTagName('h4')[0].innerText.split(' ')[0];
       const as = divs['bokskills'].getElementsByTagName('a');
       for (const skill of as) {
         if (!this.model.skills.includes(shortCode + ' ' + skill.innerText)) {
@@ -208,8 +208,8 @@ export class NewopComponent implements OnInit {
         }
       }
     }
-    const concept = this.textBoK.nativeElement.getElementsByTagName('h4')[0]
-      .textContent;
+
+    const concept = this.textInfo.nativeElement.getElementsByTagName('h4')[0].textContent;
     if (!this.model.knowledge.includes(concept)) {
       this.model.knowledge.push(concept);
     }
@@ -347,7 +347,7 @@ export class NewopComponent implements OnInit {
   cleanResults() {
     this.searchInputField = '';
     bok.searchInBoK('');
-    this.navigateToConcept('GIST');
+    this.navigateToConcept('UCGIS');
   }
 
   navigateToConcept(conceptName) {
@@ -378,10 +378,10 @@ export class NewopComponent implements OnInit {
 
   // Add custom competence to model to force updating component, and to competences lists to find it again if removed
   addExtraCompetence(comp) {
-    this.model.competences = [...this.model.competences, { preferredLabel: comp, reuseLevel: 'custom'  }];
+    this.model.competences = [...this.model.competences, { preferredLabel: comp, reuseLevel: 'custom' }];
     this.competences = [...this.competences, { preferredLabel: comp, reuseLevel: 'custom' }];
     this.model.customCompetences.push(comp);
-    this.escoService.allcompetences = [...this.escoService.allcompetences, { preferredLabel: comp, reuseLevel: 'custom'  }];
+    this.escoService.allcompetences = [...this.escoService.allcompetences, { preferredLabel: comp, reuseLevel: 'custom' }];
     this.escoService.basicCompetences = [...this.escoService.basicCompetences, { preferredLabel: comp, reuseLevel: 'custom', uri: null }];
     // console.log('add compr:' + comp);
   }
@@ -414,7 +414,7 @@ export class NewopComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }
 
   loadDivisions() {

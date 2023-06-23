@@ -72,6 +72,7 @@ export class OrganizationComponent implements OnInit {
     const newOrg = new Organization();
     newOrg.name = 'Create a new one';
     newOrg._id = 'new';
+    console.log(newOrg);
     this.allOrgs = [newOrg].concat(this.allOrgs);
   }
 

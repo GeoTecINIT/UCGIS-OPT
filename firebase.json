@@ -4,12 +4,18 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "./dist",
-    "site" : "eo4geo-opt",
+    "public": "dist/",
+    "site": "ucgis-tools-opt",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   }
 }

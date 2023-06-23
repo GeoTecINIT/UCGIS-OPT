@@ -10,7 +10,7 @@ import { User, UserService } from '../../services/user.service';
 import { OrganizationService, Organization } from '../../services/organization.service';
 import { ActivatedRoute } from '@angular/router';
 import * as cloneDeep from 'lodash/cloneDeep';
-import * as bok from '@eo4geo/bok-dataviz';
+import * as bok from '@ucgis/find-in-bok-dataviz-tools';
 
 @Component({
   selector: 'app-list',
@@ -38,7 +38,7 @@ export class ListComponent implements OnInit {
   limitSearchFrom = 0;
   limitSearchTo = 10;
   searchInputField = '';
-  currentConcept = 'GIST';
+  currentConcept = 'UCGIS';
   buttonClear = 0;
 
   selectedNodes = [];
@@ -58,7 +58,7 @@ export class ListComponent implements OnInit {
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
   @ViewChild('releaseNotesModal') public releaseNotesModal: any;
   @ViewChild('bokModal') public bokModal: ModalDirective;
-  @ViewChild('textBoK') textBoK: ElementRef;
+  @ViewChild('textInfo') textInfo: ElementRef;
 
 
   constructor(private occuprofilesService: OcuprofilesService,
@@ -127,7 +127,7 @@ export class ListComponent implements OnInit {
       this.releaseNotesModal.basicModal.config = config;
       this.releaseNotesModal.basicModal.show({});
     }
-    bok.visualizeBOKData('#bubbles', '#textBoK');
+    bok.visualizeBOKData('https://ucgis-bok-default-rtdb.firebaseio.com/', 'current');
   }
 
   removeOccuProfile(id: string) {
@@ -272,7 +272,7 @@ export class ListComponent implements OnInit {
   cleanResults() {
     this.searchInputField = '';
     bok.searchInBoK('');
-    this.navigateToConcept('GIST');
+    this.navigateToConcept('UCGIS');
   }
 
   navigateToConcept(conceptName) {
@@ -305,8 +305,7 @@ export class ListComponent implements OnInit {
     }
   }
   addBokConcept() {
-    const concept = this.textBoK.nativeElement.getElementsByTagName('h4')[0]
-      .textContent;
+    const concept = this.textInfo.nativeElement.getElementsByTagName('h4')[0].textContent;
     const conceptId = concept.split(']')[0].substring(1);
     let itExist = false;
     this.conceptsToSearch.forEach( cpt => {

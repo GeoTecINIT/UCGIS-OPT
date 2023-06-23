@@ -10,8 +10,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
-import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
-import { AngularFirePerformanceModule } from '@angular/fire/performance';
+// import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
+// import { AngularFirePerformanceModule } from '@angular/fire/performance';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -91,8 +91,8 @@ import { ReleaseNotesComponent } from './components/release-notes/release-notes.
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFireAnalyticsModule,
-    AngularFirePerformanceModule,
+   // AngularFireAnalyticsModule,
+   // AngularFirePerformanceModule,
     AngularFireDatabaseModule,
     HttpClientModule,
     PopoverModule.forRoot(),
@@ -100,7 +100,7 @@ import { ReleaseNotesComponent } from './components/release-notes/release-notes.
   ],
   declarations: [
     AppComponent,
-    ...APP_CONTAINERS,
+    APP_CONTAINERS,
     P404Component,
     P500Component,
     LoginComponent,
@@ -121,8 +121,8 @@ import { ReleaseNotesComponent } from './components/release-notes/release-notes.
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     AngularFireAuthGuard,
     Base64img,
-    ScreenTrackingService, // automatically integrates with the Angular Router to provide Firebase with screen view tracking
-    UserTrackingService // dynamically import firebase/auth, monitor for changes in the logged in user
+   // ScreenTrackingService, // automatically integrates with the Angular Router to provide Firebase with screen view tracking
+   // UserTrackingService // dynamically import firebase/auth, monitor for changes in the logged in user
   ],
   bootstrap: [AppComponent]
 })
