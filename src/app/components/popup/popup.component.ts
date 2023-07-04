@@ -55,21 +55,21 @@ export class PopupComponent implements OnInit {
   }
 
   getSubjectMetadata() {
-    // <#> dc:hasPart [ dc:extent "2" ; dc:relation eo4geo:someBoKConcept  ] ;
+    // <#> dc:hasPart [ dc:extent "2" ; dc:relation ucgis:someBoKConcept  ] ;
     // @prefix dc: <http://purl.org/dc/terms/> .
-    // @prefix eo4geo: <http://bok.eo4geo.eu/> .
+    // @prefix ucgis: <http://ucgis-bok.web.app/> .
     // <> dc:hasPart [ dc:type "Module";
     // dc:title "Mathematics";
-    // dc:relation eo4geo:AM;
-    // dc:relation eo4geo:GC] .
-    let subject = '@prefix dc: <http://purl.org/dc/terms/> . @prefix eo4geo: <http://bok.eo4geo.eu/> . ';
+    // dc:relation ucgis:AM;
+    // dc:relation ucgis:GC] .
+    let subject = '@prefix dc: <http://purl.org/dc/terms/> . @prefix ucgis: <http://ucgis-bok.web.app/> . ';
     if (this.selectedProfile.knowledge && this.selectedProfile.knowledge.length > 0) {
       subject = subject + '<> dc:type "Occupational Profile"; <> dc:title "' + this.selectedProfile.title + '"';
       this.selectedProfile.knowledge.forEach(know => {
         // const bokCode = concept.split('] ')[1];
         const bokCode = know.split(']', 1)[0].split('[', 2)[1];
         if (bokCode) {
-          subject = subject + '; dc:relation eo4geo:' + bokCode;
+          subject = subject + '; dc:relation ucgis:' + bokCode;
         }
       });
       subject = subject + '  .';
@@ -84,23 +84,24 @@ export class PopupComponent implements OnInit {
     doc.setProperties({
       title: this.selectedProfile.title,
       subject: this.getSubjectMetadata(),
-      author: 'EO4GEO',
-      keywords: 'eo4geo, occupational profile tool',
+      author: 'UCGIS',
+      keywords: 'UCGIS, occupational profile tool',
       creator: 'Occupational Profile Tool'
     });
-    doc.addImage(this.base64img.logo, 'PNG', 10, 7, 37, 25);
-    doc.addImage(this.base64img.back, 'PNG', 0, 100, 210, 198);
-    doc.link(15, 15, 600, 33, { url: 'http://www.eo4geo.eu' });
+    doc.addImage(this.base64img.logo, 'PNG', 10, 7, 67, 20);
+    doc.addImage(this.base64img.back, 'PNG', 0, 200, 210, 100);
+
+    doc.link(15, 15, 600, 33, { url: 'https://ucgis-bok.web.app' });
     doc.setFontSize(38);
     doc.setFontType('bold');
-    doc.setTextColor('#1a80b6');
+    doc.setTextColor('#324d55');
     if (this.selectedProfile.title != null) {
       const titleLines = doc.setFontSize(38).splitTextToSize(this.selectedProfile.title, 150);
       doc.text(30, currentLinePoint, titleLines);
       currentLinePoint = currentLinePoint + (15 * titleLines.length);
     }
 
-    doc.setFontSize(12).setTextColor('#1a80b6').setFontType('bold'); // headline
+    doc.setFontSize(12).setTextColor('#324d55').setFontType('bold'); // headline
     doc.text(30, currentLinePoint, 'EQF' + this.selectedProfile.eqf);
     currentLinePoint = currentLinePoint + 5;
     if (this.selectedProfile.fields != null && this.selectedProfile.fields.length > 1) {
@@ -121,7 +122,7 @@ export class PopupComponent implements OnInit {
     // doc.text(90, 90, d.toLocaleDateString('es-ES'));
 
     if (this.selectedProfile.knowledge.length > 0) {
-      doc.setFontSize(12).setTextColor('#1a80b6').setFontType('bold'); // headline
+      doc.setFontSize(12).setTextColor('#324d55').setFontType('bold'); // headline
       doc.text(30, currentLinePoint, 'Knowledge required');
       currentLinePoint = currentLinePoint + 5;
       doc.setTextColor('#000').setFontType('normal').setFontSize(8); // normal text
@@ -135,7 +136,7 @@ export class PopupComponent implements OnInit {
 
     if (this.selectedProfile.skills.length > 0) {
       currentLinePoint = currentLinePoint + 10;
-      doc.setFontSize(12).setTextColor('#1a80b6').setFontType('bold'); // headline
+      doc.setFontSize(12).setTextColor('#324d55').setFontType('bold'); // headline
       doc.text(30, currentLinePoint, 'Skills required');
       currentLinePoint = currentLinePoint + 5;
       doc.setTextColor('#000').setFontType('normal').setFontSize(8); // normal text
@@ -150,7 +151,7 @@ export class PopupComponent implements OnInit {
 
     if (this.selectedProfile.competences.length > 0) {
       currentLinePoint = currentLinePoint + 10;
-      doc.setFontSize(12).setTextColor('#1a80b6').setFontType('bold'); // headline
+      doc.setFontSize(12).setTextColor('#324d55').setFontType('bold'); // headline
       doc.text(30, currentLinePoint, 'Transversal skills required');
       currentLinePoint = currentLinePoint + 5;
       doc.setTextColor('#000').setFontType('normal').setFontSize(8); // normal text
@@ -170,8 +171,9 @@ export class PopupComponent implements OnInit {
   checkEndOfPage(line, doc) {
     if (line > PopupComponent.END_PAGE_LINE) {
       doc.addPage();
-      doc.addImage(this.base64img.logo, 'PNG', 10, 7, 37, 25);
-      doc.addImage(this.base64img.back, 'PNG', 0, 100, 210, 198);
+      doc.addImage(this.base64img.logo, 'PNG', 10, 7, 67, 20);
+      doc.addImage(this.base64img.back, 'PNG', 0, 200, 210, 100);
+
       line = 45;
     }
     return line;
@@ -205,7 +207,7 @@ export class PopupComponent implements OnInit {
   }
 
   getKnowledge ( data: any ) {
-    const occPro = 'https://eo4geo-opt.web.app/#/detail/';
+    const occPro = 'https://ucgis-bok.web.app';
     let resultKnowledges = '';
     data.knowledge.forEach( know => {
       resultKnowledges = resultKnowledges + '<rdf:li>' +
@@ -217,7 +219,7 @@ export class PopupComponent implements OnInit {
   }
 
   getSkills ( data: any ) {
-    const urlSkills = 'https://eo4geo-opt.web.app/#/detail/';
+    const urlSkills = 'https://ucgis-bok.web.app';
     let resultSkills = '';
     data.skills.forEach( skill => {
       resultSkills = resultSkills + '<rdf:li>' +
@@ -229,10 +231,10 @@ export class PopupComponent implements OnInit {
   }
 
   createRDFFile(data: any) {
-    const urlBase = 'https://eo4geo-opt.web.app/#/detail/';
+    const urlBase = 'https://ucgis-tools-opt.web.app/#/detail/';
     const esco = 'http://data.europa.eu/esco/skill/';
-    const occPro = 'https://eo4geo-opt.web.app/#/detail/';
-    const urlSkills = 'https://eo4geo-opt.web.app/#/detail/';
+    const occPro = 'https://ucgis-tools-opt.web.app/#/detail/';
+    const urlSkills = 'https://ucgis-tools-opt.web.app/#/detail/';
     const competences = this.getCompetences( this.selectedProfile);
     const fields = this.getFields( this.selectedProfile);
     const knowledge = this.getKnowledge( this.selectedProfile );
