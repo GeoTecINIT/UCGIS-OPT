@@ -53,7 +53,7 @@ export class ListComponent implements OnInit {
   public currentPage = 0;
   showOnlyAuthor = -2;
 
-  public BOK_PERMALINK_PREFIX = 'https://bok.eo4geo.eu/';
+  public BOK_PERMALINK_PREFIX = 'https://ucgis-bok.web.app/';
 
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
   @ViewChild('releaseNotesModal') public releaseNotesModal: any;
