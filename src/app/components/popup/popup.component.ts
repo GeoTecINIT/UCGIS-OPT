@@ -57,12 +57,12 @@ export class PopupComponent implements OnInit {
   getSubjectMetadata() {
     // <#> dc:hasPart [ dc:extent "2" ; dc:relation ucgis:someBoKConcept  ] ;
     // @prefix dc: <http://purl.org/dc/terms/> .
-    // @prefix ucgis: <http://ucgis-bok.web.app/> .
+    // @prefix ucgis: <https://gistbok-bok.ucgis.org/> .
     // <> dc:hasPart [ dc:type "Module";
     // dc:title "Mathematics";
     // dc:relation ucgis:AM;
     // dc:relation ucgis:GC] .
-    let subject = '@prefix dc: <http://purl.org/dc/terms/> . @prefix ucgis: <http://ucgis-bok.web.app/> . ';
+    let subject = '@prefix dc: <http://purl.org/dc/terms/> . @prefix ucgis: <https://gistbok-bok.ucgis.org/> . ';
     if (this.selectedProfile.knowledge && this.selectedProfile.knowledge.length > 0) {
       subject = subject + '<> dc:type "Occupational Profile"; <> dc:title "' + this.selectedProfile.title + '"';
       this.selectedProfile.knowledge.forEach(know => {
@@ -91,7 +91,7 @@ export class PopupComponent implements OnInit {
     doc.addImage(this.base64img.logo, 'PNG', 10, 7, 67, 20);
     doc.addImage(this.base64img.back, 'PNG', 0, 200, 210, 100);
 
-    doc.link(15, 15, 600, 33, { url: 'https://ucgis-bok.web.app' });
+    doc.link(15, 15, 600, 33, { url: 'https://gistbok-bok.ucgis.org/' });
     doc.setFontSize(38);
     doc.setFontType('bold');
     doc.setTextColor('#324d55');
@@ -207,7 +207,7 @@ export class PopupComponent implements OnInit {
   }
 
   getKnowledge ( data: any ) {
-    const occPro = 'https://ucgis-bok.web.app';
+    const occPro = 'https://gistbok-bok.ucgis.org/';
     let resultKnowledges = '';
     data.knowledge.forEach( know => {
       resultKnowledges = resultKnowledges + '<rdf:li>' +
@@ -219,7 +219,7 @@ export class PopupComponent implements OnInit {
   }
 
   getSkills ( data: any ) {
-    const urlSkills = 'https://ucgis-bok.web.app';
+    const urlSkills = 'https://gistbok-bok.ucgis.org/';
     let resultSkills = '';
     data.skills.forEach( skill => {
       resultSkills = resultSkills + '<rdf:li>' +
